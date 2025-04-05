@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/_core.dart';
+import 'navigation.dart';
 
 // ! WARNING
 // ! Everything here must only be used one widget below Material widget.
@@ -29,7 +30,7 @@ double kScreenHeight([BuildContext? ctx]) {
   }
 }
 
-/// Easily get theme colorScheme.
+/// Easily get theme [ColorScheme].
 ColorScheme kColor([BuildContext? ctx]) {
   try {
     return (ctx == null) ? Theme.of(altContext).colorScheme : Theme.of(ctx).colorScheme;
@@ -39,4 +40,11 @@ ColorScheme kColor([BuildContext? ctx]) {
   }
 }
 
+/// Easily get theme [Textstyle].
 TextTheme kTextStyle(BuildContext context) => Theme.of(context).textTheme;
+
+/// Easily communicate with [ScaffoldMessenger]. Intended as a shortcut for
+/// ```dart
+/// ScaffoldMessenger.of(context).showSnackBar();
+/// ```
+ScaffoldMessengerState kSnackBar(BuildContext context) => ScaffoldMessenger.of(context);

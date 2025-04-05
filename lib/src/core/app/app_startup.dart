@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gato_id_generator/src/core/theme/platform_brightness_bloc/platform_brightness_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:go_transitions/go_transitions.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +13,7 @@ import 'package:hive_ce/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../app.dart';
 import '../constants/_constants.dart';
-import '../exceptions/error_logger.dart';
+import '../exceptions/_exceptions.dart';
 import '../../util/context_shortcut.dart';
 import '../_core.dart';
 
@@ -22,21 +21,26 @@ import '../_core.dart';
 class AppStartup {
   const AppStartup();
 
-  /// Create the root widget that should be passed to [runApp].
-  Future<Widget> createRootWidget({bool minimumTest = false}) async {
+  /// Core app initializations.
+  Future<void> initializeApp({bool minimumTest = false}) async {
     // * Initalize app.
     if (!minimumTest) await _initializeApp();
-    await initAppModule(); // Must be before initializeApp
-    await _initializeAdditionalConf();
+
+    // * Core GetIt initializations.
+    await initCoreAppModule();
 
     // * Register error handlers.
-    if (!minimumTest) _registerErrorHandlers();
+    final errorLogger = getIt<ErrorLogger>();
+    if (!minimumTest) _registerErrorHandlers(errorLogger);
+  }
 
+  /// Create the root widget that should be passed to [runApp].
+  Future<Widget> createRootWidget({bool minimumTest = false}) async {
     return EasyLocalization(
       path: 'assets/translations', // TODO localize strings in the app, watchout.
       supportedLocales: const [Locale('en', 'US')],
       fallbackLocale: const Locale('en', 'US'),
-      child: App(),
+      child: const App(),
     );
   }
 
@@ -52,7 +56,7 @@ class AppStartup {
 
     // Hive localDB -- Must be after Default.init()
     if (!kIsWeb) Hive.init((await getApplicationDocumentsDirectory()).path);
-    Hive.registerAdapters();
+    // Hive.registerAdapters(); // TODO * Uncomment this when model is done
     await Hive.initBoxes();
 
     // Removing the # sign, and follow the real configured route in the URL for the web.
@@ -78,25 +82,18 @@ class AppStartup {
     }
   }
 
-  /// Additional configurations.
-  Future<void> _initializeAdditionalConf() async {
-    await getIt<PlatformBrightnessBloc>().init();
-  }
-
   /// Register Flutter error handlers.
-  void _registerErrorHandlers() {
-    final errorLogger = getIt<ErrorLogger>();
-
+  void _registerErrorHandlers(ErrorLogger errorLogger) {
     // * Show some error UI if any uncaught exception happens
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.presentError(details);
-      errorLogger.logError(details.exception, details.stack);
+      errorLogger.log(details.exception, details.stack);
       if (kReleaseMode) exit(1);
     };
 
     // * Handle errors from the underlying platform/OS
     PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
-      errorLogger.logError(error, stack);
+      errorLogger.log(error, stack);
       if (kReleaseMode) exit(1);
       return true;
     };
@@ -113,18 +110,7 @@ class AppStartup {
           ),
           body: SingleChildScrollView(
             child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Oops! Something went wrong.',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  GAP_H24,
-                  Text(details.toString()),
-                  GAP_H24,
-                ],
-              ),
+              child: Text(details.toString()),
             ),
           ),
         ),
@@ -133,5 +119,5 @@ class AppStartup {
   }
 
   @visibleForTesting
-  void registerErrorHandlers() => _registerErrorHandlers();
+  void registerErrorHandlers(ErrorLogger errorLogger) => _registerErrorHandlers(errorLogger);
 }

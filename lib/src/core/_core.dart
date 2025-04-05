@@ -1,9 +1,9 @@
 export 'app/app_startup.dart';
+export 'app/bloc_observer.dart';
 export 'app/di.dart';
-export 'app/navigation.dart';
 export 'local_db/hive_adapters.dart';
 export 'network/api_service.dart';
-export 'network/connectivity_bloc.dart';
+export 'network/connectivity_service_cubit.dart';
 export 'network/dio_factory.dart';
 export 'network/http_override.dart';
 export 'theme/platform_brightness_bloc/platform_brightness_bloc.dart';

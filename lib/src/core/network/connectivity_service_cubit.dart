@@ -9,6 +9,7 @@ import '../_core.dart';
 @visibleForTesting
 bool canListenToNetworkStatusChange = true;
 
+/// You can use this cubit in a provider alongside another bloc/cubit where network request exists.
 class ConnectivityCubit extends Cubit<bool> {
   StreamSubscription<InternetStatus>? _subscription;
 

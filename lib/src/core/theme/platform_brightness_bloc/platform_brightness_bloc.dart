@@ -13,7 +13,6 @@ part 'platform_brightness_event.dart';
 class PlatformBrightnessBloc extends Bloc<PlatformBrightnessEvent, Brightness> {
   _PlatformBrightnessObserver? observer;
   Box<bool>? _box;
-  late bool _isLightMode;
 
   PlatformBrightnessBloc() : super(WidgetsBinding.instance.platformDispatcher.platformBrightness) {
     observer = _PlatformBrightnessObserver(
@@ -39,15 +38,17 @@ class PlatformBrightnessBloc extends Bloc<PlatformBrightnessEvent, Brightness> {
 
   /// Used in early app initialization to remember configuration.
   Future<void> init() async {
+    late bool isLightMode;
+
     try {
       _box = Hive.box<bool>(DBKeys.BRIGHTNESS_BOX);
-      _isLightMode = await _getConf();
+      isLightMode = await _getConf();
     } catch (e) {
-      _isLightMode = false;
+      isLightMode = false;
     }
 
     // False persistance since it's only an initialization.
-    if (_isLightMode) add(BrightnessChange(to: Brightness.light, persist: false));
+    if (isLightMode) return add(BrightnessChange(to: Brightness.light, persist: false));
     return add(BrightnessChange(to: Brightness.dark, persist: false));
   }
 

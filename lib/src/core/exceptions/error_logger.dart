@@ -6,7 +6,11 @@ import '_exceptions.dart';
 class ErrorLogger {
   final _log = Logger();
 
-  void logError(Object error, StackTrace? stackTrace) {
+  /// This method will separate the error object to be processed by certain methods for a certain object.
+  void log(Object error, StackTrace? stackTrace) =>
+      (error is AppException) ? _logAppException(error) : _logError(error, stackTrace);
+
+  void _logError(Object error, StackTrace? stackTrace) {
     // * Optional to be replaced with a crash reporting tool. (Sentry, Crashlytics, etc.)
     if (kReleaseMode) {
       // TODO Watchout
@@ -16,13 +20,13 @@ class ErrorLogger {
     _log.f('ERROR', error: error, stackTrace: stackTrace);
   }
 
-  void logAppException(AppException exception) {
+  void _logAppException(AppException exception) {
     // * Optional to be replaced with a crash reporting tool. (Sentry, Crashlytics, etc.)
     if (kReleaseMode) {
       // TODO Watchout
     }
 
-    // Warning level since it is recognized as a defined AppException.
+    // Warning level since it is recognized as a pre-defined Exception.
     _log.w('', error: exception);
   }
 }

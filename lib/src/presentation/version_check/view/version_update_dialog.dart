@@ -27,13 +27,14 @@ class VersionUpdateDialog extends StatelessWidget {
   }
 
   static Future<void> showErrorInstead(BuildContext context, {required Object? e}) async {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Check version error: ${e.toString()}"),
-        dismissDirection: DismissDirection.horizontal,
-      ),
-    );
+    kSnackBar(context)
+      ..clearSnackBars()
+      ..showSnackBar(
+        SnackBar(
+          content: Text("Check version error: ${e.toString()}"),
+          dismissDirection: DismissDirection.horizontal,
+        ),
+      );
   }
 
   @override

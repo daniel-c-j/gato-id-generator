@@ -12,13 +12,12 @@ import '../../../domain/use_case/version_check_usecase.dart';
 part 'version_check_event.dart';
 part 'version_check_state.dart';
 
-// TODO global bloc observer
-
 class VersionCheckBloc extends Bloc<VersionCheckEvent, VersionCheckState> {
   VersionCheckBloc() : super(VersionCheckIdle()) {
-    on<CheckVersionData>((event, emit) async => await _check(event, emit));
+    on<CheckVersionData>(_check);
   }
 
+  /// Will execute [VersionCheckUsecase] to fetch and check the data in the repository.
   Future<void> _check(CheckVersionData event, Emitter<VersionCheckState> emit) async {
     late final VersionCheck versionCheck;
     emit(VersionCheckLoading());

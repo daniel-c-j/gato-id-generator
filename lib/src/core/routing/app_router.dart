@@ -7,6 +7,7 @@ import '../../presentation/common_widgets/hud_overlay.dart';
 import '../_core.dart';
 import '../../presentation/home/view/home_screen.dart';
 import '../../presentation/common_widgets/not_found_screen.dart';
+import 'go_router_refresh_stream.dart';
 
 /// Defined app route to be handful when managing route name.
 enum AppRoute {
@@ -25,6 +26,8 @@ extension AppRouteExtension on AppRoute {
 GoRouter get goRouterInstance => GoRouter(
       debugLogDiagnostics: !kReleaseMode,
       navigatorKey: NavigationService.navigatorKey,
+      // TODO
+      // refreshListenable: GoRouterRefreshStream(),
       initialLocation: '/',
       redirect: (context, state) {
         // Placeholder

@@ -6,12 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
 
-// TODO Fonts
-
+// TODO maybe change this into bloc/cubit, if the theme can be customized.
 class AppTheme {
-  const AppTheme();
-
-  ThemeData light() {
+  static ThemeData light() {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
@@ -51,7 +48,7 @@ class AppTheme {
     );
   }
 
-  ThemeData dark() {
+  static ThemeData dark() {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,

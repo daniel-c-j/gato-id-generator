@@ -2,7 +2,7 @@ name: gato_id_generator
 description: "Generate business card... But for cats!"
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1 # TODO change this.
+version: 0.1.0+1
 
 #
 # ======================================================================================================
@@ -126,6 +126,7 @@ dev_dependencies:
   hive_ce_generator: ^1.8.1
 
   # For testing.
+  bloc_test: ^10.0.0
   mocktail: ^1.0.4
   test: ^1.25.8
 

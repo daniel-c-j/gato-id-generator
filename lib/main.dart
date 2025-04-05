@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:gato_id_generator/src/core/app/app_startup_local.dart';
 
 import 'src/core/_core.dart';
 
@@ -15,8 +17,15 @@ Future<void> main() async {
 
   // Creating app startup instance for initialization.
   const appStartup = AppStartup();
-  final root = await appStartup.createRootWidget();
+  await appStartup.initializeApp();
+  // Run the app locally.
+  // TODO
+  await appStartup.runWithLocal();
+
+  // Bloc observer. 
+  Bloc.observer = AppBlocObserver();
 
   // Entry point
+  final root = await appStartup.createRootWidget();
   runApp(root);
 }

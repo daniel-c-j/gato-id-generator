@@ -13,9 +13,7 @@ final class DBKeys {
 
   // Hive-specific box names
   static const String BRIGHTNESS_BOX = "BRIGHTNESS_BOX";
-  static const String CIPHER_REPO_BOX = "CIPHER_REPO_BOX";
 
   // Key names
   static const String BRIGHTNESS_LIGHT = "BRIGHTNESS_LIGHT";
-  static const String CIPHER_ALGORITHM_INDEX = "CIPHER_ALGORITHM_INDEX";
 }

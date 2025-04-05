@@ -1,11 +1,8 @@
 // coverage:ignore-file
-
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 import 'package:flutter/material.dart';
 
 import '../../util/context_shortcut.dart';
-
-// TODO delete those that are unnecessary
 
 // Light theme
 const Color PRIMARY_COLOR_L0 = Color.fromARGB(255, 90, 215, 10);
