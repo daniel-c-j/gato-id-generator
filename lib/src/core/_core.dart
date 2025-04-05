@@ -1,6 +1,8 @@
 export 'app/app_startup.dart';
 export 'app/bloc_observer.dart';
 export 'app/di.dart';
+export 'app/app_startup_local.dart';
+export 'app/app_startup_remote.dart';
 export 'local_db/hive_adapters.dart';
 export 'network/api_service.dart';
 export 'network/connectivity_service_cubit.dart';

@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import '../../data/repository/remote_version_repo.dart';
-import '../../domain/use_case/version_check_usecase.dart';
+import '../../domain/repository/version_repo.dart';
 import '../../presentation/common_widgets/hud_overlay.dart';
 import '../_core.dart';
 import '../exceptions/_exceptions.dart';
@@ -36,6 +36,5 @@ Future<void> initCoreAppModule() async {
   getIt.registerLazySingleton<HudControllerCubit>(() => HudControllerCubit());
 
   // VersionCheck feature
-  final versionCheckRepo = RemoteVersionCheckRepo(getIt<ApiService>());
-  getIt.registerFactory<VersionCheckUsecase>(() => VersionCheckUsecase(versionCheckRepo));
+  getIt.registerFactory<VersionCheckRepo>(() => RemoteVersionCheckRepo(getIt<ApiService>()));
 }

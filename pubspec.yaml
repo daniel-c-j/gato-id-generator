@@ -96,10 +96,11 @@ dependencies:
   # App theme font customization.
   google_fonts: ^6.2.1
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  # Decorations
   cupertino_icons: ^1.0.8
   icons_plus: ^5.0.0
+  simple_gradient_text: ^1.3.0
+  marqueer: ^2.0.1
 
   # README badge.
   test_coverage_badge: ^0.3.2
@@ -140,3 +141,4 @@ flutter:
     - assets/google_fonts/
     - assets/translations/
     - assets/images/splash/
+    - assets/images/gato/

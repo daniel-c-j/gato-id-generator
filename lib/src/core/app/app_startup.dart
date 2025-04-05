@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +85,9 @@ class AppStartup {
 
   /// Register Flutter error handlers.
   void _registerErrorHandlers(ErrorLogger errorLogger) {
+    // * Bloc specific error handler.
+    Bloc.observer = AppBlocObserver(errorLogger);
+
     // * Show some error UI if any uncaught exception happens
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.presentError(details);

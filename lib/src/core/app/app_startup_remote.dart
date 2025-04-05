@@ -6,6 +6,8 @@ import '../_core.dart';
 extension AppStartupRemote on AppStartup {
   /// Setting up [GetIt] dependency injection at the top-level with remote
   /// repositories only.
+  ///
+  /// [WARNING] This method should be called after initializeApp is called.
   Future<void> runWithRemote() async {
     // getIt
   }

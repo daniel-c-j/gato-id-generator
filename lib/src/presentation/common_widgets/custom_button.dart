@@ -14,6 +14,7 @@ class CustomButton extends StatelessWidget {
     this.isOutlined,
     this.borderColor,
     this.borderWidth,
+    this.elevation = 0,
   });
 
   final VoidCallback onTap;
@@ -23,6 +24,7 @@ class CustomButton extends StatelessWidget {
   final BorderRadius? borderRadius;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
+  final double elevation;
 
   final bool? isOutlined;
   final Color? borderColor;
@@ -40,6 +42,7 @@ class CustomButton extends StatelessWidget {
       child: Material(
         borderRadius: borderRadius ?? _radius,
         color: buttonColor,
+        elevation: elevation,
         child: InkWell(
           borderRadius: borderRadius ?? _radius,
           onTap: onTap,

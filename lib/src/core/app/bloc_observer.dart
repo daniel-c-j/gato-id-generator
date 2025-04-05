@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
-
-import '../_core.dart';
 import '../exceptions/_exceptions.dart';
 
 class AppBlocObserver extends BlocObserver {
-  final _errorLogger = getIt<ErrorLogger>();
+  AppBlocObserver(this._errorLogger);
+
+  final ErrorLogger _errorLogger;
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
