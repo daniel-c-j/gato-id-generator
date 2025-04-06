@@ -3,6 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gato_id_generator/src/core/_core.dart';
+import 'package:gato_id_generator/src/presentation/auth/account/bloc/profile_bloc.dart';
+import 'package:gato_id_generator/src/presentation/version_check/bloc/version_check_bloc.dart';
 import 'package:marqueer/marqueer.dart';
 
 import '../../../core/constants/_constants.dart';
@@ -28,6 +30,8 @@ class HomeScreen extends StatelessWidget {
       //       );
 
       //   _isUpdateChecked = true;
+      // context.read<VersionCheckBloc>().close();
+
       // });
     }
 
@@ -37,10 +41,18 @@ class HomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const CustomAppBar(
-                title: "Gato Id Generator",
-                withThemeIcon: true,
-                withBackIcon: false,
+              StreamBuilder(
+                stream: context.watch<ProfileBloc>().getUser(),
+                builder: (context, snapshot) {
+                  final user = snapshot.data;
+
+                  return CustomAppBar(
+                    title: "Gato Id Generator",
+                    withThemeIcon: true,
+                    withBackIcon: false,
+                    withProfileIcon: user != null,
+                  );
+                },
               ),
               GAP_H12,
               Padding(

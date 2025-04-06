@@ -18,14 +18,14 @@ class GenerateButton extends StatelessWidget {
         gradient: LinearGradient(
           colors: (isLight)
               ? const [
-                  PRIMARY_COLOR_L0,
-                  PRIMARY_COLOR_L1,
-                  PRIMARY_COLOR_L2,
-                ]
-              : const [
                   PRIMARY_COLOR_D0,
                   PRIMARY_COLOR_D1,
                   PRIMARY_COLOR_D2,
+                ]
+              : const [
+                  PRIMARY_COLOR_L0,
+                  PRIMARY_COLOR_L1,
+                  PRIMARY_COLOR_L2,
                 ],
         ),
         boxShadow: const [
@@ -41,7 +41,7 @@ class GenerateButton extends StatelessWidget {
           "Generate ID",
           overflow: TextOverflow.fade,
           textAlign: TextAlign.center,
-          style: kTextStyle(context).bodyMedium?.copyWith(color: Colors.white),
+          style: kTextStyle(context).bodyMedium?.copyWith(color: kColor(context).surface),
         ),
       ),
     );

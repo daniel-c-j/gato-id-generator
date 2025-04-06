@@ -3,11 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gato_id_generator/src/domain/repository/auth_repo.dart';
+import 'package:gato_id_generator/src/domain/use_case/auth_usecase.dart';
+import 'package:gato_id_generator/src/presentation/auth/account/bloc/profile_bloc.dart';
+import 'package:gato_id_generator/src/presentation/auth/account/view/profile_screen.dart';
+import 'package:gato_id_generator/src/presentation/auth/sign_in/bloc/email_pass_sign_in_bloc.dart';
+import 'package:gato_id_generator/src/presentation/auth/sign_in/view/sign_in_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/repository/version_repo.dart';
 import '../../domain/use_case/version_check_usecase.dart';
 import '../../presentation/_common_widgets/hud_overlay.dart';
+import '../../presentation/auth/sign_in/view/email_password_sign_in_form_type.dart';
 import '../../presentation/generate/view/generate_screen.dart';
 import '../../presentation/version_check/bloc/version_check_bloc.dart';
 import '../../util/navigation.dart';
@@ -19,6 +25,8 @@ import 'go_router_refresh_stream.dart';
 /// Defined app route to be handful when managing route name.
 enum AppRoute {
   home,
+  signIn,
+  profile,
   generate,
   about,
   license,
@@ -31,9 +39,7 @@ extension AppRouteExtension on AppRoute {
   String get path => "/$name";
 }
 
-GoRouter get goRouterInstance {
-  final authRepo = getIt<AuthRepository>();
-
+GoRouter goRouterInstance(AuthRepository authRepo) {
   return GoRouter(
     debugLogDiagnostics: !kReleaseMode,
     navigatorKey: NavigationService.navigatorKey,
@@ -41,8 +47,16 @@ GoRouter get goRouterInstance {
     initialLocation: '/',
     redirect: (context, state) {
       final isLogin = authRepo.currentUser != null;
-      // TODO
-      return;
+      final path = state.uri.path;
+      // TODO make sure of these
+      if (isLogin) {
+        if (path == AppRoute.signIn.path) return '/';
+      } else {
+        // If not logging in... force to go to signIn route.
+        if (path.startsWith(AppRoute.generate.path)) return AppRoute.signIn.path;
+      }
+
+      return null;
     },
     routes: [
       GoRoute(
@@ -50,33 +64,68 @@ GoRouter get goRouterInstance {
         name: AppRoute.home.name,
         builder: (context, state) {
           final versionUseCase = VersionCheckUsecase(getIt<VersionCheckRepo>());
+          final currentUserUseCase = GetCurrentUserUsecase(authRepo);
+          final signOutUseCase = SignOutUsecase(authRepo);
 
-          return BlocProvider(
-            create: (context) => VersionCheckBloc(versionUseCase),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => ProfileBloc(currentUserUseCase, signOutUseCase),
+              ),
+              BlocProvider(
+                create: (context) => VersionCheckBloc(versionUseCase),
+              )
+            ],
             child: const HudOverlay(child: HomeScreen()),
           );
         },
-        routes: [],
-        onExit: (context, state) {
-          // Prevent keyboard suddenly opens when going back to home screen after
-          // once focused on one of the textfields.
-          FocusScope.of(context).unfocus();
-          return true;
-        },
-      ),
-      GoRoute(
-        path: AppRoute.generate.path,
-        name: AppRoute.generate.name,
-        builder: (context, state) {
-          // TODO
-          final versionUseCase = VersionCheckUsecase(getIt<VersionCheckRepo>());
+        routes: [
+          GoRoute(
+            path: AppRoute.generate.path,
+            name: AppRoute.generate.name,
+            builder: (context, state) {
+              // TODO
+              final versionUseCase = VersionCheckUsecase(getIt<VersionCheckRepo>());
 
-          return BlocProvider(
-            create: (context) => VersionCheckBloc(versionUseCase),
-            child: const HudOverlay(child: GenerateScreen()),
-          );
-        },
-        routes: [],
+              return BlocProvider(
+                create: (context) => VersionCheckBloc(versionUseCase),
+                child: const HudOverlay(child: GenerateScreen()),
+              );
+            },
+            routes: [],
+          ),
+          GoRoute(
+            path: AppRoute.signIn.path,
+            name: AppRoute.signIn.name,
+            builder: (context, state) {
+              final createUserUsecase = CreateUserWithEmailPasswUsecase(authRepo);
+              final signInUsecase = SignInWithEmailPasswUsecase(authRepo);
+
+              return BlocProvider(
+                create: (context) => EmailPassSignInBloc(createUserUsecase, signInUsecase),
+                child: const HudOverlay(
+                  child: EmailPasswordSignInScreen(
+                    formType: EmailPasswordSignInFormType.signIn, // By default.
+                  ),
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            path: AppRoute.profile.path,
+            name: AppRoute.profile.name,
+            builder: (context, state) {
+              final currentUserUseCase = GetCurrentUserUsecase(authRepo);
+              final signOutUseCase = SignOutUsecase(authRepo);
+              return BlocProvider(
+                create: (context) => ProfileBloc(currentUserUseCase, signOutUseCase),
+                child: const HudOverlay(
+                  child: ProfileScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       GoRoute(
         path: AppRoute.about.path,

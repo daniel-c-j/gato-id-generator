@@ -18,6 +18,7 @@ class GenerateScreen extends StatelessWidget {
             title: "Generate",
             withThemeIcon: false,
             withBackIcon: true,
+            withProfileIcon: false,
           ),
           Flexible(
             child: SingleChildScrollView(

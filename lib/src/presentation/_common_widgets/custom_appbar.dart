@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/custom_button.dart';
+import 'package:gato_id_generator/src/presentation/auth/account/view/components/profile_icon_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
@@ -15,11 +16,13 @@ class CustomAppBar extends StatelessWidget {
     required this.title,
     required this.withThemeIcon,
     required this.withBackIcon,
+    required this.withProfileIcon,
   });
 
   final String title;
   final bool withThemeIcon;
   final bool withBackIcon;
+  final bool withProfileIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +61,7 @@ class CustomAppBar extends StatelessWidget {
                   }),
                   const Spacer(),
                   if (withThemeIcon) const ThemeIconButton(),
+                  if (withProfileIcon) const ProfileIconButton(),
                 ],
               ),
             ),

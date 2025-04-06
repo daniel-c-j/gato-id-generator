@@ -32,7 +32,7 @@ class RegexValidator implements StringValidator {
 }
 
 class ValidatorInputFormatter implements TextInputFormatter {
-  ValidatorInputFormatter({required this.editingValidator});
+  const ValidatorInputFormatter({required this.editingValidator});
   final StringValidator editingValidator;
 
   @override

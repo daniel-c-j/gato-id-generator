@@ -1,11 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gato_id_generator/src/core/routing/app_router.dart';
+import 'package:gato_id_generator/src/presentation/_common_widgets/custom_button.dart';
+import 'package:gato_id_generator/src/presentation/_common_widgets/hud_overlay.dart';
+import 'package:gato_id_generator/src/presentation/auth/sign_in/bloc/email_pass_sign_in_bloc.dart';
+import 'package:gato_id_generator/src/util/context_shortcut.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/_core.dart';
 import '../../../../core/constants/_constants.dart';
 import 'email_password_sign_in_form_type.dart';
-import 'email_password_sign_in_validators.dart';
-import 'string_validators.dart';
+import '../../../../util/email_password_sign_in_validators.dart';
+import '../../../../util/string_validators.dart';
 
 /// Email & password sign in screen.
 /// Wraps the [EmailPasswordSignInContents] widget below with a [Scaffold] and
@@ -21,7 +29,11 @@ class EmailPasswordSignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sign In'.tr())),
+      appBar: AppBar(
+        title: Text('Sign In'.tr()),
+        scrolledUnderElevation: 0,
+        forceMaterialTransparency: true,
+      ),
       body: EmailPasswordSignInContents(
         formType: formType,
       ),
@@ -35,13 +47,12 @@ class EmailPasswordSignInScreen extends StatelessWidget {
 class EmailPasswordSignInContents extends StatefulWidget {
   const EmailPasswordSignInContents({
     super.key,
-    this.onSignedIn,
     required this.formType,
   });
-  final VoidCallback? onSignedIn;
 
   /// The default form type to use.
   final EmailPasswordSignInFormType formType;
+
   @override
   State<EmailPasswordSignInContents> createState() => _EmailPasswordSignInContentsState();
 }
@@ -77,14 +88,36 @@ class _EmailPasswordSignInContentsState extends State<EmailPasswordSignInContent
     setState(() => _submitted = true);
     // only submit the form if validation passes
     if (_formKey.currentState!.validate()) {
-      // final controller = ref.read(emailPasswordSignInControllerProvider.notifier);
-      // final success = await controller.submit(
-      //   email: email,
-      //   password: password,
-      //   formType: _formType,
-      // );
+      final event = EmailPassSignInSubmit(
+        email: email,
+        passw: password,
+        formType: _formType,
+        onSuccess: () async {
+          if (_formType == EmailPasswordSignInFormType.register) {
+            kSnackBar(context).clearSnackBars();
+            kSnackBar(context).showSnackBar(
+              SnackBar(
+                content: Text("One more step! Sign-in and you're good to go."),
+                dismissDirection: DismissDirection.horizontal,
+              ),
+            );
+            return _updateFormType();
+          }
 
-      // if (success) widget.onSignedIn?.call();
+          return context.goNamed(AppRoute.generate.name);
+        },
+        onError: (e, st) {
+          kSnackBar(context).clearSnackBars();
+          kSnackBar(context).showSnackBar(
+            SnackBar(
+              content: Text("Error: ${e.toString()}"),
+              dismissDirection: DismissDirection.horizontal,
+            ),
+          );
+        },
+      );
+
+      context.read<EmailPassSignInBloc>().add(event);
     }
   }
 
@@ -111,69 +144,125 @@ class _EmailPasswordSignInContentsState extends State<EmailPasswordSignInContent
 
   @override
   Widget build(BuildContext context) {
-    // ref.listen<AsyncValue>(
-    //   emailPasswordSignInControllerProvider,
-    //   (_, state) => state.showAlertDialogOnError(context),
-    // );
-    // final state = ref.watch(emailPasswordSignInControllerProvider);
-    return Container(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: FocusScope(
         node: _node,
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              GAP_H8,
-              // Email field
-              TextFormField(
-                key: EmailPasswordSignInScreen.emailKey,
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email'.tr(),
-                  hintText: 'test@test.com'.tr(),
-                  // enabled: !state.isLoading, // TODO
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (email) => !_submitted ? null : emailErrorText(email ?? ''),
-                autocorrect: false,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.emailAddress,
-                keyboardAppearance: Brightness.light,
-                onEditingComplete: () => _emailEditingComplete(),
-                inputFormatters: <TextInputFormatter>[
-                  ValidatorInputFormatter(editingValidator: EmailEditingRegexValidator()),
+          child: BlocBuilder<EmailPassSignInBloc, EmailPassSignInState>(
+            builder: (context, state) {
+              // Controlling HUD
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                if (state is EmailPassSignInLoading) return context.read<HudControllerCubit>().show();
+                context.read<HudControllerCubit>().hide();
+              });
+
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          GAP_H8,
+                          // Email field
+                          TextFormField(
+                            key: EmailPasswordSignInScreen.emailKey,
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                              labelText: 'Email'.tr(),
+                              hintText: 'test@test.com'.tr(),
+                              enabled: state is! EmailPassSignInLoading,
+                            ),
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (email) => (!_submitted) ? null : emailErrorText(email ?? ''),
+                            autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            keyboardType: TextInputType.emailAddress,
+                            onEditingComplete: () => _emailEditingComplete(),
+                            inputFormatters: const [
+                              ValidatorInputFormatter(editingValidator: EmailEditingRegexValidator()),
+                            ],
+                          ),
+                          GAP_H8,
+                          // Password field
+                          TextFormField(
+                            key: EmailPasswordSignInScreen.passwordKey,
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              labelText: _formType.passwordLabelText,
+                              enabled: state is! EmailPassSignInLoading,
+                            ),
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (password) =>
+                                (!_submitted) ? null : passwordErrorText(password ?? '', _formType),
+                            obscureText: true,
+                            autocorrect: false,
+                            textInputAction: TextInputAction.done,
+                            onEditingComplete: () => _passwordEditingComplete(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.maxFinite,
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: CustomButton(
+                        msg: _formType.secondaryButtonText,
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        onTap: () {
+                          (state is EmailPassSignInLoading) ? null : _updateFormType();
+                        },
+                        child: Text(_formType.secondaryButtonText),
+                      ),
+                    ),
+                  ),
+                  GAP_H8,
+                  Builder(builder: (context) {
+                    final isLight = context.watch<PlatformBrightnessBloc>().state == Brightness.light;
+
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        gradient: LinearGradient(
+                          colors: (isLight)
+                              ? const [
+                                  PRIMARY_COLOR_L0,
+                                  PRIMARY_COLOR_L1,
+                                  PRIMARY_COLOR_L2,
+                                ]
+                              : const [
+                                  PRIMARY_COLOR_D0,
+                                  PRIMARY_COLOR_D1,
+                                  PRIMARY_COLOR_D2,
+                                ],
+                        ),
+                      ),
+                      child: CustomButton(
+                        msg: _formType.primaryButtonText,
+                        buttonColor: Colors.transparent,
+                        onTap: () {
+                          (state is EmailPassSignInLoading) ? null : _submit();
+                        },
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: Text(
+                            _formType.primaryButtonText,
+                            textAlign: TextAlign.center,
+                            style: kTextStyle(context).bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                  GAP_H12,
                 ],
-              ),
-              GAP_H8,
-              // Password field
-              TextFormField(
-                key: EmailPasswordSignInScreen.passwordKey,
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: _formType.passwordLabelText,
-                  // enabled: !state.isLoading, // TODO
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (password) => !_submitted ? null : passwordErrorText(password ?? '', _formType),
-                obscureText: true,
-                autocorrect: false,
-                textInputAction: TextInputAction.done,
-                keyboardAppearance: Brightness.light,
-                onEditingComplete: () => _passwordEditingComplete(),
-              ),
-              GAP_H8, // TODO
-              // PrimaryButton(
-              //   text: _formType.primaryButtonText,
-              //   isLoading: state.isLoading,
-              //   onPressed: state.isLoading ? null : () => _submit(),
-              // ),
-              GAP_H8,
-              // CustomTextButton(
-              //   text: _formType.secondaryButtonText,
-              //   onPressed: state.isLoading ? null : _updateFormType,
-              // ),
-            ],
+              );
+            },
           ),
         ),
       ),

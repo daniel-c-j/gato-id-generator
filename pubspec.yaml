@@ -107,6 +107,8 @@ dependencies:
 
   # Generate fake data
   faker: ^2.2.0
+
+  # Firebase
   firebase_auth: ^5.5.2
 
 #
@@ -121,7 +123,7 @@ dev_dependencies:
     sdk: flutter
 
   # Cool & Useful codegen
-  build_runner: ^2.4.13
+  build_runner: ^2.4.15
 
   # Lints
   flutter_lints: ^5.0.0

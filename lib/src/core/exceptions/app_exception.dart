@@ -65,13 +65,20 @@ class NoConnectionException extends AppException {
   const NoConnectionException() : super(-3, 'no_internet_connection');
 }
 
-class EmailAlreadyInUseException extends AppException {
-  const EmailAlreadyInUseException() : super(-4, 'email_already_in_use');
-}
-
 class UpdateCheckException extends AppException {
   // Update check failed. Please try again later.
-  const UpdateCheckException() : super(-5, 'update_check_failed');
+  const UpdateCheckException() : super(-4, 'update_check_failed');
 }
 
+class DataBaseClosedException extends AppException {
+  const DataBaseClosedException() : super(-5, 'db_closed');
+}
+
+class EmailAlreadyInUseException extends AppException {
+  const EmailAlreadyInUseException() : super(-6, 'email_already_in_use');
+}
+
+class WrongCredentialsException extends AppException {
+  const WrongCredentialsException() : super(-7, 'wrong_credentials');
+}
 // TODO expand this, and figure the messageKey to messageStr, and support for localization.

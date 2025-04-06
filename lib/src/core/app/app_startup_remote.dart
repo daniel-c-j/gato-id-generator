@@ -1,4 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gato_id_generator/src/domain/repository/auth_repo.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../data/repository/auth/remote_auth_repo.dart';
 import '../_core.dart';
+import '../routing/app_router.dart';
 
 // TODO
 
@@ -9,7 +15,12 @@ extension AppStartupRemote on AppStartup {
   ///
   /// [WARNING] This method should be called after initializeApp is called.
   Future<void> runWithRemote() async {
-    // getIt
+    // * Using singleton since it maintains one must-ready, globally-shared state.
+    getIt.registerSingleton<AuthRepository>(RemoteAuthRepository(FirebaseAuth.instance));
+
+    // Route
+    // ! Must be after authRepo
+    getIt.registerSingleton<GoRouter>(goRouterInstance(getIt<AuthRepository>()));
   }
 
   // Future<void> setupFirebaseEmulators() async {

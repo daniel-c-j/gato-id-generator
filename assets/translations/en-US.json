@@ -42,6 +42,8 @@
   "==AppException====================================================================================================================SEPARATOR": "",
   "unknown_error": "Unknown error",
   "no_internet_connection": "No internet connection",
+  "update_check_failed": "Failed to check update",
+  "db_closed": "Database is closed",
   "email_already_in_use": "Email is already used",
-  "update_check_failed": "Failed to check update"
+  "wrong_credentials": "Wrong Credentials"
 }

@@ -1,6 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gato_id_generator/src/core/constants/_constants.dart';
+import 'package:gato_id_generator/src/domain/repository/auth_repo.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 import '../../../../core/_core.dart';
@@ -11,7 +14,7 @@ import '../../../_common_widgets/custom_button.dart';
 class ThemeIconButton extends StatelessWidget {
   const ThemeIconButton({super.key});
 
-  static const buttonKey = Key("theme-icon-button");
+  static const buttonKey = Key("ThemeIconButton");
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,8 @@ class ThemeIconButton extends StatelessWidget {
       buttonColor: Colors.transparent,
       borderRadius: BorderRadius.circular(60),
       onTap: () {
+        // Hive.deleteBoxFromDisk(DBKeys.LOCAL_USER_BOX);
+        // getIt<AuthRepository>().signOut();
         final value = (mode == Brightness.light) ? Brightness.dark : Brightness.light;
         context.read<PlatformBrightnessBloc>().add(BrightnessChange(to: value));
       },

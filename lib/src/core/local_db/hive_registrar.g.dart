@@ -3,10 +3,11 @@
 // Check in to version control
 
 import 'package:hive_ce/hive.dart';
-import 'package:gato_id_generator/src/data/model/app_user/app_user.dart';
+import 'package:gato_id_generator/src/core/local_db/hive_adapters.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
     registerAdapter(AppUserAdapter());
+    registerAdapter(LocalAppUserAdapter());
   }
 }

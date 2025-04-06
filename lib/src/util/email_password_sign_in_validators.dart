@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 
-import 'email_password_sign_in_form_type.dart';
+import '../presentation/auth/sign_in/view/email_password_sign_in_form_type.dart';
 import 'string_validators.dart';
 
 /// Mixin class to be used for client-side email & password validation
@@ -21,12 +21,12 @@ mixin EmailAndPasswordValidators {
   String? emailErrorText(String email) {
     final showErrorText = !canSubmitEmail(email);
     final errorText = (email.isEmpty) ? 'Email can\'t be empty'.tr() : 'Invalid email'.tr();
-    return showErrorText ? errorText : null;
+    return (showErrorText) ? errorText : null;
   }
 
   String? passwordErrorText(String password, EmailPasswordSignInFormType formType) {
     final showErrorText = !canSubmitPassword(password, formType);
     final errorText = (password.isEmpty) ? 'Password can\'t be empty'.tr() : 'Password is too short'.tr();
-    return showErrorText ? errorText : null;
+    return (showErrorText) ? errorText : null;
   }
 }

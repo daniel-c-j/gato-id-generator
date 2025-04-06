@@ -8,15 +8,18 @@ part 'hive_adapters.g.dart';
 
 // TODO when using hive.
 @GenerateAdapters([
-  AdapterSpec<AppUserAdapter>(),
+  AdapterSpec<AppUser>(),
+  AdapterSpec<LocalAppUser>(),
 ])
 class HiveAdapters {}
+
+// TODO when using hive.
 
 extension HiveRegistrar on HiveInterface {
   Future<void> initBoxes() async {
     await Hive.openBox<bool>(DBKeys.BRIGHTNESS_BOX);
     await Hive.openBox<AppUser?>(DBKeys.AUTH_STATE_BOX);
     // Specific for localAuthRepo only
-    await Hive.openBox<LocalAppUser?>(DBKeys.USER_BOX);
+    await Hive.openBox<LocalAppUser?>(DBKeys.LOCAL_USER_BOX);
   }
 }

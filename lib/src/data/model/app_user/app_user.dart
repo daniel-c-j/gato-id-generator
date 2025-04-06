@@ -4,7 +4,7 @@ import 'package:hive_ce/hive.dart';
 part 'app_user.g.dart';
 
 /// Simple class representing the user UID and email.
-@HiveType(typeId: DBKeys.USER_HIVE)
+@HiveType(typeId: DBKeys.BASE_USER_HIVE)
 class AppUser {
   const AppUser({
     required this.uid,

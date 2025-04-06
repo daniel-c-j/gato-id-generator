@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import '../../data/repository/remote_version_repo.dart';
@@ -7,7 +6,6 @@ import '../../domain/repository/version_repo.dart';
 import '../../presentation/_common_widgets/hud_overlay.dart';
 import '../_core.dart';
 import '../exceptions/_exceptions.dart';
-import '../routing/app_router.dart';
 
 final getIt = GetIt.instance;
 
@@ -22,9 +20,6 @@ Future<void> initCoreAppModule() async {
   getIt.registerLazySingleton<InternetConnection>(() => InternetConnection());
   getIt.registerLazySingleton<ApiService>(() => ApiService(dio, getIt<InternetConnection>()));
 
-  // Route
-  getIt.registerSingleton<GoRouter>(goRouterInstance);
-
   // Theme
   getIt.registerSingletonAsync<PlatformBrightnessBloc>(() async {
     final brightness = PlatformBrightnessBloc();
@@ -36,5 +31,6 @@ Future<void> initCoreAppModule() async {
   getIt.registerLazySingleton<HudControllerCubit>(() => HudControllerCubit());
 
   // VersionCheck feature
-  getIt.registerFactory<VersionCheckRepo>(() => RemoteVersionCheckRepo(getIt<ApiService>()));
+  // * Using lazySingleton since it maintains no state, and should exist only when it's called.
+  getIt.registerLazySingleton<VersionCheckRepo>(() => RemoteVersionCheckRepo(getIt<ApiService>()));
 }
