@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gato_id_generator/src/core/constants/_constants.dart';
 import 'package:gato_id_generator/src/presentation/generate/view/components/generate_button.dart';
 
-import '../../common_widgets/custom_appbar.dart';
+import '../../_common_widgets/custom_appbar.dart';
 import 'components/generated_history.dart';
 import 'components/id/gato_id.dart';
 

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gato_id_generator/src/core/local_db/hive_registrar.g.dart';
 import 'package:go_router/go_router.dart';
 import 'package:go_transitions/go_transitions.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -57,7 +58,7 @@ class AppStartup {
 
     // Hive localDB -- Must be after Default.init()
     if (!kIsWeb) Hive.init((await getApplicationDocumentsDirectory()).path);
-    // Hive.registerAdapters(); // TODO * Uncomment this when model is done
+    Hive.registerAdapters();
     await Hive.initBoxes();
 
     // Removing the # sign, and follow the real configured route in the URL for the web.

@@ -4,7 +4,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 
 import '../../data/repository/remote_version_repo.dart';
 import '../../domain/repository/version_repo.dart';
-import '../../presentation/common_widgets/hud_overlay.dart';
+import '../../presentation/_common_widgets/hud_overlay.dart';
 import '../_core.dart';
 import '../exceptions/_exceptions.dart';
 import '../routing/app_router.dart';

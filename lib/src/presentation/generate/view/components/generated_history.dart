@@ -23,7 +23,7 @@ class GeneratedHistory extends StatelessWidget {
         GAP_H2,
         const Divider(thickness: 0.75, height: 0, indent: 12, endIndent: 12),
         SizedBox(
-          height: 40 * 10, // TODO
+          height: 40 * 10, // TODO this should be sync to bloc -> usecase -> repo either local/remote
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 8,

@@ -5,7 +5,7 @@ import 'package:icons_plus/icons_plus.dart';
 
 import '../../../../core/_core.dart';
 import '../../../../util/context_shortcut.dart';
-import '../../../common_widgets/custom_button.dart';
+import '../../../_common_widgets/custom_button.dart';
 
 /// Change the theme of the app.
 class ThemeIconButton extends StatelessWidget {

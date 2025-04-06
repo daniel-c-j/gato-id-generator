@@ -1,4 +1,4 @@
-import 'package:gato_id_generator/src/presentation/common_widgets/responsive_layout.dart';
+import 'package:gato_id_generator/src/presentation/_common_widgets/responsive_layout.dart';
 import 'package:gato_id_generator/src/core/constants/_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

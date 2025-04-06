@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
+### Added
 
-- None
-
+- Home screen design.
+- Generated screen design.
+`
 ## [0.1.0] - 2025-xx-xx
 
 ### Added

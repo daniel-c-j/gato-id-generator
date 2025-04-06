@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/_core.dart';
 import '../../../../util/context_shortcut.dart';
-import '../../../common_widgets/custom_button.dart';
+import '../../../_common_widgets/custom_button.dart';
 
 class GenerateButton extends StatelessWidget {
   const GenerateButton({super.key});

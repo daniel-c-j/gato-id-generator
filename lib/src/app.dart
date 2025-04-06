@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import 'core/constants/_constants.dart';
 import 'core/_core.dart';
-import 'presentation/common_widgets/hud_overlay.dart';
+import 'presentation/_common_widgets/hud_overlay.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

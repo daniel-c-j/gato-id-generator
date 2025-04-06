@@ -7,7 +7,7 @@ import 'package:marqueer/marqueer.dart';
 
 import '../../../core/constants/_constants.dart';
 import '../../../util/context_shortcut.dart';
-import '../../common_widgets/custom_appbar.dart';
+import '../../_common_widgets/custom_appbar.dart';
 import 'components/generate_button.dart';
 
 bool _isUpdateChecked = false;

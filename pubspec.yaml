@@ -105,6 +105,10 @@ dependencies:
   # README badge.
   test_coverage_badge: ^0.3.2
 
+  # Generate fake data
+  faker: ^2.2.0
+  firebase_auth: ^5.5.2
+
 #
 # ======================================================================================================
 #

@@ -5,7 +5,7 @@ import 'package:icons_plus/icons_plus.dart';
 import '../../../../core/constants/_constants.dart';
 import '../../../../core/routing/app_router.dart';
 import '../../../../util/context_shortcut.dart';
-import '../../../common_widgets/custom_button.dart';
+import '../../../_common_widgets/custom_button.dart';
 
 class HomeGenerateButton extends StatelessWidget {
   const HomeGenerateButton({super.key});

@@ -1,4 +1,4 @@
-import 'package:gato_id_generator/src/presentation/common_widgets/hud_overlay.dart';
+import 'package:gato_id_generator/src/presentation/_common_widgets/hud_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

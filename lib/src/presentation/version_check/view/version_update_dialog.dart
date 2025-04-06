@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import '../../common_widgets/custom_button.dart';
+import '../../_common_widgets/custom_button.dart';
 import '../../../core/constants/_constants.dart';
 import '../../../core/_core.dart';
 import '../../../util/context_shortcut.dart';
