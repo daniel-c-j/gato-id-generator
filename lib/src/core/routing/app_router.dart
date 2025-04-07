@@ -2,12 +2,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gato_id_generator/src/data/repository/generate_repo.dart';
 import 'package:gato_id_generator/src/domain/repository/auth_repo.dart';
 import 'package:gato_id_generator/src/domain/use_case/auth_usecase.dart';
+import 'package:gato_id_generator/src/domain/use_case/generate_id_usecase.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/bloc/profile_bloc.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/view/profile_screen.dart';
 import 'package:gato_id_generator/src/presentation/auth/sign_in/bloc/email_pass_sign_in_bloc.dart';
 import 'package:gato_id_generator/src/presentation/auth/sign_in/view/sign_in_screen.dart';
+import 'package:gato_id_generator/src/presentation/generate/bloc/generated_gato_id_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/repository/version_repo.dart';
@@ -85,11 +88,10 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
             path: AppRoute.generate.path,
             name: AppRoute.generate.name,
             builder: (context, state) {
-              // TODO
-              final versionUseCase = VersionCheckUsecase(getIt<VersionCheckRepo>());
+              final generateIdUseCase = GenerateIdUsecase(getIt<GenerateIdRepo>());
 
               return BlocProvider(
-                create: (context) => VersionCheckBloc(versionUseCase),
+                create: (context) => GeneratedGatoIdBloc(generateIdUseCase),
                 child: const HudOverlay(child: GenerateScreen()),
               );
             },

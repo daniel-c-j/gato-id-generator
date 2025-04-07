@@ -65,7 +65,7 @@ class VersionUpdateDialog extends StatelessWidget {
           msg: "Go to download page".tr(),
           buttonColor: PRIMARY_COLOR_D0,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-          onTap: () async => await launchUrlString(NetConsts.URL_UPDATE_VERSION),
+          onTap: () async => await launchUrlString(NetConsts.URL_GET_UPDATED_VERSION),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

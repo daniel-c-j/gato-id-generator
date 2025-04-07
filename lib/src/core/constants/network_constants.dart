@@ -4,7 +4,7 @@
 
 /// Data container containing network constants.
 final class NetConsts {
-  /// [Dio] configuration.
+  // [Dio] configuration.
   static const String APPLICATION_JSON = "application/json";
   static const String CONTENT_TYPE = "content-type";
   static const String AUTHORIZATION = "Authorization";
@@ -13,12 +13,16 @@ final class NetConsts {
 
   /// Used for [VersionCheck].
   static late final String URL_CHECK_VERSION;
-  static late final String URL_UPDATE_VERSION;
+  static late final String URL_GET_UPDATED_VERSION;
+
+  // Generate ID image
+  static late final String URL_GATO_IMG;
 
   /// Lazy Initialization exists for the ease of testing to manipulate certain properties of [NetConsts].
   static void init() {
 // TODO INSERT
     URL_CHECK_VERSION = "";
-    URL_UPDATE_VERSION = "";
+    URL_GET_UPDATED_VERSION = "";
+    URL_GATO_IMG = "https://cataas.com/cat";
   }
 }

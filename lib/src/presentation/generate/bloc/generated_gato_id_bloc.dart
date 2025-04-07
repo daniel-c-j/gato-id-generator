@@ -1,12 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:gato_id_generator/src/domain/use_case/generate_id_usecase.dart';
 import 'package:gato_id_generator/src/util/delay.dart';
 
 part 'generated_gato_id_event.dart';
 part 'generated_gato_id_state.dart';
 
 class GeneratedGatoIdBloc extends Bloc<GeneratedGatoIdEvent, GeneratedGatoIdState> {
-  GeneratedGatoIdBloc() : super(GeneratedGatoIdIdle()) {
+  final GenerateIdUsecase _generateIdUsecase;
+
+  GeneratedGatoIdBloc(this._generateIdUsecase) : super(GeneratedGatoIdIdle()) {
     on<GenerateGatoId>(_generate);
   }
 
@@ -15,8 +18,9 @@ class GeneratedGatoIdBloc extends Bloc<GeneratedGatoIdEvent, GeneratedGatoIdStat
     await delay(true);
 
     try {
-// Generate usecase => repo
+      await _generateIdUsecase.execute();
       event.onSuccess();
+
       emit(GeneratedGatoIdIdle());
     } catch (e, st) {
       event.onError(e, st);
