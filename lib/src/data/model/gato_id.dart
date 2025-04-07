@@ -1,8 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class GatoId {
   const GatoId({
     required this.uid,
     required this.name,
     required this.doB,
+    required this.isMale,
     required this.occupation,
     required this.madeIn,
   });
@@ -10,6 +12,7 @@ class GatoId {
   final String uid;
   final String name;
   final DateTime doB;
+  final bool isMale;
   final String occupation;
   final DateTime madeIn;
 
@@ -20,12 +23,18 @@ class GatoId {
     return other.uid == uid &&
         other.name == name &&
         other.doB == doB &&
+        other.isMale == isMale &&
         other.occupation == occupation &&
         other.madeIn == madeIn;
   }
 
   @override
   int get hashCode {
-    return uid.hashCode ^ name.hashCode ^ doB.hashCode ^ occupation.hashCode ^ madeIn.hashCode;
+    return uid.hashCode ^
+        name.hashCode ^
+        doB.hashCode ^
+        isMale.hashCode ^
+        occupation.hashCode ^
+        madeIn.hashCode;
   }
 }

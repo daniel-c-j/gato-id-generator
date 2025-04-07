@@ -41,46 +41,51 @@ class GatoIdImage extends StatelessWidget {
     return SizedBox(
       width: kScreenWidth(context) * 0.325,
       child: BlocBuilder<GeneratedGatoIdBloc, GeneratedGatoIdState>(builder: (context, state) {
+        if (state is GeneratedGatoIdLoading) return const SizedBox.shrink();
+
         // Will be renewed each state update/screen enters.
         final imageUuid = getIt<Random>().nextDouble().toString();
-
-        if (state is GeneratedGatoIdLoading) return _loadingIndicator;
+        final gatoId = context.watch<GeneratedGatoIdBloc>().currentGatoId;
 
         return Stack(
           children: [
-            CachedNetworkImage(
-              imageUrl: NetConsts.URL_GATO_IMG,
-              width: innerConstraint,
-              height: innerConstraint,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => _loadingIndicator,
-              errorWidget: (context, url, error) => _errorIndicator,
-              maxHeightDiskCache: innerConstraintInt,
-              maxWidthDiskCache: innerConstraintInt,
-              memCacheHeight: innerConstraintInt,
-              memCacheWidth: innerConstraintInt,
-              cacheKey: imageUuid,
-            ),
+            if (gatoId != null)
+              CachedNetworkImage(
+                imageUrl: NetConsts.URL_GATO_IMG,
+                width: innerConstraint,
+                height: innerConstraint,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => _loadingIndicator,
+                errorWidget: (context, url, error) => _errorIndicator,
+                maxHeightDiskCache: innerConstraintInt,
+                maxWidthDiskCache: innerConstraintInt,
+                memCacheHeight: innerConstraintInt,
+                memCacheWidth: innerConstraintInt,
+                cacheKey: imageUuid,
+              ),
             // Overlay
             DecoratedBox(
-              decoration: BoxDecoration(color: Colors.black.withAlpha(45)),
+              decoration: BoxDecoration(color: Colors.black.withAlpha(75)),
               child: SizedBox(
                 width: innerConstraint,
                 height: innerConstraint,
+                // * Will show default placeholder if no generated id exists yet.
+                child: (gatoId == null) ? const Icon(BoxIcons.bxs_cat, size: 35) : null,
               ),
             ),
-            CachedNetworkImage(
-              imageUrl: NetConsts.URL_GATO_IMG,
-              width: innerConstraint,
-              height: innerConstraint,
-              placeholder: (context, url) => _loadingIndicator,
-              errorWidget: (context, url, error) => _errorIndicator,
-              maxHeightDiskCache: innerConstraintInt,
-              maxWidthDiskCache: innerConstraintInt,
-              memCacheHeight: innerConstraintInt,
-              memCacheWidth: innerConstraintInt,
-              cacheKey: imageUuid,
-            ),
+            if (gatoId != null)
+              CachedNetworkImage(
+                imageUrl: NetConsts.URL_GATO_IMG,
+                width: innerConstraint,
+                height: innerConstraint,
+                placeholder: (context, url) => _loadingIndicator,
+                errorWidget: (context, url, error) => _errorIndicator,
+                maxHeightDiskCache: innerConstraintInt,
+                maxWidthDiskCache: innerConstraintInt,
+                memCacheHeight: innerConstraintInt,
+                memCacheWidth: innerConstraintInt,
+                cacheKey: imageUuid,
+              ),
           ],
         );
       }),

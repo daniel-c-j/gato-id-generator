@@ -45,5 +45,6 @@
   "update_check_failed": "Failed to check update",
   "db_closed": "Database is closed",
   "email_already_in_use": "Email is already used",
-  "wrong_credentials": "Wrong Credentials"
+  "wrong_credentials": "Wrong credentials",
+  "save_image_failed": "Saving image failed"
 }

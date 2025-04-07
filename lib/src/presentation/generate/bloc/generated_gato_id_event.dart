@@ -12,3 +12,15 @@ class GenerateGatoId implements GeneratedGatoIdEvent {
   final VoidCallback onSuccess;
   final void Function(Object? e, StackTrace st) onError;
 }
+
+class SaveGeneratedGatoId implements GeneratedGatoIdEvent {
+  SaveGeneratedGatoId({
+    required this.value,
+    required this.onSuccess,
+    required this.onError,
+  });
+
+  final Uint8List value;
+  final VoidCallback onSuccess;
+  final void Function(Object? e, StackTrace st) onError;
+}

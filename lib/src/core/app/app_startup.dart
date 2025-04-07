@@ -114,6 +114,7 @@ class AppStartup {
             title: const Text('An error occurred'),
           ),
           body: SingleChildScrollView(
+            padding: const EdgeInsets.all(8),
             child: Center(
               child: Text(details.toString()),
             ),

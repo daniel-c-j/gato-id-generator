@@ -23,7 +23,7 @@ types:
         index: 2
   GatoId:
     typeId: 2
-    nextIndex: 6
+    nextIndex: 7
     fields:
       uid:
         index: 0
@@ -35,5 +35,5 @@ types:
         index: 3
       madeIn:
         index: 4
-      imageUrl:
-        index: 5
+      isMale:
+        index: 6

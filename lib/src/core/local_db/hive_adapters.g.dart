@@ -95,9 +95,9 @@ class GatoIdAdapter extends TypeAdapter<GatoId> {
     };
     return GatoId(
       uid: fields[0] as String,
-      imageUrl: fields[5] as String,
       name: fields[1] as String,
       doB: fields[2] as DateTime,
+      isMale: fields[6] as bool,
       occupation: fields[3] as String,
       madeIn: fields[4] as DateTime,
     );
@@ -117,8 +117,8 @@ class GatoIdAdapter extends TypeAdapter<GatoId> {
       ..write(obj.occupation)
       ..writeByte(4)
       ..write(obj.madeIn)
-      ..writeByte(5)
-      ..write(obj.imageUrl);
+      ..writeByte(6)
+      ..write(obj.isMale);
   }
 
   @override

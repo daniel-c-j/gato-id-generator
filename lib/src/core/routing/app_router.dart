@@ -88,10 +88,16 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
             path: AppRoute.generate.path,
             name: AppRoute.generate.name,
             builder: (context, state) {
-              final generateIdUseCase = GenerateIdUsecase(getIt<GenerateIdRepo>());
+              final generateIdUseCase = GenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
+              final saveGenerateIdUsecase = SaveGenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
+              final getGeneratedIdStatsUseCase = GetGenerateIdStatsUsecase(getIt<GenerateIdRepo>(), authRepo);
 
               return BlocProvider(
-                create: (context) => GeneratedGatoIdBloc(generateIdUseCase),
+                create: (context) => GeneratedGatoIdBloc(
+                  generateIdUseCase,
+                  saveGenerateIdUsecase,
+                  getGeneratedIdStatsUseCase,
+                ),
                 child: const HudOverlay(child: GenerateScreen()),
               );
             },
@@ -121,8 +127,28 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
               final watchUserUseCase = WatchUserUsecase(authRepo);
               final currentUserUseCase = GetCurrentUserUsecase(authRepo);
               final signOutUseCase = SignOutUsecase(authRepo);
-              return BlocProvider(
-                create: (context) => ProfileBloc(watchUserUseCase, currentUserUseCase, signOutUseCase),
+
+              final generateIdUseCase = GenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
+              final saveGenerateIdUsecase = SaveGenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
+              final getGeneratedIdStatsUseCase = GetGenerateIdStatsUsecase(getIt<GenerateIdRepo>(), authRepo);
+
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => ProfileBloc(
+                      watchUserUseCase,
+                      currentUserUseCase,
+                      signOutUseCase,
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => GeneratedGatoIdBloc(
+                      generateIdUseCase,
+                      saveGenerateIdUsecase,
+                      getGeneratedIdStatsUseCase,
+                    ),
+                  ),
+                ],
                 child: const HudOverlay(
                   child: ProfileScreen(),
                 ),

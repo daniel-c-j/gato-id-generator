@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:gato_id_generator/src/core/constants/local_db_constants.dart';
 import 'package:gato_id_generator/src/data/repository/generate_repo.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import '../../data/repository/remote_version_repo.dart';
@@ -41,5 +43,7 @@ Future<void> initCoreAppModule() async {
   getIt.registerLazySingleton<VersionCheckRepo>(() => RemoteVersionCheckRepo(getIt<ApiService>()));
 
   // Generate ID feature
-  getIt.registerLazySingleton<GenerateIdRepo>(() => GenerateIdRepo(getIt<ApiService>()));
+  final generatedImageBox = Hive.box<String>(DBKeys.IMAGE_GENERATED_BOX);
+  final generatedStats = Hive.box<int>(DBKeys.STATS_GENERATED_BOX);
+  getIt.registerLazySingleton<GenerateIdRepo>(() => GenerateIdRepo(generatedImageBox, generatedStats));
 }

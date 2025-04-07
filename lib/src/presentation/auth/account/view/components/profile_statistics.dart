@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gato_id_generator/src/presentation/generate/bloc/generated_gato_id_bloc.dart';
 
 import '../../../../../core/constants/_constants.dart';
 import '../../../../../util/context_shortcut.dart';
 
-class ProfileStatictics extends StatelessWidget {
-  const ProfileStatictics({super.key});
+class ProfileStatistics extends StatelessWidget {
+  const ProfileStatistics({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final stat = context.watch<GeneratedGatoIdBloc>().latestStat;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,8 +31,8 @@ class ProfileStatictics extends StatelessWidget {
         GAP_H4,
         const Divider(thickness: 0.75, height: 0),
         GAP_H4,
-        Text("Gato Id generated: 8"),
-        Text("Gato Id saved: 3"),
+        Text("Gato Id generated: ${stat.generatedCount}"),
+        Text("Gato Id saved:  ${stat.savedCount}"),
       ],
     );
   }

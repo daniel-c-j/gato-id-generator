@@ -6,7 +6,7 @@ import 'package:gato_id_generator/src/presentation/_common_widgets/custom_appbar
 import 'package:gato_id_generator/src/presentation/_common_widgets/custom_button.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/generic_snackbar.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/bloc/profile_bloc.dart';
-import 'package:gato_id_generator/src/presentation/auth/account/view/components/profile_statictics.dart';
+import 'package:gato_id_generator/src/presentation/auth/account/view/components/profile_statistics.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart';
 
@@ -88,7 +88,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             GAP_H32,
-            const ProfileStatictics(),
+            const ProfileStatistics(),
             GAP_H32,
             Align(
               alignment: Alignment.topRight,

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gato_id_generator/src/presentation/generate/bloc/generated_gato_id_bloc.dart';
+import 'package:gato_id_generator/src/util/date_format.dart';
 
 import '../../../../../core/constants/_constants.dart';
 import '../../../../../util/context_shortcut.dart';
@@ -8,43 +11,63 @@ class GatoIdContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
+    return BlocBuilder<GeneratedGatoIdBloc, GeneratedGatoIdState>(
+      builder: (context, state) {
+        if (state is GeneratedGatoIdLoading) return const SizedBox.shrink();
+
+        final gatoId = context.watch<GeneratedGatoIdBloc>().currentGatoId;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "ID: ",
-              textAlign: TextAlign.left,
-              style: kTextStyle(context).bodyMedium,
+            Row(
+              children: [
+                Text(
+                  "ID: ",
+                  textAlign: TextAlign.left,
+                  style: kTextStyle(context).bodyMedium,
+                ),
+                Text(
+                  // TODO use shimmer/skeletonizer instead
+                  gatoId?.uid ?? "1729-2421-0323-9242",
+                  textAlign: TextAlign.left,
+                  style: kTextStyle(context).bodyMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        height: 0,
+                      ),
+                ),
+              ],
             ),
+            GAP_H4,
             Text(
-              "1729-2421-0323-9242",
+              (gatoId != null)
+                  ? "Name: ${gatoId.name} \n"
+                      "Date of Birth: ${gatoId.doB.formatTime} \n"
+                      "Gender: ${(gatoId.isMale) ? "Male" : "Female"} \n"
+                      "Occupation: ${gatoId.occupation} \n"
+//
+                  : "Name: Biscuit Junior \n"
+                      "Date of Birth: 02-10-2016 \n"
+                      "Gender: Male \n"
+                      "Occupation: Cave diver \n",
               textAlign: TextAlign.left,
-              style: kTextStyle(context).bodyMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    height: 0,
+              style: kTextStyle(context).bodySmall,
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                    "Made in: ${gatoId?.madeIn.formatTime ?? "02-04-2022"}",
+                    textAlign: TextAlign.right,
+                    style: kTextStyle(context).bodySmall,
                   ),
+                ),
+              ),
             ),
           ],
-        ),
-        GAP_H4,
-        const Text(
-          "Name: Biscuit Junior \n"
-          "Date of Birth: 02-10-2016 \n"
-          "Gender: Male \n"
-          "Occupation: Cave diver \n",
-          textAlign: TextAlign.left,
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Text(
-            "Made in: 02-04-2022",
-            textAlign: TextAlign.right,
-            style: kTextStyle(context).bodySmall,
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 }
