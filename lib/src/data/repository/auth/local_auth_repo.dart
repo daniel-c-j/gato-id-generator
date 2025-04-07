@@ -8,7 +8,7 @@ import 'package:hive_ce/hive.dart';
 class LocalAuthRepository implements AuthRepository {
   LocalAuthRepository(this._dataSource);
 
-  final Box<LocalAppUser?> _dataSource;
+  final Box<LocalAppUser> _dataSource;
   final _authState = Hive.box<AppUser?>(DBKeys.AUTH_STATE_BOX);
 
   @override
@@ -29,10 +29,9 @@ class LocalAuthRepository implements AuthRepository {
     if (!_dataSource.isOpen) throw const DataBaseClosedException();
 
     final users = _dataSource.values;
-
-    // Updates the auth state.
-    for (LocalAppUser? user in users) {
-      if (email == user?.email && password == user?.password) {
+    for (LocalAppUser user in users) {
+      if (email == user.email && password == user.password) {
+        // Updates the auth state.
         return _authState.put(DBKeys.AUTH_STATE, user);
       }
     }
@@ -47,13 +46,14 @@ class LocalAuthRepository implements AuthRepository {
     final users = _dataSource.keys;
     if (users.contains(email)) throw const EmailAlreadyInUseException();
 
-    return await _dataSource.putAll({
-      email: LocalAppUser(
+    return await _dataSource.put(
+      email,
+      LocalAppUser(
         uid: email.split('').reversed.join(),
         email: email,
         password: password,
       ),
-    });
+    );
   }
 
   @override

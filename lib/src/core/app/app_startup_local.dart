@@ -18,7 +18,7 @@ extension AppStartupLocal on AppStartup {
   /// [WARNING] This method should be called after initializeApp is called.
   Future<void> runWithLocal() async {
     // * Using singleton since it maintains one must-ready, globally-shared state.
-    final dataSource = Hive.box<LocalAppUser?>(DBKeys.LOCAL_USER_BOX);
+    final dataSource = Hive.box<LocalAppUser>(DBKeys.USER_BOX);
     getIt.registerSingleton<AuthRepository>(LocalAuthRepository(dataSource));
 
     // Route

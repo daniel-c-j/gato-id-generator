@@ -25,9 +25,16 @@ class SignOutUsecase {
   Future<void> execute() async => await _repository.signOut();
 }
 
+class WatchUserUsecase {
+  const WatchUserUsecase(this._repository);
+  final AuthRepository _repository;
+
+  Stream<AppUser?> execute() => _repository.authStateChanges();
+}
+
 class GetCurrentUserUsecase {
   const GetCurrentUserUsecase(this._repository);
   final AuthRepository _repository;
 
-  Stream<AppUser?> execute() => _repository.authStateChanges();
+  AppUser? execute() => _repository.currentUser;
 }

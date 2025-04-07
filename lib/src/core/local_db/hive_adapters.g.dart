@@ -82,3 +82,52 @@ class LocalAppUserAdapter extends TypeAdapter<LocalAppUser> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class GatoIdAdapter extends TypeAdapter<GatoId> {
+  @override
+  final int typeId = 2;
+
+  @override
+  GatoId read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return GatoId(
+      uid: fields[0] as String,
+      imageUrl: fields[5] as String,
+      name: fields[1] as String,
+      doB: fields[2] as DateTime,
+      occupation: fields[3] as String,
+      madeIn: fields[4] as DateTime,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, GatoId obj) {
+    writer
+      ..writeByte(6)
+      ..writeByte(0)
+      ..write(obj.uid)
+      ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.doB)
+      ..writeByte(3)
+      ..write(obj.occupation)
+      ..writeByte(4)
+      ..write(obj.madeIn)
+      ..writeByte(5)
+      ..write(obj.imageUrl);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GatoIdAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

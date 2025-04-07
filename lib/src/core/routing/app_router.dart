@@ -64,13 +64,14 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
         name: AppRoute.home.name,
         builder: (context, state) {
           final versionUseCase = VersionCheckUsecase(getIt<VersionCheckRepo>());
+          final watchUserUseCase = WatchUserUsecase(authRepo);
           final currentUserUseCase = GetCurrentUserUsecase(authRepo);
           final signOutUseCase = SignOutUsecase(authRepo);
 
           return MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => ProfileBloc(currentUserUseCase, signOutUseCase),
+                create: (context) => ProfileBloc(watchUserUseCase, currentUserUseCase, signOutUseCase),
               ),
               BlocProvider(
                 create: (context) => VersionCheckBloc(versionUseCase),
@@ -115,10 +116,11 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
             path: AppRoute.profile.path,
             name: AppRoute.profile.name,
             builder: (context, state) {
+              final watchUserUseCase = WatchUserUsecase(authRepo);
               final currentUserUseCase = GetCurrentUserUsecase(authRepo);
               final signOutUseCase = SignOutUsecase(authRepo);
               return BlocProvider(
-                create: (context) => ProfileBloc(currentUserUseCase, signOutUseCase),
+                create: (context) => ProfileBloc(watchUserUseCase, currentUserUseCase, signOutUseCase),
                 child: const HudOverlay(
                   child: ProfileScreen(),
                 ),

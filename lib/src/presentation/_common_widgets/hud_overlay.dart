@@ -63,18 +63,20 @@ class HudOverlay extends StatelessWidget {
             /// Triggers the sizedBox widget return.
             bool shouldRender = false;
 
-            return BlocBuilder<HudControllerCubit, bool>(
-              builder: (BuildContext context, bool show) {
-                final duration = Duration(milliseconds: (withDelay) ? 800 : 0);
+            return AbsorbPointer(
+              absorbing: true,
+              child: IgnorePointer(
+                ignoring: true,
+                child: BlocBuilder<HudControllerCubit, bool>(builder: (BuildContext context, bool show) {
+                  final duration = Duration(milliseconds: (withDelay) ? 800 : 0);
 
-                // If not testing whatsoever, the condition below will apply.
-                if (!forceShowHUD) {
-                  // Returns nothing when animation ends and show is false.
-                  if (!show && !shouldRender) return const SizedBox.shrink();
-                }
+                  // If not testing whatsoever, the condition below will apply.
+                  if (!forceShowHUD) {
+                    // Returns nothing when animation ends and show is false.
+                    if (!show && !shouldRender) return const SizedBox.shrink();
+                  }
 
-                return IgnorePointer(
-                  child: AnimatedOpacity(
+                  return AnimatedOpacity(
                     opacity: (show) ? 1 : 0,
                     onEnd: () {
                       shouldRender = show;
@@ -87,9 +89,9 @@ class HudOverlay extends StatelessWidget {
                         _showOverlayContent(),
                       ],
                     ),
-                  ),
-                );
-              },
+                  );
+                }),
+              ),
             );
           },
         ),

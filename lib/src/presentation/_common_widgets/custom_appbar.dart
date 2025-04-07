@@ -2,75 +2,78 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/custom_button.dart';
-import 'package:gato_id_generator/src/presentation/auth/account/view/components/profile_icon_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 import '../../core/_core.dart';
 import '../../util/context_shortcut.dart';
-import '../home/view/components/theme_icon_button.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     required this.title,
-    required this.withThemeIcon,
     required this.withBackIcon,
-    required this.withProfileIcon,
+    this.additionalActions = const [],
   });
 
   final String title;
-  final bool withThemeIcon;
   final bool withBackIcon;
-  final bool withProfileIcon;
+  final List<Widget> additionalActions;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        DecoratedBox(
-          decoration: BoxDecoration(color: Colors.transparent),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: SizedBox(
-              height: 64,
-              width: double.maxFinite,
-              child: Row(
-                spacing: 8,
-                children: [
-                  if (withBackIcon) const BackIconButton(),
-                  Builder(builder: (context) {
-                    final isLight = context.watch<PlatformBrightnessBloc>().state == Brightness.light;
-                    return GradientText(
-                      title,
-                      style: kTextStyle(context).titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                      colors: (isLight)
-                          ? const [
-                              PRIMARY_COLOR_D0,
-                              PRIMARY_COLOR_D1,
-                              PRIMARY_COLOR_D2,
-                            ]
-                          : const [
-                              PRIMARY_COLOR_L0,
-                              PRIMARY_COLOR_L1,
-                              PRIMARY_COLOR_L2,
-                            ],
-                    );
-                  }),
-                  const Spacer(),
-                  if (withThemeIcon) const ThemeIconButton(),
-                  if (withProfileIcon) const ProfileIconButton(),
-                ],
+    return AppBar(
+      automaticallyImplyLeading: false,
+      forceMaterialTransparency: true,
+      scrolledUnderElevation: 0,
+      actions: [
+        Expanded(
+          child: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Row(
+                    spacing: 8,
+                    children: [
+                      if (withBackIcon) const BackIconButton(),
+                      Builder(builder: (context) {
+                        final isLight = context.watch<PlatformBrightnessBloc>().state == Brightness.light;
+                        return GradientText(
+                          title,
+                          style: kTextStyle(context).titleLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                height: 0,
+                              ),
+                          colors: (isLight)
+                              ? const [
+                                  PRIMARY_COLOR_D0,
+                                  PRIMARY_COLOR_D1,
+                                  PRIMARY_COLOR_D2,
+                                ]
+                              : const [
+                                  PRIMARY_COLOR_L0,
+                                  PRIMARY_COLOR_L1,
+                                  PRIMARY_COLOR_L2,
+                                ],
+                        );
+                      }),
+                      const Spacer(),
+                      ...additionalActions,
+                    ],
+                  ),
+                ),
               ),
-            ),
+              const Divider(thickness: 0.75, height: 0),
+            ],
           ),
         ),
-        const Divider(thickness: 0.75, height: 0, indent: 12, endIndent: 12),
       ],
     );
   }
+
+  @override
+  Size get preferredSize => const Size(double.maxFinite, 64);
 }
 
 class BackIconButton extends StatelessWidget {
@@ -89,9 +92,20 @@ class BackIconButton extends StatelessWidget {
       onTap: () {
         context.pop();
       },
-      child: Icon(
-        Icons.arrow_back,
-        color: kColor(context).inverseSurface,
+      child: const SizedBox.square(
+        dimension: 22,
+        child: Stack(
+          children: [
+            Positioned(
+              left: -1.5,
+              bottom: -0.5,
+              child: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                size: 22,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

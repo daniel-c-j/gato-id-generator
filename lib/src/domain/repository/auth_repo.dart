@@ -10,4 +10,7 @@ abstract class AuthRepository {
   Stream<AppUser?> authStateChanges();
 
   AppUser? get currentUser;
+
+  // TODO deleteUser
+  // Future<void> deleteUser();
 }

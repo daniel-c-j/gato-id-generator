@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gato_id_generator/src/core/constants/_constants.dart';
 import 'package:gato_id_generator/src/presentation/generate/view/components/generate_button.dart';
@@ -11,22 +12,17 @@ class GenerateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(
-            title: "Generate",
-            withThemeIcon: false,
-            withBackIcon: true,
-            withProfileIcon: false,
-          ),
-          Flexible(
+          CustomAppBar(title: "Generate".tr(), withBackIcon: true),
+          const Flexible(
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   Padding(
                     padding: EdgeInsets.all(12.0),
-                    child: GatoId(),
+                    child: GatoIdCard(),
                   ),
                   GAP_W4,
                   Padding(

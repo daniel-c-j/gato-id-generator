@@ -6,8 +6,8 @@ import 'package:icons_plus/icons_plus.dart';
 import '../../../../../core/constants/_constants.dart';
 import '../../../../../util/context_shortcut.dart';
 
-class GatoId extends StatelessWidget {
-  const GatoId({super.key});
+class GatoIdCard extends StatelessWidget {
+  const GatoIdCard({super.key});
 
   @override
   Widget build(BuildContext context) {

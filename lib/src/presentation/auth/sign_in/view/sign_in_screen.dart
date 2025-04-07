@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gato_id_generator/src/core/routing/app_router.dart';
+import 'package:gato_id_generator/src/presentation/_common_widgets/custom_appbar.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/custom_button.dart';
+import 'package:gato_id_generator/src/presentation/_common_widgets/generic_snackbar.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/hud_overlay.dart';
 import 'package:gato_id_generator/src/presentation/auth/sign_in/bloc/email_pass_sign_in_bloc.dart';
 import 'package:gato_id_generator/src/util/context_shortcut.dart';
@@ -29,11 +31,7 @@ class EmailPasswordSignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sign In'.tr()),
-        scrolledUnderElevation: 0,
-        forceMaterialTransparency: true,
-      ),
+      appBar: CustomAppBar(title: "Sign In".tr(), withBackIcon: true),
       body: EmailPasswordSignInContents(
         formType: formType,
       ),
@@ -107,13 +105,7 @@ class _EmailPasswordSignInContentsState extends State<EmailPasswordSignInContent
           return context.goNamed(AppRoute.generate.name);
         },
         onError: (e, st) {
-          kSnackBar(context).clearSnackBars();
-          kSnackBar(context).showSnackBar(
-            SnackBar(
-              content: Text("Error: ${e.toString()}"),
-              dismissDirection: DismissDirection.horizontal,
-            ),
-          );
+          showErrorSnackBar(context, error: e);
         },
       );
 

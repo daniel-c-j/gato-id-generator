@@ -9,18 +9,21 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  final GetCurrentUserUsecase _currentUserUsecase;
+  final WatchUserUsecase _watchUserUsecase;
+  final GetCurrentUserUsecase _getCurrentUserUsecase;
   final SignOutUsecase _signOutUsecase;
 
-  ProfileBloc(this._currentUserUsecase, this._signOutUsecase) : super(ProfileIdle()) {
+  ProfileBloc(this._watchUserUsecase, this._getCurrentUserUsecase, this._signOutUsecase)
+      : super(ProfileIdle()) {
     on<ProfileSignOut>(_signOut);
   }
 
-  Stream<AppUser?> getUser() => _currentUserUsecase.execute();
+  Stream<AppUser?> watchUser() => _watchUserUsecase.execute();
+  AppUser? getUser() => _getCurrentUserUsecase.execute();
 
   Future<void> _signOut(ProfileSignOut event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
-    await delay(true);
+    await delay(true); // TODO delay should be injected since firebase need not these guy.
 
     try {
       await _signOutUsecase.execute();

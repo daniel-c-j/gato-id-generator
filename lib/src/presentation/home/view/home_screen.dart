@@ -4,15 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gato_id_generator/src/core/_core.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/bloc/profile_bloc.dart';
-import 'package:gato_id_generator/src/presentation/version_check/bloc/version_check_bloc.dart';
+import 'package:gato_id_generator/src/presentation/auth/account/view/components/profile_icon_button.dart';
+import 'package:gato_id_generator/src/presentation/home/view/components/theme_icon_button.dart';
 import 'package:marqueer/marqueer.dart';
 
 import '../../../core/constants/_constants.dart';
+import '../../../data/model/app_user/app_user.dart';
 import '../../../util/context_shortcut.dart';
 import '../../_common_widgets/custom_appbar.dart';
 import 'components/generate_button.dart';
 
 bool _isUpdateChecked = false;
+
+/// This is needed since local `watchUser()` is always start from null, and authstate currently does not
+/// update the UI if it solely depends on synchronous `getUser()`, so one possible approach is by using
+/// synchronous `getUser()` first to eliminate false-null value, then followed by `watchUser()`.
+bool _isFirstTime = true;
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -42,15 +49,23 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               StreamBuilder(
-                stream: context.watch<ProfileBloc>().getUser(),
+                stream: context.watch<ProfileBloc>().watchUser(),
                 builder: (context, snapshot) {
-                  final user = snapshot.data;
+                  late final AppUser? user;
+                  if (_isFirstTime) {
+                    user = context.watch<ProfileBloc>().getUser();
+                    _isFirstTime = false;
+                  } else {
+                    user = snapshot.data;
+                  }
 
                   return CustomAppBar(
                     title: "Gato Id Generator",
-                    withThemeIcon: true,
                     withBackIcon: false,
-                    withProfileIcon: user != null,
+                    additionalActions: [
+                      const ThemeIconButton(),
+                      if (user != null) const ProfileIconButton(),
+                    ],
                   );
                 },
               ),

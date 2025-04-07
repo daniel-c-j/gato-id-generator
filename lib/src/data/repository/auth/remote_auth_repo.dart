@@ -41,4 +41,12 @@ class RemoteAuthRepository implements AuthRepository {
 
   /// Helper method to convert a [User] to an [AppUser]
   AppUser? _convertUser(User? user) => user != null ? RemoteAppUser(user) : null;
+
+  // TODO deleteUser
+  // @override
+  // Future<void> deleteUser() async {
+  //   await _auth.currentUser
+  //       ?.reauthenticateWithCredential(EmailAuthProvider.credential(email: email, password: password));
+  //   await _auth.currentUser?.delete();
+  // }
 }

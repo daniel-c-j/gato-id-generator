@@ -29,7 +29,7 @@ class GatoIdContent extends StatelessWidget {
           ],
         ),
         GAP_H4,
-        Text(
+        const Text(
           "Name: Biscuit Junior \n"
           "Date of Birth: 02-10-2016 \n"
           "Gender: Male \n"
