@@ -23,6 +23,6 @@ extension HiveRegistrar on HiveInterface {
     await Hive.openBox<AppUser?>(DBKeys.AUTH_STATE_BOX);
     // Specific for localAuthRepo only
     await Hive.openBox<LocalAppUser>(DBKeys.USER_BOX); // TODO be utilizing encryption shceme
-    await Hive.openBox<GatoId>(DBKeys.GATO_ID_BOX);
+    await Hive.openBox<int>(DBKeys.STATS_GENERATED);
   }
 }

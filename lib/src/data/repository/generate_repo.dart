@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:gato_id_generator/src/core/constants/local_db_constants.dart';
-import 'package:gato_id_generator/src/core/constants/network_constants.dart';
 import 'package:gato_id_generator/src/data/model/gato_id.dart';
 import 'package:faker/faker.dart';
 import 'package:hive_ce/hive.dart';
@@ -9,8 +7,7 @@ import 'dart:math';
 import '../../core/_core.dart';
 
 class GenerateIdRepo {
-  GenerateIdRepo(this._generatedImage, this._generatedStats, this._apiService);
-  final ApiService _apiService;
+  GenerateIdRepo(this._generatedImage, this._generatedStats);
   final Box<String> _generatedImage;
   final Box<int> _generatedStats;
 
