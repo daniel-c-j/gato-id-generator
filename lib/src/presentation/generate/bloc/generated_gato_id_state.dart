@@ -7,4 +7,6 @@ class GeneratedGatoIdIdle extends GeneratedGatoIdState {}
 
 class GeneratedGatoIdLoading extends GeneratedGatoIdState {}
 
+class GeneratedGatoIdSaving extends GeneratedGatoIdState {}
+
 class GeneratedGatoIdError extends GeneratedGatoIdState {}

@@ -25,7 +25,7 @@ class GenerateScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: WidgetsToImage(controller: controller, child: GatoIdCard()),
+                    child: WidgetsToImage(controller: controller, child: const GatoIdCard()),
                   ),
                   GAP_W4,
                   Padding(
@@ -39,7 +39,7 @@ class GenerateScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  GAP_H24,
+                  GAP_H32,
                   const GeneratedHistory(),
                 ],
               ),

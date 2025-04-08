@@ -16,12 +16,12 @@ final class DBKeys {
   static const String AUTH_STATE_BOX = "AUTH_STATE_BOX";
   static const String USER_BOX = "USER_BOX";
   static const String USERNAME_BOX = "USERNAME_BOX";
-  static const String STATS_GENERATED_BOX = "STATS_GENERATED_BOX";
-  static const String IMAGE_GENERATED_BOX = "IMAGE_GENERATED_BOX";
+  static const String GENERATED_ID_COUNT_BOX = "GENERATED_ID_COUNT_BOX";
+  static const String SAVED_ID_BOX = "SAVED_ID_BOX";
 
   // Key names
   static const String BRIGHTNESS_LIGHT = "BRIGHTNESS_LIGHT";
   static const String AUTH_STATE = "AUTH_STATE";
   static const String USERNAME = "USERNAME";
-  static const String STATS_GENERATED = "STATS_GENERATED";
+  static const String GENERATED_ID_COUNT = "GENERATED_ID_COUNT";
 }

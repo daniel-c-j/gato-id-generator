@@ -1,24 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-/// Statistic values to be displayed in [ProfileScreen].
+import 'package:flutter/foundation.dart';
+
+/// Generated statistic values.
 class GatoIdStat {
   const GatoIdStat({
     required this.generatedCount,
-    required this.savedCount,
+    required this.savedImages,
   });
 
   final int generatedCount;
-  final int savedCount;
+  final List<String> savedImages;
 
   @override
   bool operator ==(covariant GatoIdStat other) {
     if (identical(this, other)) return true;
 
-    return other.generatedCount == generatedCount && other.savedCount == savedCount;
+    return other.generatedCount == generatedCount && listEquals(other.savedImages, savedImages);
   }
 
   @override
-  int get hashCode => generatedCount.hashCode ^ savedCount.hashCode;
+  int get hashCode => generatedCount.hashCode ^ savedImages.hashCode;
 
   @override
-  String toString() => 'GatoIdStat(generatedCount: $generatedCount, savedCount: $savedCount)';
+  String toString() => 'GatoIdStat(generatedCount: $generatedCount, savedImages: $savedImages)';
 }

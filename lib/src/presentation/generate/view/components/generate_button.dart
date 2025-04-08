@@ -9,6 +9,7 @@ import 'package:widgets_to_image/widgets_to_image.dart';
 import '../../../../core/_core.dart';
 import '../../../../util/context_shortcut.dart';
 import '../../../_common_widgets/custom_button.dart';
+import '../../bloc/image_load_cubit.dart';
 
 class GenerateButton extends StatelessWidget {
   const GenerateButton({super.key});
@@ -40,7 +41,7 @@ class GenerateButton extends StatelessWidget {
         msg: "Generate ID",
         onTap: () {
           final bloc = context.read<GeneratedGatoIdBloc>();
-          if (bloc.state is GeneratedGatoIdLoading) return;
+          if (bloc.state is GeneratedGatoIdSaving || bloc.state is GeneratedGatoIdLoading) return;
           bloc.add(
             GenerateGatoId(
               onSuccess: () {},
@@ -69,11 +70,13 @@ class SaveGeneratedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<GeneratedGatoIdBloc>();
+    final imageIsLoaded = context.watch<ImageIsLoadedCubit>().state;
+
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         gradient: LinearGradient(
-          colors: (bloc.currentGatoId == null)
+          colors: (bloc.currentGatoId == null || bloc.state is GeneratedGatoIdLoading || !imageIsLoaded)
               ? const [
                   Color.fromARGB(120, 15, 217, 119),
                   Color.fromARGB(120, 36, 150, 40),
@@ -87,27 +90,28 @@ class SaveGeneratedButton extends StatelessWidget {
       child: CustomButton(
         msg: "Save",
         onTap: () async {
-          if (bloc.currentGatoId == null) return;
-          if (bloc.state is GeneratedGatoIdLoading) return;
+          if (bloc.currentGatoId == null) return; // Does nothing if yet generate a thing.
+          if (bloc.state is GeneratedGatoIdSaving || bloc.state is GeneratedGatoIdLoading) return;
+          if (!imageIsLoaded) return;
 
           context.read<HudControllerCubit>().show();
           final value = await controller.capture();
 
           // ignore: use_build_context_synchronously
-          if (value == null) showErrorSnackBar(context, error: const SaveImageFailedException());
+          if (value == null) return showErrorSnackBar(context, error: const SaveImageFailedException());
 
           bloc.add(
             SaveGeneratedGatoId(
-              value: value!,
-              onSuccess: () {},
+              value: value,
+              onSuccess: () {
+                context.read<HudControllerCubit>().hide();
+              },
               onError: (e, st) {
+                context.read<HudControllerCubit>().hide();
                 showErrorSnackBar(context, error: e);
               },
             ),
           );
-
-          // ignore: use_build_context_synchronously
-          context.read<HudControllerCubit>().hide();
         },
         borderRadius: BorderRadius.circular(12),
         buttonColor: Colors.transparent,

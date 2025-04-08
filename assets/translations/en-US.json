@@ -46,5 +46,6 @@
   "db_closed": "Database is closed",
   "email_already_in_use": "Email is already used",
   "wrong_credentials": "Wrong credentials",
-  "save_image_failed": "Saving image failed"
+  "save_image_failed": "Saving image failed",
+  "access_not_granted": "Access is not granted"
 }

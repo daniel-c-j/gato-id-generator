@@ -6,7 +6,7 @@ import 'package:gato_id_generator/src/data/model/gato_id_stat.dart';
 import 'package:gato_id_generator/src/domain/use_case/generate_id_usecase.dart';
 import 'package:gato_id_generator/src/util/delay.dart';
 
-import '../../../data/model/gato_id.dart';
+import '../../../data/model/gato_id_content.dart';
 
 part 'generated_gato_id_event.dart';
 part 'generated_gato_id_state.dart';
@@ -45,7 +45,7 @@ class GeneratedGatoIdBloc extends Bloc<GeneratedGatoIdEvent, GeneratedGatoIdStat
   }
 
   Future<void> _save(SaveGeneratedGatoId event, Emitter<GeneratedGatoIdState> emit) async {
-    emit(GeneratedGatoIdLoading());
+    emit(GeneratedGatoIdSaving());
     await delay(true);
 
     try {

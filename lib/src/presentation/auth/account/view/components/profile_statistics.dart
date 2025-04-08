@@ -32,7 +32,7 @@ class ProfileStatistics extends StatelessWidget {
         const Divider(thickness: 0.75, height: 0),
         GAP_H4,
         Text("Gato Id generated: ${stat.generatedCount}"),
-        Text("Gato Id saved:  ${stat.savedCount}"),
+        Text("Gato Id saved:  ${stat.savedImages.length}"),
       ],
     );
   }

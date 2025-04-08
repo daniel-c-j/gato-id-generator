@@ -82,7 +82,12 @@ class WrongCredentialsException extends AppException {
   const WrongCredentialsException() : super(-7, 'wrong_credentials');
 }
 
-class SaveImageFailedException extends AppException {
-  const SaveImageFailedException() : super(-8, 'save_image_failed');
+class AccessNotGrantedException extends AppException {
+  const AccessNotGrantedException() : super(-8, 'access_not_granted');
 }
+
+class SaveImageFailedException extends AppException {
+  const SaveImageFailedException() : super(-9, 'save_image_failed');
+}
+
 // TODO expand this, and figure the messageKey to messageStr, and support for localization.

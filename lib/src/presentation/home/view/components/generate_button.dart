@@ -33,8 +33,8 @@ class HomeGenerateButton extends StatelessWidget {
             left: 0,
             child: CustomButton(
               msg: "Generate ID",
-              onTap: () {
-                context.pushNamed(AppRoute.generate.name);
+              onTap: () async {
+                await context.pushNamed(AppRoute.generate.name);
               },
               elevation: 3,
               borderRadius: BorderRadius.only(

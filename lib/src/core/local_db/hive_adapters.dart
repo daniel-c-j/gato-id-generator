@@ -1,4 +1,4 @@
-import 'package:gato_id_generator/src/data/model/gato_id.dart';
+import 'package:gato_id_generator/src/data/model/gato_id_content.dart';
 import 'package:hive_ce/hive.dart';
 
 import '../../data/model/app_user/app_user.dart';
@@ -24,7 +24,7 @@ extension HiveRegistrar on HiveInterface {
     // Specific for localAuthRepo only
     await Hive.openBox<LocalAppUser>(DBKeys.USER_BOX); // TODO be utilizing encryption shceme
 
-    await Hive.openBox<String>(DBKeys.IMAGE_GENERATED_BOX);
-    await Hive.openBox<int>(DBKeys.STATS_GENERATED_BOX);
+    await Hive.openBox<String>(DBKeys.SAVED_ID_BOX);
+    await Hive.openBox<int>(DBKeys.GENERATED_ID_COUNT_BOX);
   }
 }

@@ -11,6 +11,7 @@ import 'package:gato_id_generator/src/presentation/auth/account/view/profile_scr
 import 'package:gato_id_generator/src/presentation/auth/sign_in/bloc/email_pass_sign_in_bloc.dart';
 import 'package:gato_id_generator/src/presentation/auth/sign_in/view/sign_in_screen.dart';
 import 'package:gato_id_generator/src/presentation/generate/bloc/generated_gato_id_bloc.dart';
+import 'package:gato_id_generator/src/presentation/generate/bloc/image_load_cubit.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/repository/version_repo.dart';
@@ -92,12 +93,17 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
               final saveGenerateIdUsecase = SaveGenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
               final getGeneratedIdStatsUseCase = GetGenerateIdStatsUsecase(getIt<GenerateIdRepo>(), authRepo);
 
-              return BlocProvider(
-                create: (context) => GeneratedGatoIdBloc(
-                  generateIdUseCase,
-                  saveGenerateIdUsecase,
-                  getGeneratedIdStatsUseCase,
-                ),
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => GeneratedGatoIdBloc(
+                      generateIdUseCase,
+                      saveGenerateIdUsecase,
+                      getGeneratedIdStatsUseCase,
+                    ),
+                  ),
+                  BlocProvider(create: (context) => ImageIsLoadedCubit())
+                ],
                 child: const HudOverlay(child: GenerateScreen()),
               );
             },

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:gato_id_generator/src/data/model/gato_id.dart';
+import 'package:gato_id_generator/src/data/model/gato_id_content.dart';
 import 'package:gato_id_generator/src/data/model/gato_id_stat.dart';
 import 'package:gato_id_generator/src/data/repository/generate_repo.dart';
 import 'package:gato_id_generator/src/domain/repository/auth_repo.dart';

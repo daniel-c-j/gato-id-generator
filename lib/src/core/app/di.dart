@@ -43,7 +43,8 @@ Future<void> initCoreAppModule() async {
   getIt.registerLazySingleton<VersionCheckRepo>(() => RemoteVersionCheckRepo(getIt<ApiService>()));
 
   // Generate ID feature
-  final generatedImageBox = Hive.box<String>(DBKeys.IMAGE_GENERATED_BOX);
-  final generatedStats = Hive.box<int>(DBKeys.STATS_GENERATED_BOX);
-  getIt.registerLazySingleton<GenerateIdRepo>(() => GenerateIdRepo(generatedImageBox, generatedStats));
+  // TODO local & remote repo
+  final savedId = Hive.box<String>(DBKeys.SAVED_ID_BOX);
+  final generatedId = Hive.box<int>(DBKeys.GENERATED_ID_COUNT_BOX);
+  getIt.registerLazySingleton<GenerateIdRepo>(() => GenerateIdRepo(savedId, generatedId));
 }

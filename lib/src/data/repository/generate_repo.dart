@@ -1,22 +1,23 @@
-import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:gal/gal.dart';
 import 'package:gato_id_generator/src/core/constants/local_db_constants.dart';
-import 'package:gato_id_generator/src/data/model/gato_id.dart';
+import 'package:gato_id_generator/src/core/exceptions/app_exception.dart';
+import 'package:gato_id_generator/src/data/model/gato_id_content.dart';
 import 'package:faker/faker.dart';
 import 'package:gato_id_generator/src/data/model/gato_id_stat.dart';
+import 'package:gato_id_generator/src/util/date_format.dart';
 import 'package:hive_ce/hive.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'dart:math';
 
 import '../../core/_core.dart';
 
 // TODO abstraction
 class GenerateIdRepo {
-  GenerateIdRepo(this._generatedImage, this._generatedStats);
-  final Box<String> _generatedImage;
-  final Box<int> _generatedStats;
+  GenerateIdRepo(this._savedId, this._generatedIdCount);
+  final Box<String> _savedId;
+  final Box<int> _generatedIdCount;
 
   // * Will not use singleton nor dependency Injection for now.
   final _faker = Faker();
@@ -33,9 +34,29 @@ class GenerateIdRepo {
     );
   }
 
-  List<String> getAllGeneratedImages({required String uid}) => _generatedImage.values.where((String value) {
-        return value.contains(uid);
-      }).toList();
+  List<String> getAllGeneratedImages({required String uid}) {
+    final keys = getAllGeneratedImageKeysOf(uid: uid);
+    final List<String> tempList = [];
+
+    for (String key in keys) {
+      final value = _savedId.get(key);
+      if (value != null) tempList.add(value);
+    }
+
+    return tempList;
+  }
+
+  /// Filter the keys that is related with the current uid.
+  List<String> getAllGeneratedImageKeysOf({required String uid}) {
+    final keys = _savedId.keys.toList();
+    return [
+      for (var key in keys)
+        if (key is String && key.contains(uid)) key
+    ];
+  }
+
+  /// Returns individual saved card image.
+  String? getSavedImage(String key) => _savedId.get(key);
 
   /// Will save the current Gato Id card as an image.
   ///
@@ -43,76 +64,36 @@ class GenerateIdRepo {
   /// [value] is the image data, and
   /// [uid] is the current authenticated user id.
   Future<void> saveGenerated(String uuid, Uint8List value, {required String uid}) async {
-    final savedKey = "${uid}_$uuid";
+    if (await Permission.storage.request().isGranted) {
+      final savedKey = "${uid}_$uuid";
+      final result = await ImageGallerySaverPlus.saveImage(
+        value,
+        name: "${DateTime.now().formatTime}-$uuid-${uid.replaceFirst("@", "")}",
+      );
+      return await _savedId.put(savedKey, result["filePath"]);
+    }
 
-    // Check for access permission
-    final hasAccess = await Gal.hasAccess();
-    // Request access permission
-    if (!hasAccess) await Gal.requestAccess();
-    await Gal.putImageBytes(value, name: uuid);
-
-    final path = "";
-    return await _generatedImage.put(savedKey, path);
+    throw const AccessNotGrantedException();
   }
 
   /// Get the latest [GatoIdStat].
   GatoIdStat getLatestStats({required String uid}) {
     final generatedCount = _getGeneratedCountStats(uid);
-    final savedCount = getAllGeneratedImages(uid: uid).length;
-    return GatoIdStat(generatedCount: generatedCount, savedCount: savedCount);
+    final savedImages = getAllGeneratedImages(uid: uid);
+    savedImages.sort();
+    return GatoIdStat(generatedCount: generatedCount, savedImages: savedImages);
   }
 
-  String _getGeneratedCountKey(String uid) => "${uid}_${DBKeys.STATS_GENERATED}";
+  /// Get generated count key according to the current authenticated user.
+  String _getGeneratedCountKey(String uid) => "${uid}_${DBKeys.GENERATED_ID_COUNT}";
 
   /// Track how many times user generate gato ID.
   Future<void> incrementAndSaveStats({required String uid}) async {
-    return await _generatedStats.put(_getGeneratedCountKey(uid), _getGeneratedCountStats(uid) + 1);
+    return await _generatedIdCount.put(_getGeneratedCountKey(uid), _getGeneratedCountStats(uid) + 1);
   }
 
   /// Get the latest generated count number according with the given user id.
-  int _getGeneratedCountStats(String uid) => _generatedStats.get(_getGeneratedCountKey(uid)) ?? 0;
-
-  Future<String> _getPossiblePaths() async {
-    List<String> paths = [];
-
-    String basePath;
-
-    // Get the external storage directory for pictures
-
-    Directory? externalDir = await getExternalStorageDirectory();
-
-    if (externalDir != null) {
-      basePath = '${externalDir.path}/Pictures/';
-
-      // Check for existing files
-
-      for (int i = 0;; i++) {
-        String filePath = '$basePath$name${i == 0 ? '' : i}$extension';
-
-        if (await File(filePath).exists()) {
-          paths.add(filePath);
-        } else {
-          // Stop when we find a non-existing file
-
-          paths.add(filePath);
-
-          break;
-        }
-      }
-    }
-
-    // Get the internal storage directory for pictures
-
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-
-    basePath = '${appDocDir.path}/Pictures/';
-
-    // Add the file path directly
-
-    paths.add('$basePath$name$extension');
-
-    return paths;
-  }
+  int _getGeneratedCountStats(String uid) => _generatedIdCount.get(_getGeneratedCountKey(uid)) ?? 0;
 
   /// Generate string ID in 16 characters-length format, such as:
   /// 0000-0000-0000-0000, and utilizes hex digits.

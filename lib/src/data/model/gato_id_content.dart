@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+/// Generated card id content.
 class GatoId {
   const GatoId({
     required this.uid,
