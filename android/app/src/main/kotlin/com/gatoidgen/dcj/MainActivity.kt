@@ -1,4 +1,4 @@
-package com.gato_id_gen.dcj
+package com.gatoidgen.dcj
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -100,6 +100,9 @@ class GeneratedHistory extends StatelessWidget {
                                   child: (filePath.contains("http"))
                                       ? CachedNetworkImage(
                                           imageUrl: filePath,
+                                          placeholder: (_, __) => const Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
                                           fit: BoxFit.fitWidth,
                                         )
                                       : Image.file(

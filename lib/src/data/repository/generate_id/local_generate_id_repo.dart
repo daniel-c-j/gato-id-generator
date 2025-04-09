@@ -36,7 +36,7 @@ class LocalGenerateIdRepo implements GenerateIdRepo {
   }
 
   @override
-  List<Map<String, String>> getAllGeneratedImages({required String uid}) {
+  List<Map<String, dynamic>> getAllGeneratedImages({required String uid}) {
     final keys = _getAllGeneratedImageKeysOf(uid: uid);
     final List<Map<String, String>> tempList = [];
 

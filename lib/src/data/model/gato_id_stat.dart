@@ -11,7 +11,7 @@ class GatoIdStat {
 
   /// Expectedly in this format: `{imageKey: imagePath}`
   /// imagePath can be either local path or remote url.
-  final List<Map<String, String>> savedImages;
+  final List<Map<String, dynamic>> savedImages;
 
   @override
   bool operator ==(covariant GatoIdStat other) {

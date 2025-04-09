@@ -36,12 +36,23 @@ class RemoteGenerateIdRepo implements GenerateIdRepo {
   }
 
   @override
-  Future<List<Map<String, String>>> getAllGeneratedImages({required String uid}) async {
-    final QuerySnapshot images = await _firestore.collection("users/$uid/images").get();
+  Future<List<Map<String, dynamic>>> getAllGeneratedImages({required String uid}) async {
+    try {
+      final QuerySnapshot images = await _firestore.collection('users').doc(uid).collection('image').get();
 
-    // Assuming the data is in the format {String: String}
-    return [for (var imageData in images.docs) (imageData.data() as Map<String, String>)];
+      // Assuming the data is in the format {String: String}
+      final tempList = <Map<String, dynamic>>[];
+      for (var imageData in images.docs) {
+        final data = imageData.data();
+        if (data is Map<String, dynamic>) tempList.add(data);
+      }
+
+      return tempList;
+    } catch (e) {
+      return [];
+    }
   }
+  // TODO delete
 
   @override
   FutureOr<GatoIdStat> getLatestStats({required String uid}) async {
@@ -55,18 +66,20 @@ class RemoteGenerateIdRepo implements GenerateIdRepo {
     );
   }
 
-  String statsDoc(uid) => "users/$uid/stats";
-
   @override
   Future<void> incrementAndSaveStats({required String uid}) async {
-    await _firestore.doc(statsDoc(uid)).set({
+    await _firestore.collection('users').doc(uid).set({
       DBKeys.GENERATED_ID_COUNT: await _getGeneratedCountStats(uid) + 1,
     });
   }
 
   Future<int> _getGeneratedCountStats(String uid) async {
-    final docStats = await _firestore.doc(statsDoc(uid)).get();
-    return docStats[DBKeys.GENERATED_ID_COUNT];
+    try {
+      final docStats = await _firestore.collection('users').doc(uid).get();
+      return docStats.data()?[DBKeys.GENERATED_ID_COUNT] ?? 0;
+    } catch (e) {
+      return 0;
+    }
   }
 
   @override
@@ -90,7 +103,12 @@ class RemoteGenerateIdRepo implements GenerateIdRepo {
       );
 
       // Post image file's url
-      await _firestore.collection("users/$uid/images").add({formattedName: imageUrl});
+      return await _firestore
+          .collection('users')
+          .doc(uid)
+          .collection('image')
+          .doc()
+          .set({formattedName: imageUrl.data});
     }
 
     throw const AccessNotGrantedException();

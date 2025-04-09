@@ -1,27 +1,18 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:gato_id_generator/firebase_options.dart';
 
 import 'src/core/_core.dart';
 
-// TODO Read this.
-// ! Do note, that while this is a template, that does not mean it can be used right away, do make sure the plugins
-// ! configuration for specific natives. Such as for Dio, for Android to provide the xml for internet permission.
 Future<void> main() async {
   // Ensuring widgets binding at startup.
   final WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // Summoning splash screen
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  // Initializing firebase.
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   // Creating app startup instance for further initialization.
   const appStartup = AppStartup();
   await appStartup.initializeApp();
-  // Run with remote backend.
-  await appStartup.runWithRemote();
+  // Run with local backend.
+  await appStartup.runWithLocal();
 
   // Entry point
   final root = await appStartup.createRootWidget();
