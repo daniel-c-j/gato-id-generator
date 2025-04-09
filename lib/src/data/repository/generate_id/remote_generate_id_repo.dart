@@ -52,7 +52,11 @@ class RemoteGenerateIdRepo implements GenerateIdRepo {
       return [];
     }
   }
-  // TODO delete
+
+  @override
+  Future<void> delete({required String uid, required String uuid}) async {
+    return await _firestore.collection('users').doc(uid).collection('image').doc(uuid).delete();
+  }
 
   @override
   FutureOr<GatoIdStat> getLatestStats({required String uid}) async {
@@ -107,7 +111,7 @@ class RemoteGenerateIdRepo implements GenerateIdRepo {
           .collection('users')
           .doc(uid)
           .collection('image')
-          .doc()
+          .doc(uuid)
           .set({formattedName: imageUrl.data});
     }
 

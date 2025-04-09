@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gato_id_generator/src/core/exceptions/app_exception.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/generic_snackbar.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/hud_overlay.dart';
 import 'package:gato_id_generator/src/presentation/generate/bloc/generated_gato_id_bloc.dart';
+import 'package:gato_id_generator/src/util/delay.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 
 import '../../../../core/_core.dart';
@@ -45,7 +47,9 @@ class GenerateButton extends StatelessWidget {
           bloc.add(
             GenerateGatoId(
               onSuccess: () {},
-              onError: (e, st) => showErrorSnackBar(context, error: e),
+              onError: (e, st) {
+                showErrorSnackBar(context, error: e);
+              },
             ),
           );
         },
@@ -76,7 +80,10 @@ class SaveGeneratedButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         gradient: LinearGradient(
-          colors: (bloc.currentGatoId == null || bloc.state is GeneratedGatoIdLoading || !imageIsLoaded)
+          colors: (!imageIsLoaded ||
+                  (bloc.currentGatoId == null ||
+                      bloc.state is GeneratedGatoIdLoading ||
+                      bloc.state is GeneratedGatoIdSaving))
               ? const [
                   Color.fromARGB(120, 15, 217, 119),
                   Color.fromARGB(120, 36, 150, 40),
@@ -90,9 +97,9 @@ class SaveGeneratedButton extends StatelessWidget {
       child: CustomButton(
         msg: "Save",
         onTap: () async {
+          if (!imageIsLoaded) return;
           if (bloc.currentGatoId == null) return; // Does nothing if yet generate a thing.
           if (bloc.state is GeneratedGatoIdSaving || bloc.state is GeneratedGatoIdLoading) return;
-          if (!imageIsLoaded) return;
 
           context.read<HudControllerCubit>().show();
           final value = await controller.capture();
@@ -104,6 +111,13 @@ class SaveGeneratedButton extends StatelessWidget {
             SaveGeneratedGatoId(
               value: value,
               onSuccess: () {
+                // Indicating that the card is saved, and the button should not be enabled until
+                // generating new one.
+                SchedulerBinding.instance.addPostFrameCallback((_) async {
+                  await delay(true, 100);
+                  context.read<ImageIsLoadedCubit>().value = false;
+                });
+
                 context.read<HudControllerCubit>().hide();
               },
               onError: (e, st) {

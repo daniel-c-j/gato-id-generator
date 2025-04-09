@@ -24,3 +24,15 @@ class SaveGeneratedGatoId implements GeneratedGatoIdEvent {
   final VoidCallback onSuccess;
   final void Function(Object? e, StackTrace st) onError;
 }
+
+class DeleteGeneratedGatoId implements GeneratedGatoIdEvent {
+  DeleteGeneratedGatoId({
+    required this.id,
+    required this.onSuccess,
+    required this.onError,
+  });
+
+  final String id;
+  final VoidCallback onSuccess;
+  final void Function(Object? e, StackTrace st) onError;
+}

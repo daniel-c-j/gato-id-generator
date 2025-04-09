@@ -10,6 +10,8 @@ abstract class GenerateIdRepo {
 
   Future<void> saveGenerated(String uuid, Uint8List value, {required String uid});
 
+  Future<void> delete({required String uid, required String uuid});
+
   FutureOr<GatoIdStat> getLatestStats({required String uid});
 
   Future<void> incrementAndSaveStats({required String uid});

@@ -14,15 +14,18 @@ part 'generated_gato_id_state.dart';
 class GeneratedGatoIdBloc extends Bloc<GeneratedGatoIdEvent, GeneratedGatoIdState> {
   final GenerateIdUsecase _generateIdUsecase;
   final SaveGenerateIdUsecase _saveGenerateIdUsecase;
+  final DeleteIdUsecase _deleteIdUsecase;
   final GetGenerateIdStatsUsecase _getGenerateIdStatsUsecase;
 
   GeneratedGatoIdBloc(
     this._generateIdUsecase,
     this._saveGenerateIdUsecase,
+    this._deleteIdUsecase,
     this._getGenerateIdStatsUsecase,
   ) : super(GeneratedGatoIdIdle()) {
     on<GenerateGatoId>(_generate);
     on<SaveGeneratedGatoId>(_save);
+    on<DeleteGeneratedGatoId>(_delete);
   }
 
   GatoId? _gatoId;
@@ -50,6 +53,21 @@ class GeneratedGatoIdBloc extends Bloc<GeneratedGatoIdEvent, GeneratedGatoIdStat
 
     try {
       await _saveGenerateIdUsecase.execute(currentGatoId!, event.value);
+      event.onSuccess();
+
+      emit(GeneratedGatoIdIdle());
+    } catch (e, st) {
+      event.onError(e, st);
+      emit(GeneratedGatoIdError());
+    }
+  }
+
+  Future<void> _delete(DeleteGeneratedGatoId event, Emitter<GeneratedGatoIdState> emit) async {
+    emit(GeneratedGatoIdDeleting());
+    await delay(true);
+
+    try {
+      await _deleteIdUsecase.execute(event.id);
       event.onSuccess();
 
       emit(GeneratedGatoIdIdle());

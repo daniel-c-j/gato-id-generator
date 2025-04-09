@@ -27,6 +27,16 @@ class SaveGenerateIdUsecase {
   }
 }
 
+class DeleteIdUsecase {
+  const DeleteIdUsecase(this._generateIdrepository, this._authRepo);
+  final GenerateIdRepo _generateIdrepository;
+  final AuthRepository _authRepo;
+
+  Future<void> execute(String uuid) async {
+    await _generateIdrepository.delete(uid: _authRepo.currentUser!.uid, uuid: uuid);
+  }
+}
+
 class GetGenerateIdStatsUsecase {
   const GetGenerateIdStatsUsecase(this._generateIdrepository, this._authRepo);
   final GenerateIdRepo _generateIdrepository;

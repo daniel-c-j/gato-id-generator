@@ -45,13 +45,13 @@ class GatoIdImage extends StatelessWidget {
       width: kScreenWidth(context) * 0.325,
       child: BlocBuilder<GeneratedGatoIdBloc, GeneratedGatoIdState>(
         builder: (context, state) {
-          if (state is GeneratedGatoIdLoading) return const SizedBox.shrink();
+          if (state is GeneratedGatoIdLoading) {
+            imageUuid = getIt<Random>().nextDouble().toString();
+            return const SizedBox.shrink();
+          }
 
           // Will be renewed each state update/screen enters.
           final bloc = context.watch<GeneratedGatoIdBloc>();
-          if (state is! GeneratedGatoIdSaving) {
-            imageUuid = getIt<Random>().nextDouble().toString();
-          }
 
           return Stack(
             children: [

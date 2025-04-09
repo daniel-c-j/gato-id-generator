@@ -23,11 +23,7 @@ class GeneratedHistory extends StatelessWidget {
     return FutureBuilder(
       future: gatoStat,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        final stat = snapshot.data as GatoIdStat;
+        final stat = snapshot.data ?? const GatoIdStat(generatedCount: 0, savedImages: []);
         final savedImagesCount = stat.savedImages.length;
 
         return Column(
@@ -66,7 +62,7 @@ class GeneratedHistory extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: savedImagesCount,
                 padding: EdgeInsets.zero,
-                itemBuilder: (context, index) {
+                itemBuilder: (ctx, index) {
                   final imageData = stat.savedImages[index].entries.first;
                   final fileName = imageData.key;
 
@@ -74,10 +70,19 @@ class GeneratedHistory extends StatelessWidget {
                   final id = fileName.substring(11, 30);
 
                   return Dismissible(
-                    key: Key(fileName),
-                    confirmDismiss: (direction) {
-                      showUnimplementedSnackBar(context);
-                      return Future.value(false);
+                    key: Key("${snapshot.connectionState == ConnectionState.waiting}"),
+                    onDismissed: (_) {
+                      context.read<GeneratedGatoIdBloc>().add(
+                            DeleteGeneratedGatoId(
+                              id: id,
+                              onSuccess: () {
+                                showTextSnackBar(context, txt: "$id has successfully deleted.");
+                              },
+                              onError: (e, st) {
+                                showErrorSnackBar(context, error: e);
+                              },
+                            ),
+                          );
                     },
                     child: SizedBox(
                       height: listTileHeight,

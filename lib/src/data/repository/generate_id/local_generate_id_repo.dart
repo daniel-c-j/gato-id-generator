@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:collection/collection.dart';
 import 'package:gato_id_generator/src/core/constants/local_db_constants.dart';
 import 'package:gato_id_generator/src/core/exceptions/app_exception.dart';
 import 'package:gato_id_generator/src/data/model/gato_id_content.dart';
@@ -72,6 +73,13 @@ class LocalGenerateIdRepo implements GenerateIdRepo {
     }
 
     throw const AccessNotGrantedException();
+  }
+
+  @override
+  Future<void> delete({required String uid, required String uuid}) async {
+    final keys = _getAllGeneratedImageKeysOf(uid: uid);
+    final key = keys.firstWhereOrNull((value) => value.contains(uuid));
+    return await _savedId.delete(key.toString());
   }
 
   /// Get the latest [GatoIdStat].

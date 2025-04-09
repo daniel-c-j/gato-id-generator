@@ -91,6 +91,7 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
             builder: (context, state) {
               final generateIdUseCase = GenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
               final saveGenerateIdUsecase = SaveGenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
+              final deleteIdUsecase = DeleteIdUsecase(getIt<GenerateIdRepo>(), authRepo);
               final getGeneratedIdStatsUseCase = GetGenerateIdStatsUsecase(getIt<GenerateIdRepo>(), authRepo);
 
               return MultiBlocProvider(
@@ -99,6 +100,7 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
                     create: (context) => GeneratedGatoIdBloc(
                       generateIdUseCase,
                       saveGenerateIdUsecase,
+                      deleteIdUsecase,
                       getGeneratedIdStatsUseCase,
                     ),
                   ),
@@ -135,6 +137,7 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
               final signOutUseCase = SignOutUsecase(authRepo);
 
               final generateIdUseCase = GenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
+              final deleteIdUsecase = DeleteIdUsecase(getIt<GenerateIdRepo>(), authRepo);
               final saveGenerateIdUsecase = SaveGenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
               final getGeneratedIdStatsUseCase = GetGenerateIdStatsUsecase(getIt<GenerateIdRepo>(), authRepo);
 
@@ -151,6 +154,7 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
                     create: (context) => GeneratedGatoIdBloc(
                       generateIdUseCase,
                       saveGenerateIdUsecase,
+                      deleteIdUsecase,
                       getGeneratedIdStatsUseCase,
                     ),
                   ),
