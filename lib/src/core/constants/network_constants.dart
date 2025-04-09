@@ -17,12 +17,13 @@ final class NetConsts {
 
   // Generate ID image
   static late final String URL_GATO_IMG;
+  static late final String URL_SAVED_GATO_IMG_API;
 
   /// Lazy Initialization exists for the ease of testing to manipulate certain properties of [NetConsts].
   static void init() {
-// TODO INSERT
     URL_CHECK_VERSION = "";
     URL_GET_UPDATED_VERSION = "";
     URL_GATO_IMG = "https://cataas.com/cat";
+    URL_SAVED_GATO_IMG_API = "https://catbox.moe/user/api.php";
   }
 }

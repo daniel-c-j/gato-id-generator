@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gato_id_generator/src/data/repository/generate_id/remote_generate_id_repo.dart';
 import 'package:gato_id_generator/src/domain/repository/auth_repo.dart';
+import 'package:gato_id_generator/src/domain/repository/generate_id_repo.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/repository/auth/remote_auth_repo.dart';
@@ -21,12 +24,15 @@ extension AppStartupRemote on AppStartup {
     // Route
     // ! Must be after authRepo
     getIt.registerSingleton<GoRouter>(goRouterInstance(getIt<AuthRepository>()));
+
+    // Generate ID feature
+    final firestore = FirebaseFirestore.instance;
+    getIt.registerLazySingleton<GenerateIdRepo>(() => RemoteGenerateIdRepo(firestore, getIt<ApiService>()));
   }
 
   // Future<void> setupFirebaseEmulators() async {
   //   await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   //   FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-  //   await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
   //   // * When running on the emulator, disable persistence to avoid discrepancies
   //   // * between the emulated database and local caches. More info here:
   //   // * https://firebase.google.com/docs/emulator-suite/connect_firestore#instrument_your_app_to_talk_to_the_emulators

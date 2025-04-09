@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:gato_id_generator/src/data/model/gato_id_content.dart';
 import 'package:gato_id_generator/src/data/model/gato_id_stat.dart';
-import 'package:gato_id_generator/src/data/repository/generate_repo.dart';
 import 'package:gato_id_generator/src/domain/repository/auth_repo.dart';
+import 'package:gato_id_generator/src/domain/repository/generate_id_repo.dart';
 
 class GenerateIdUsecase {
   const GenerateIdUsecase(this._generateIdrepository, this._authRepo);
@@ -32,7 +32,7 @@ class GetGenerateIdStatsUsecase {
   final GenerateIdRepo _generateIdrepository;
   final AuthRepository _authRepo;
 
-  GatoIdStat execute() {
+  Future<GatoIdStat> execute() async {
     return _generateIdrepository.getLatestStats(uid: _authRepo.currentUser!.uid);
   }
 }

@@ -1,9 +1,7 @@
 import 'dart:math';
 
-import 'package:gato_id_generator/src/core/constants/local_db_constants.dart';
-import 'package:gato_id_generator/src/data/repository/generate_repo.dart';
+import 'package:faker/faker.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_ce/hive.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import '../../data/repository/remote_version_repo.dart';
@@ -42,9 +40,6 @@ Future<void> initCoreAppModule() async {
   // * Using lazySingleton since it maintains no state, and should exist only when it's called.
   getIt.registerLazySingleton<VersionCheckRepo>(() => RemoteVersionCheckRepo(getIt<ApiService>()));
 
-  // Generate ID feature
-  // TODO local & remote repo
-  final savedId = Hive.box<String>(DBKeys.SAVED_ID_BOX);
-  final generatedId = Hive.box<int>(DBKeys.GENERATED_ID_COUNT_BOX);
-  getIt.registerLazySingleton<GenerateIdRepo>(() => GenerateIdRepo(savedId, generatedId));
+  // Generate id content feature
+  getIt.registerLazySingleton(() => Faker());
 }

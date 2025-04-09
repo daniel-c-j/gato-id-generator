@@ -10,7 +10,7 @@ final class AppInfo {
   // TODO recheck whether README, Github Description, and Pubspec.yaml are all matching with title and desc.
   // ! These two are crucial and should not depend on the packageInfo or any changing operations.
   static const String TITLE = "Gato Id Generator";
-  static const String DESCRIPTION = "Generate business card... But for cats!";
+  static const String DESCRIPTION = "Generate id card... But for cats!";
 
   // ! Must be initialized first before being used.
   static late String _CURRENT_VERSION;

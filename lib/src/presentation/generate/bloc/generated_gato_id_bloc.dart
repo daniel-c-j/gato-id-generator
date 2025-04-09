@@ -27,7 +27,7 @@ class GeneratedGatoIdBloc extends Bloc<GeneratedGatoIdEvent, GeneratedGatoIdStat
 
   GatoId? _gatoId;
   GatoId? get currentGatoId => _gatoId;
-  GatoIdStat get latestStat => _getGenerateIdStatsUsecase.execute();
+  Future<GatoIdStat> get latestStat => _getGenerateIdStatsUsecase.execute();
 
   Future<void> _generate(GenerateGatoId event, Emitter<GeneratedGatoIdState> emit) async {
     emit(GeneratedGatoIdLoading());

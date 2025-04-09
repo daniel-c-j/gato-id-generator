@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,9 +28,10 @@ class ThemeIconButton extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       buttonColor: Colors.transparent,
       borderRadius: BorderRadius.circular(60),
-      onTap: () {
+      onTap: () async {
         // Hive.deleteBoxFromDisk(DBKeys.LOCAL_USER_BOX);
         // getIt<AuthRepository>().signOut();
+
         final value = (mode == Brightness.light) ? Brightness.dark : Brightness.light;
         context.read<PlatformBrightnessBloc>().add(BrightnessChange(to: value));
       },

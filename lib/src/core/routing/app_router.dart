@@ -2,8 +2,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gato_id_generator/src/data/repository/generate_repo.dart';
 import 'package:gato_id_generator/src/domain/repository/auth_repo.dart';
+import 'package:gato_id_generator/src/domain/repository/generate_id_repo.dart';
 import 'package:gato_id_generator/src/domain/use_case/auth_usecase.dart';
 import 'package:gato_id_generator/src/domain/use_case/generate_id_usecase.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/bloc/profile_bloc.dart';
