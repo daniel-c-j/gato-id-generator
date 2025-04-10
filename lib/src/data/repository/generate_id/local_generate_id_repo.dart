@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
@@ -69,7 +70,13 @@ class LocalGenerateIdRepo implements GenerateIdRepo {
       final savedKey = "${DateTime.now().formatTime}-$uuid-$uid";
       final imageName = "${DateTime.now().formatTime}-$uuid-${uid.replaceFirst("@", "")}";
       final result = await ImageGallerySaverPlus.saveImage(value, name: imageName);
-      return await _savedId.put(savedKey, result["filePath"]);
+
+      // Renaming output image file.
+      final oldPath = result["filePath"].replaceFirst("file://", "");
+      final file = File(oldPath);
+      final newPath = oldPath.replaceFirst(".jpg", ".png");
+      await file.rename(newPath);
+      return await _savedId.put(savedKey, newPath);
     }
 
     throw const AccessNotGrantedException();

@@ -1,4 +1,3 @@
-// TODO use case is just like APPLICATION/SRERVICE class where it depends on two or more repo. This time below
 // is an exception just to show how it works.
 import '../../data/model/version_check.dart';
 import '../repository/version_repo.dart';

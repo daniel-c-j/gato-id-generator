@@ -11,9 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Home screen design.
 - Generated screen design.
-- Authentication design & Mechanism.`
+- Authentication design & Mechanism.
 
-## [0.1.0] - 2025-xx-xx
+## [0.1.0] - 2025-04-04
 
 ### Added
 

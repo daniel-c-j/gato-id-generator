@@ -70,6 +70,7 @@ class GeneratedHistory extends StatelessWidget {
                   final id = fileName.substring(11, 30);
 
                   return Dismissible(
+                    // To change key when loading
                     key: Key("${snapshot.connectionState == ConnectionState.waiting}"),
                     onDismissed: (_) {
                       context.read<GeneratedGatoIdBloc>().add(
@@ -95,7 +96,6 @@ class GeneratedHistory extends StatelessWidget {
                             context: context,
                             builder: (context) {
                               final filePath = imageData.value;
-                              final path = filePath.replaceFirst("file://", "");
                               return GestureDetector(
                                 onTap: () {
                                   context.pop();
@@ -111,7 +111,7 @@ class GeneratedHistory extends StatelessWidget {
                                           fit: BoxFit.fitWidth,
                                         )
                                       : Image.file(
-                                          File(path),
+                                          File(filePath),
                                           fit: BoxFit.fitWidth,
                                         ),
                                 ),

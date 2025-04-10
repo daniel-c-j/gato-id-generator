@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -97,13 +98,17 @@ class RemoteGenerateIdRepo implements GenerateIdRepo {
         name: "$formattedName-${uid.replaceFirst("@", "")}",
       );
 
+      // Renaming output image file.
+      final oldPath = result["filePath"].replaceFirst("file://", "");
+      final file = File(oldPath);
+      final newPath = oldPath.replaceFirst(".jpg", ".png");
+      await file.rename(newPath);
+
       // Post image file
       final imageUrl = await _apiService.post(
         url: NetConsts.URL_SAVED_GATO_IMG_API,
-        data: FormData.fromMap({
-          "reqtype": "fileupload",
-          "fileToUpload": await MultipartFile.fromFile(result["filePath"].replaceFirst("file://", ""))
-        }),
+        data: FormData.fromMap(
+            {"reqtype": "fileupload", "fileToUpload": await MultipartFile.fromFile(newPath)}),
       );
 
       // Post image file's url

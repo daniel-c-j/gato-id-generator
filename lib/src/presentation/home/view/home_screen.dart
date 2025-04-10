@@ -2,7 +2,6 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gato_id_generator/src/core/_core.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/bloc/profile_bloc.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/view/components/profile_icon_button.dart';
 import 'package:gato_id_generator/src/presentation/home/view/components/theme_icon_button.dart';
@@ -81,11 +80,31 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               GAP_H12,
-              const GatoLine(),
-              GAP_H12,
-              const HomeGenerateButton(),
-              GAP_H12,
-              const GatoLine(autoStartAfter: Duration(milliseconds: 800)),
+              const Stack(
+                children: [
+                  Column(
+                    children: [
+                      GatoLine(),
+                      GAP_H12,
+                      GatoLine(reverse: true, autoStartAfter: Duration(milliseconds: 1200)),
+                      GAP_H12,
+                      GatoLine(autoStartAfter: Duration(milliseconds: 1200)),
+                    ],
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 135.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          HomeGenerateButton(enabled: true, type: AnimalType.cat),
+                          HomeGenerateButton(enabled: false, type: AnimalType.dog),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               GAP_H12,
             ],
           ),
@@ -96,37 +115,40 @@ class HomeScreen extends StatelessWidget {
 }
 
 class GatoLine extends StatelessWidget {
-  const GatoLine({super.key, this.autoStartAfter, this.color});
+  const GatoLine({super.key, this.autoStartAfter, this.color, this.reverse = false});
 
   final Duration? autoStartAfter;
   final Color? color;
-// TODO replace this with cat result picture or meme.
+  final bool reverse;
+
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color ?? kColor(context).surfaceDim,
-        gradient: LinearGradient(
-          colors: (context.watch<PlatformBrightnessBloc>().state == Brightness.dark)
-              ? [
-                  PRIMARY_COLOR_D0,
-                  PRIMARY_COLOR_D1,
-                  PRIMARY_COLOR_D2,
-                ]
-              : [
-                  PRIMARY_COLOR_L0,
-                  PRIMARY_COLOR_L1,
-                  PRIMARY_COLOR_L2,
-                ],
-        ),
-      ),
-      child: SizedBox(
-        height: 20,
-        child: Marqueer(
-          interaction: false,
-          autoStart: true,
-          autoStartAfter: autoStartAfter ?? Duration.zero,
-          child: const Text(" GATO "),
+    final images = [
+      for (var i = 0; i < 8; i++)
+        Padding(
+          padding: const EdgeInsets.only(right: 12.0),
+          child: Image.asset(
+            "./assets/images/id/0${i + 1}.png",
+            width: 240,
+            height: 150,
+            opacity: const AlwaysStoppedAnimation(0.6),
+          ),
+        )
+    ];
+    // To make the images appear randomly.
+    images.shuffle();
+
+    return SizedBox(
+      height: 150,
+      child: Marqueer(
+        interaction: false,
+        autoStart: true,
+        infinity: true,
+        direction: (reverse) ? MarqueerDirection.rtl : MarqueerDirection.ltr,
+        autoStartAfter: autoStartAfter ?? Duration.zero,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: images,
         ),
       ),
     );

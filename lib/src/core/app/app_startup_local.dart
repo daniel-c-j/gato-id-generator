@@ -9,7 +9,6 @@ import 'package:hive_ce/hive.dart';
 import '../../domain/repository/auth_repo.dart';
 import '../_core.dart';
 import '../routing/app_router.dart';
-// TODO
 
 /// Extension methods specific for the "local" project configuration
 extension AppStartupLocal on AppStartup {

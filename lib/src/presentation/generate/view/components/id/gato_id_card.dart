@@ -37,7 +37,25 @@ class GatoIdCard extends StatelessWidget {
               Expanded(
                 child: Stack(
                   children: [
-                    // TODO app logo as the bg illustration for the card.
+                    // Watermark
+                    BlocBuilder<GeneratedGatoIdBloc, GeneratedGatoIdState>(
+                      builder: (context, state) {
+                        if (state is GeneratedGatoIdLoading) return const SizedBox.shrink();
+
+                        return Positioned(
+                          right: 0,
+                          bottom: 10,
+                          child: Image.asset(
+                            "assets/images/icon/icon.png",
+                            opacity: const AlwaysStoppedAnimation(0.3),
+                            width: 135,
+                            height: 135,
+                            color: kColor(context).inverseSurface.withAlpha(200),
+                          ),
+                        );
+                      },
+                    ),
+                    // Real content
                     const Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
