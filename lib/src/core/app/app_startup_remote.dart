@@ -28,7 +28,6 @@ extension AppStartupRemote on AppStartup {
     getIt.registerLazySingleton<GenerateIdRepo>(() => RemoteGenerateIdRepo(firestore, getIt<ApiService>()));
   }
 
-  // TODO emulator
   Future<void> setupFirebaseEmulators() async {
     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
