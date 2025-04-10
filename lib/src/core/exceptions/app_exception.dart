@@ -12,7 +12,7 @@ sealed class AppException implements Exception {
   final String message;
   final int code;
 
-  // ! Why don't just Exception(-1, "nope_exception".tr()) directly?
+  // ! Why don't just Exception(-1, "nope_exception"..tr()) directly?
   // ! If that's the case then the Exceptions can't be const, which is not what we're looking for.
   // ! So then, if using the toString() approach, how to track the necessary tr() in the json?
   // !

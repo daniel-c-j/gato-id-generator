@@ -2,7 +2,9 @@ import 'package:bloc/bloc.dart';
 import '../exceptions/_exceptions.dart';
 
 class AppBlocObserver extends BlocObserver {
-  AppBlocObserver(this._errorLogger);
+  /// Custom [BlocObserver] that focuses on collection errors and delivering it to
+  /// the global error handler.
+  const AppBlocObserver(this._errorLogger);
 
   final ErrorLogger _errorLogger;
 

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/constants/_constants.dart';
+import '../constants/_constants.dart';
 import '../../util/delay.dart';
-import '../../core/routing/app_router.dart';
+import 'app_router.dart';
 
 /// Simple not found screen used for 404 errors (page not found on web).
 class NotFoundScreen extends StatefulWidget {

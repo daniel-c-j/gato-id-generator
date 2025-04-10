@@ -46,6 +46,6 @@ const List<AppException> NET_RESPONSE_ERROR = [
   NotExtendedException(),
   NetworkAuthenticationRequiredException(),
 
-  // * App-side (not server response, but still included as a countermeasure)
+  // * App-side (not server response, but must still be included as a countermeasure)
   NoConnectionException()
 ];

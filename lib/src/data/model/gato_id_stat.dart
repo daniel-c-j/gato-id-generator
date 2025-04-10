@@ -9,7 +9,7 @@ class GatoIdStat {
 
   final int generatedCount;
 
-  /// Expectedly in this format: `{imageKey: imagePath}`
+  /// Expectedly in this format: `{imageName: imagePath}`
   /// imagePath can be either local path or remote url.
   final List<Map<String, dynamic>> savedImages;
 

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gato_id_generator/src/data/model/gato_id_stat.dart';
@@ -34,14 +35,14 @@ class GeneratedHistory extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "Generated IDs (${stat.savedImages.length})",
+                    "${"Generated IDs".tr()} (${stat.savedImages.length})",
                     style: kTextStyle(context).bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),
                   const Spacer(),
                   CustomButton(
-                    msg: "Delete all",
+                    msg: "Delete all".tr(),
                     buttonColor: Colors.transparent,
                     borderRadius: BorderRadius.circular(60),
                     padding: const EdgeInsets.all(8),
@@ -72,53 +73,47 @@ class GeneratedHistory extends StatelessWidget {
                   return Dismissible(
                     // To change key when loading
                     key: Key("${snapshot.connectionState == ConnectionState.waiting}"),
-                    onDismissed: (_) {
-                      context.read<GeneratedGatoIdBloc>().add(
-                            DeleteGeneratedGatoId(
-                              id: id,
-                              onSuccess: () {
-                                showTextSnackBar(context, txt: "$id has successfully deleted.");
-                              },
-                              onError: (e, st) {
-                                showErrorSnackBar(context, error: e);
-                              },
-                            ),
-                          );
-                    },
+                    onDismissed: (_) => context.read<GeneratedGatoIdBloc>().add(
+                          DeleteGeneratedGatoId(
+                            id: id,
+                            onSuccess: () {
+                              showTextSnackBar(context, txt: "$id ${"has successfully deleted.".tr()}");
+                            },
+                            onError: (e, st) {
+                              showErrorSnackBar(context, error: e);
+                            },
+                          ),
+                        ),
                     child: SizedBox(
                       height: listTileHeight,
                       child: ListTile(
                         leading: const Icon(Icons.credit_card),
                         title: Text(id),
                         subtitle: Text(date),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              final filePath = imageData.value;
-                              return GestureDetector(
-                                onTap: () {
-                                  context.pop();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: (filePath.contains("http"))
-                                      ? CachedNetworkImage(
-                                          imageUrl: filePath,
-                                          placeholder: (_, __) => const Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                          fit: BoxFit.fitWidth,
-                                        )
-                                      : Image.file(
-                                          File(filePath),
-                                          fit: BoxFit.fitWidth,
+                        onTap: () => showDialog(
+                          context: context,
+                          builder: (context) {
+                            final filePath = imageData.value;
+                            return GestureDetector(
+                              onTap: () => context.pop(),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: (filePath.contains("http"))
+                                    ? CachedNetworkImage(
+                                        imageUrl: filePath,
+                                        placeholder: (_, __) => const Center(
+                                          child: CircularProgressIndicator(),
                                         ),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                                        fit: BoxFit.fitWidth,
+                                      )
+                                    : Image.file(
+                                        File(filePath),
+                                        fit: BoxFit.fitWidth,
+                                      ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   );

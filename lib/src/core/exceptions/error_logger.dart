@@ -6,7 +6,8 @@ import '_exceptions.dart';
 class ErrorLogger {
   final _log = Logger();
 
-  /// This method will separate the error object to be processed by certain methods for a certain object.
+  /// This method will separate the error object to be processed by certain mechanism based
+  /// on the error's type.
   void log(Object error, StackTrace? stackTrace) =>
       (error is AppException) ? _logAppException(error) : _logError(error, stackTrace);
 

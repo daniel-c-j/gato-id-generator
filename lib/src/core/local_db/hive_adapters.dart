@@ -8,6 +8,7 @@ import '../constants/_constants.dart';
 part 'hive_adapters.g.dart';
 
 // TODO when using hive.
+
 @GenerateAdapters([
   AdapterSpec<AppUser>(),
   AdapterSpec<LocalAppUser>(),
@@ -15,9 +16,8 @@ part 'hive_adapters.g.dart';
 ])
 class HiveAdapters {}
 
-// TODO when using hive.
-
 extension HiveRegistrar on HiveInterface {
+  /// Opening boxes so that it can be accessed synchronously.
   Future<void> initBoxes() async {
     await Hive.openBox<bool>(DBKeys.BRIGHTNESS_BOX);
     await Hive.openBox<AppUser?>(DBKeys.AUTH_STATE_BOX);

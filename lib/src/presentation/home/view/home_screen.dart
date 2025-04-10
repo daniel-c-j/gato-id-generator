@@ -47,33 +47,38 @@ class HomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              StreamBuilder(
-                stream: context.watch<ProfileBloc>().watchUser(),
-                builder: (context, snapshot) {
-                  late final AppUser? user;
-                  if (_isFirstTime) {
-                    user = context.watch<ProfileBloc>().getUser();
-                    _isFirstTime = false;
-                  } else {
-                    user = snapshot.data;
-                  }
+              CustomAppBar(
+                title: "Gato Id Generator".tr(),
+                withBackIcon: false,
+                additionalActions: [
+                  const ThemeIconButton(),
+                  StreamBuilder<AppUser?>(
+                    stream: context.watch<ProfileBloc>().watchUser(),
+                    builder: (context, snapshot) {
+                      late final AppUser? user;
+                      // When it's the first time, it's better to get the value synchronously
+                      if (_isFirstTime) {
+                        user = context.watch<ProfileBloc>().getUser();
+                        _isFirstTime = false;
+                      } else {
+                        // After that, everything will depends on authStateChange.
+                        user = snapshot.data;
+                      }
 
-                  return CustomAppBar(
-                    title: "Gato Id Generator",
-                    withBackIcon: false,
-                    additionalActions: [
-                      const ThemeIconButton(),
-                      if (user != null) const ProfileIconButton(),
-                    ],
-                  );
-                },
+                      if (user != null) return const ProfileIconButton();
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                ],
               ),
               GAP_H12,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Text(
                   'And thus, Artificial Intelligence answered, \n'
-                  '"Cats are charmingly quirky companions, blending playfulness with an air of independence."',
+                          '"Cats are charmingly quirky companions, '
+                          'blending playfulness with an air of independence."'
+                      .tr(),
                   overflow: TextOverflow.fade,
                   textAlign: TextAlign.center,
                   style: kTextStyle(context).bodySmall?.copyWith(fontStyle: FontStyle.italic),
@@ -114,12 +119,15 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+/// Widget showing marquee-like automatically scrolling gato ids.
 class GatoLine extends StatelessWidget {
   const GatoLine({super.key, this.autoStartAfter, this.color, this.reverse = false});
 
   final Duration? autoStartAfter;
   final Color? color;
   final bool reverse;
+
+  static const double height = 150;
 
   @override
   Widget build(BuildContext context) {
@@ -130,16 +138,16 @@ class GatoLine extends StatelessWidget {
           child: Image.asset(
             "./assets/images/id/0${i + 1}.png",
             width: 240,
-            height: 150,
+            height: height,
             opacity: const AlwaysStoppedAnimation(0.6),
           ),
         )
     ];
-    // To make the images appear randomly.
+    // * To make the images appear randomly.
     images.shuffle();
 
     return SizedBox(
-      height: 150,
+      height: height,
       child: Marqueer(
         interaction: false,
         autoStart: true,

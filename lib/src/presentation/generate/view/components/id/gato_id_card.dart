@@ -47,9 +47,9 @@ class GatoIdCard extends StatelessWidget {
                           bottom: 10,
                           child: Image.asset(
                             "assets/images/icon/icon.png",
-                            opacity: const AlwaysStoppedAnimation(0.3),
                             width: 135,
                             height: 135,
+                            opacity: const AlwaysStoppedAnimation(0.3),
                             color: kColor(context).inverseSurface.withAlpha(200),
                           ),
                         );
@@ -106,6 +106,7 @@ class GatoIdCard extends StatelessWidget {
   }
 }
 
+/// Id card's title widget
 class GatoIdTitle extends StatelessWidget {
   const GatoIdTitle({super.key});
 

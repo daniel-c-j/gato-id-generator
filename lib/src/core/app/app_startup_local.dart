@@ -16,14 +16,14 @@ extension AppStartupLocal on AppStartup {
   /// repositories only. This is useful for testing purposes and for running the
   /// app with a "fake" backend.
   ///
-  /// [WARNING] This method should be called after initializeApp is called.
+  /// [WARNING] This method must be called after initializeApp is called.
   Future<void> runWithLocal() async {
     // * Using singleton since it maintains one must-ready, globally-shared state.
     final dataSource = Hive.box<LocalAppUser>(DBKeys.USER_BOX);
     getIt.registerSingleton<AuthRepository>(LocalAuthRepository(dataSource));
 
     // Route
-    // ! Must be after authRepo
+    // ! This is core, but must be after authRepo.
     getIt.registerSingleton<GoRouter>(goRouterInstance(getIt<AuthRepository>()));
 
     // Generate ID feature

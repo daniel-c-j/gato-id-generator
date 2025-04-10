@@ -22,7 +22,7 @@ import '../../presentation/generate/view/generate_screen.dart';
 import '../../presentation/version_check/bloc/version_check_bloc.dart';
 import '../../util/navigation.dart';
 import '../../presentation/home/view/home_screen.dart';
-import '../../presentation/_common_widgets/not_found_screen.dart';
+import 'not_found_screen.dart';
 import '../_core.dart';
 import 'go_router_refresh_stream.dart';
 
@@ -37,9 +37,6 @@ enum AppRoute {
   unknown;
 
   const AppRoute();
-}
-
-extension AppRouteExtension on AppRoute {
   String get path => "/$name";
 }
 
@@ -52,8 +49,9 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
     redirect: (context, state) {
       final isLogin = authRepo.currentUser != null;
       final path = state.uri.path;
-      // TODO make sure of these
+
       if (isLogin) {
+        // If logging in and in signIn, return back.
         if (path == AppRoute.signIn.path) return '/';
       } else {
         // If not logging in... force to go to signIn route.
@@ -89,10 +87,11 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
             path: AppRoute.generate.path,
             name: AppRoute.generate.name,
             builder: (context, state) {
-              final generateIdUseCase = GenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
-              final saveGenerateIdUsecase = SaveGenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
-              final deleteIdUsecase = DeleteIdUsecase(getIt<GenerateIdRepo>(), authRepo);
-              final getGeneratedIdStatsUseCase = GetGenerateIdStatsUsecase(getIt<GenerateIdRepo>(), authRepo);
+              final generateRepo = getIt<GenerateIdRepo>();
+              final generateIdUseCase = GenerateIdUsecase(generateRepo, authRepo);
+              final saveGenerateIdUsecase = SaveGenerateIdUsecase(generateRepo, authRepo);
+              final deleteIdUsecase = DeleteIdUsecase(generateRepo, authRepo);
+              final getGeneratedIdStatsUseCase = GetGenerateIdStatsUsecase(generateRepo, authRepo);
 
               return MultiBlocProvider(
                 providers: [
@@ -136,10 +135,11 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
               final currentUserUseCase = GetCurrentUserUsecase(authRepo);
               final signOutUseCase = SignOutUsecase(authRepo);
 
-              final generateIdUseCase = GenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
-              final deleteIdUsecase = DeleteIdUsecase(getIt<GenerateIdRepo>(), authRepo);
-              final saveGenerateIdUsecase = SaveGenerateIdUsecase(getIt<GenerateIdRepo>(), authRepo);
-              final getGeneratedIdStatsUseCase = GetGenerateIdStatsUsecase(getIt<GenerateIdRepo>(), authRepo);
+              final generateRepo = getIt<GenerateIdRepo>();
+              final generateIdUseCase = GenerateIdUsecase(generateRepo, authRepo);
+              final deleteIdUsecase = DeleteIdUsecase(generateRepo, authRepo);
+              final saveGenerateIdUsecase = SaveGenerateIdUsecase(generateRepo, authRepo);
+              final getGeneratedIdStatsUseCase = GetGenerateIdStatsUsecase(generateRepo, authRepo);
 
               return MultiBlocProvider(
                 providers: [
@@ -159,9 +159,7 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
                     ),
                   ),
                 ],
-                child: const HudOverlay(
-                  child: ProfileScreen(),
-                ),
+                child: const HudOverlay(child: ProfileScreen()),
               );
             },
           ),
@@ -171,28 +169,23 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
         path: AppRoute.about.path,
         name: AppRoute.about.name,
         builder: (context, state) {
+          // TODO
           return const HudOverlay(child: SizedBox());
         },
         routes: [
           GoRoute(
             path: AppRoute.license.path,
             name: AppRoute.license.name,
-            builder: (context, state) {
-              return const LicensePage();
-            },
+            builder: (context, state) => const LicensePage(),
           ),
         ],
       ),
       GoRoute(
         path: "/404",
         name: AppRoute.unknown.name,
-        builder: (context, state) {
-          return const NotFoundScreen();
-        },
+        builder: (context, state) => const NotFoundScreen(),
       ),
     ],
-    errorBuilder: (context, state) {
-      return const NotFoundScreen();
-    },
+    errorBuilder: (context, state) => const NotFoundScreen(),
   );
 }

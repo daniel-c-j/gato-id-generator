@@ -1,8 +1,6 @@
 // coverage:ignore-file
-
 // ignore_for_file: constant_identifier_names
 
-// TODO delete those that are unnecessary
 /// Data container containing local database keys.
 final class DBKeys {
   // Hive-specific IDs
@@ -19,7 +17,7 @@ final class DBKeys {
   static const String GENERATED_ID_COUNT_BOX = "GENERATED_ID_COUNT_BOX";
   static const String SAVED_ID_BOX = "SAVED_ID_BOX";
 
-  // Key names
+  // Unique Key names
   static const String BRIGHTNESS_LIGHT = "BRIGHTNESS_LIGHT";
   static const String AUTH_STATE = "AUTH_STATE";
   static const String USERNAME = "USERNAME";

@@ -7,6 +7,7 @@ import '../../../core/constants/_constants.dart';
 import '../../../core/_core.dart';
 import '../../../util/context_shortcut.dart';
 import '../../../data/model/version_check.dart';
+import '../../_common_widgets/generic_snackbar.dart';
 
 /// Content of the version update dialog.
 class VersionUpdateDialog extends StatelessWidget {
@@ -27,14 +28,7 @@ class VersionUpdateDialog extends StatelessWidget {
   }
 
   static Future<void> showErrorInstead(BuildContext context, {required Object? e}) async {
-    kSnackBar(context)
-      ..clearSnackBars()
-      ..showSnackBar(
-        SnackBar(
-          content: Text("Check version error: ${e.toString()}"),
-          dismissDirection: DismissDirection.horizontal,
-        ),
-      );
+    showTextSnackBar(context, txt: "${"Check version error:".tr()} ${e.toString()}");
   }
 
   @override

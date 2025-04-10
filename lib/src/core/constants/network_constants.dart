@@ -1,5 +1,4 @@
 // coverage:ignore-file
-
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
 /// Data container containing network constants.
@@ -11,11 +10,11 @@ final class NetConsts {
   static const String ACCEPT = "accept";
   static const int API_TIMEOUT = 60000;
 
-  /// Used for [VersionCheck].
+  // Used for [VersionCheck].
   static late final String URL_CHECK_VERSION;
   static late final String URL_GET_UPDATED_VERSION;
 
-  // Generate ID image
+  // Used for [GenerateIdRepo]
   static late final String URL_GATO_IMG;
   static late final String URL_SAVED_GATO_IMG_API;
 

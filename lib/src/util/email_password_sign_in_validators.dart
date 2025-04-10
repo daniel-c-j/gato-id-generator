@@ -20,13 +20,13 @@ mixin EmailAndPasswordValidators {
 
   String? emailErrorText(String email) {
     final showErrorText = !canSubmitEmail(email);
-    final errorText = (email.isEmpty) ? 'Email can\'t be empty'.tr() : 'Invalid email'.tr();
+    final errorText = (email.isEmpty) ? "Email cannot be empty".tr() : 'Invalid email'.tr();
     return (showErrorText) ? errorText : null;
   }
 
   String? passwordErrorText(String password, EmailPasswordSignInFormType formType) {
     final showErrorText = !canSubmitPassword(password, formType);
-    final errorText = (password.isEmpty) ? 'Password can\'t be empty'.tr() : 'Password is too short'.tr();
+    final errorText = (password.isEmpty) ? "Password cannot be empty".tr() : 'Password is too short'.tr();
     return (showErrorText) ? errorText : null;
   }
 }

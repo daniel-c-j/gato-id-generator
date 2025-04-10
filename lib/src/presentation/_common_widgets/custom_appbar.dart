@@ -8,6 +8,7 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import '../../core/_core.dart';
 import '../../util/context_shortcut.dart';
 
+/// Pre-defined appbar with some configurations.
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,

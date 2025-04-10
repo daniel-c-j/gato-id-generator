@@ -17,7 +17,6 @@ class ConnectivityCubit extends Cubit<bool> {
     if (!canListenToNetworkStatusChange) return;
 
     final internetConnectionChecker = getIt<InternetConnection>();
-
     _subscription = internetConnectionChecker.onStatusChange.listen(
       // Updates state to true when the condition is true, vice-versa.
       (InternetStatus status) => emit(status == InternetStatus.connected),
@@ -35,8 +34,3 @@ class ConnectivityCubit extends Cubit<bool> {
 //
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 //
-
-@immutable
-abstract class ConnectivityEvent {}
-
-class ConnectivityStatusChanged extends ConnectivityEvent {}

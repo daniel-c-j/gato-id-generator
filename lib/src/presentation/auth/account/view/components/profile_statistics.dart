@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gato_id_generator/src/presentation/generate/bloc/generated_gato_id_bloc.dart';
@@ -27,7 +28,7 @@ class ProfileStatistics extends StatelessWidget {
                 const Icon(Icons.bar_chart, size: 20),
                 GAP_W8,
                 Text(
-                  "Statistics",
+                  "Statistics".tr(),
                   textAlign: TextAlign.left,
                   style: kTextStyle(context).bodyLarge?.copyWith(
                         height: 0,
@@ -39,8 +40,8 @@ class ProfileStatistics extends StatelessWidget {
             GAP_H4,
             const Divider(thickness: 0.75, height: 0),
             GAP_H4,
-            Text("Gato Id generated: ${stat.generatedCount}"),
-            Text("Gato Id saved:  ${stat.savedImages.length}"),
+            Text("${"Gato Id generated:".tr()} ${stat.generatedCount}"),
+            Text("${"Gato Id saved:".tr()} ${stat.savedImages.length}"),
           ],
         );
       },

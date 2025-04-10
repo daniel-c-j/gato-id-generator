@@ -92,23 +92,16 @@ class _EmailPasswordSignInContentsState extends State<EmailPasswordSignInContent
         formType: _formType,
         onSuccess: () async {
           if (_formType == EmailPasswordSignInFormType.register) {
-            kSnackBar(context).clearSnackBars();
-            kSnackBar(context).showSnackBar(
-              SnackBar(
-                content: Text("One more step! Sign-in and you're good to go."),
-                dismissDirection: DismissDirection.horizontal,
-              ),
-            );
+            showTextSnackBar(context, txt: "One more step! Sign-in and you are good to go.".tr());
             return _updateFormType();
           }
 
           return context.goNamed(AppRoute.generate.name);
         },
-        onError: (e, st) {
-          showErrorSnackBar(context, error: e);
-        },
+        onError: (e, st) => showErrorSnackBar(context, error: e),
       );
 
+      // Fires event.
       context.read<EmailPassSignInBloc>().add(event);
     }
   }

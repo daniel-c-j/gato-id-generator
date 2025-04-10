@@ -13,6 +13,7 @@ import '../exceptions/_exceptions.dart';
 final getIt = GetIt.instance;
 
 // TODO watchout disposing them.
+/// Registering dependency injections for core modules.
 Future<void> initCoreAppModule() async {
   // Randomization
   getIt.registerLazySingleton<Random>(() => Random());

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:gato_id_generator/src/presentation/_common_widgets/generic_snackbar.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:gato_id_generator/src/core/theme/colors.dart';
@@ -23,6 +24,7 @@ class HomeGenerateButton extends StatelessWidget {
 
   static const double width = 145;
   static const double height = 200;
+
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
@@ -40,10 +42,7 @@ class HomeGenerateButton extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 if (!enabled) return;
-                kSnackBar(context).clearSnackBars();
-                kSnackBar(context).showSnackBar(
-                  const SnackBar(content: Text("Tap the button below, not the gato.")),
-                );
+                showTextSnackBar(context, txt: "Tap the button below, not the gato.".tr());
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
@@ -60,7 +59,7 @@ class HomeGenerateButton extends StatelessWidget {
               right: 0,
               left: 0,
               child: CustomButton(
-                msg: "Generate ID",
+                msg: "Generate ID".tr(),
                 onTap: () async {
                   if (!enabled) return;
                   await context.pushNamed(AppRoute.generate.name);
@@ -71,7 +70,7 @@ class HomeGenerateButton extends StatelessWidget {
                 ),
                 buttonColor: kColor(context).surfaceDim,
                 child: Text(
-                  "GENERATE",
+                  "GENERATE".tr(),
                   overflow: TextOverflow.fade,
                   textAlign: TextAlign.center,
                   style: kTextStyle(context)
@@ -80,7 +79,7 @@ class HomeGenerateButton extends StatelessWidget {
                 ),
               ),
             ),
-            // Overlay if not enabled.
+            // show overlay if not enabled.
             if (!enabled)
               Positioned(
                 top: 0,
@@ -88,9 +87,7 @@ class HomeGenerateButton extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     if (!enabled) {
-                      kSnackBar(context).clearSnackBars();
-                      kSnackBar(context).showSnackBar(
-                          const SnackBar(content: Text("Not yet brother! Maybe next update :)")));
+                      showTextSnackBar(context, txt: "Not yet brother! Maybe next update :)".tr());
                       return;
                     }
                   },

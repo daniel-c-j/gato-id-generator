@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gato_id_generator/src/domain/use_case/auth_usecase.dart';
-import 'package:gato_id_generator/src/util/delay.dart';
 
 import '../view/email_password_sign_in_form_type.dart';
 
@@ -21,7 +20,6 @@ class EmailPassSignInBloc extends Bloc<EmailPassSignInEvent, EmailPassSignInStat
 
   Future<void> _authenticate(EmailPassSignInSubmit event, Emitter<EmailPassSignInState> emit) async {
     emit(EmailPassSignInLoading());
-    await delay(true);
 
     try {
       if (event.formType == EmailPasswordSignInFormType.signIn) {
@@ -33,7 +31,7 @@ class EmailPassSignInBloc extends Bloc<EmailPassSignInEvent, EmailPassSignInStat
       event.onSuccess();
       emit(EmailPassSignInIdle());
     } catch (e, st) {
-      event.onError(e, st); // TODO use bloclistener or blocConsumer instead?
+      event.onError(e, st);
       emit(EmailPassSignInError());
     }
   }

@@ -2,8 +2,6 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 import 'package:flutter/material.dart';
 
-import '../../util/context_shortcut.dart';
-
 // Light theme
 const Color PRIMARY_COLOR_L0 = Color.fromARGB(255, 250, 140, 30);
 const Color PRIMARY_COLOR_L1 = Color.fromARGB(255, 255, 180, 60);
@@ -28,10 +26,3 @@ const Color SECONDARY_COLOR_V1 = Color(0xFFECC440); // Gold
 const Color SECONDARY_COLOR_V2 = Color(0xFFFFFA8A); // Gold Light
 const Color SECONDARY_COLOR_V3 = Color.fromARGB(255, 170, 20, 220); // Dark Purplish
 const Color SECONDARY_COLOR_V4 = Color.fromARGB(255, 210, 10, 255); // Light Purplish
-
-// Gradients
-Gradient kGradientV0(BuildContext context) => LinearGradient(
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-      colors: [kColor(context).surface.withAlpha(200), PRIMARY_COLOR_L1.withAlpha(220), SECONDARY_COLOR_V0],
-    );

@@ -2,7 +2,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-/// For testing purpose only!
+/// For testing purpose only
 @visibleForTesting
 bool forceShowHUD = false;
 

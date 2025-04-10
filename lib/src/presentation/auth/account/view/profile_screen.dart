@@ -48,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                           height: 0,
                         ),
                   ),
-                  Text("Unique Id: ${user.uid}"),
+                  Text("uid: ${user.uid}"),
                   GAP_H16,
                   BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
                     // Showing HUD
@@ -63,9 +63,12 @@ class ProfileScreen extends StatelessWidget {
                                   // Need to close HUD in the callback since this screen will be popped out
                                   // immediately.
                                   context.read<HudControllerCubit>().hide();
-                                  showTextSnackBar(context, txt: "Signed Out!");
+                                  showTextSnackBar(context, txt: "Signed Out!".tr());
                                 },
-                                onError: (e, st) => showErrorSnackBar(context, error: e),
+                                onError: (e, st) {
+                                  context.read<HudControllerCubit>().hide();
+                                  showErrorSnackBar(context, error: e);
+                                },
                               ),
                             );
                       },

@@ -11,7 +11,7 @@ class GenerateIdUsecase {
   final AuthRepository _authRepo;
 
   Future<GatoId> execute() async {
-    final gatoId = await _generateIdrepository.generate();
+    final gatoId = _generateIdrepository.generate();
     await _generateIdrepository.incrementAndSaveStats(uid: _authRepo.currentUser!.uid);
     return gatoId;
   }

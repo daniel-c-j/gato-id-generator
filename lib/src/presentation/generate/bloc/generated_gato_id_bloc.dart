@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:gato_id_generator/src/data/model/gato_id_stat.dart';
 import 'package:gato_id_generator/src/domain/use_case/generate_id_usecase.dart';
-import 'package:gato_id_generator/src/util/delay.dart';
 
 import '../../../data/model/gato_id_content.dart';
 
@@ -34,7 +33,6 @@ class GeneratedGatoIdBloc extends Bloc<GeneratedGatoIdEvent, GeneratedGatoIdStat
 
   Future<void> _generate(GenerateGatoId event, Emitter<GeneratedGatoIdState> emit) async {
     emit(GeneratedGatoIdLoading());
-    await delay(true);
 
     try {
       _gatoId = await _generateIdUsecase.execute();
@@ -49,7 +47,6 @@ class GeneratedGatoIdBloc extends Bloc<GeneratedGatoIdEvent, GeneratedGatoIdStat
 
   Future<void> _save(SaveGeneratedGatoId event, Emitter<GeneratedGatoIdState> emit) async {
     emit(GeneratedGatoIdSaving());
-    await delay(true);
 
     try {
       await _saveGenerateIdUsecase.execute(currentGatoId!, event.value);
@@ -64,7 +61,6 @@ class GeneratedGatoIdBloc extends Bloc<GeneratedGatoIdEvent, GeneratedGatoIdStat
 
   Future<void> _delete(DeleteGeneratedGatoId event, Emitter<GeneratedGatoIdState> emit) async {
     emit(GeneratedGatoIdDeleting());
-    await delay(true);
 
     try {
       await _deleteIdUsecase.execute(event.id);

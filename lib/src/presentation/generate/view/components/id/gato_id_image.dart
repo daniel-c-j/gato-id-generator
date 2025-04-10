@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,23 +23,24 @@ class GatoIdImage extends StatelessWidget {
         ),
       );
 
-  Widget get _errorIndicator => const Column(
+  Widget get _errorIndicator => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             BoxIcons.bxs_cat,
             color: Colors.red,
             shadows: [BoxShadow(blurRadius: 3)],
           ),
-          Text("Error fetching image", textAlign: TextAlign.center),
+          Text("Error fetching image".tr(), textAlign: TextAlign.center),
         ],
       );
 
   @override
   Widget build(BuildContext context) {
     final innerConstraint = kScreenWidth(context) * 0.275;
-    // Bigger a little bit so that image don't have to be way to blurry.
+    // * Recommendedly bigger a so that image don't have to be way to blurry.
     final innerConstraintInt = (innerConstraint * 2.5).round();
+    // *The unique identifier for image, if changed, the image will also changed.
     String imageUuid = "";
 
     return SizedBox(
@@ -46,13 +48,12 @@ class GatoIdImage extends StatelessWidget {
       child: BlocBuilder<GeneratedGatoIdBloc, GeneratedGatoIdState>(
         builder: (context, state) {
           if (state is GeneratedGatoIdLoading) {
+            // * Image will only generating new one if the state is loading.
             imageUuid = getIt<Random>().nextDouble().toString();
             return const SizedBox.shrink();
           }
 
-          // Will be renewed each state update/screen enters.
           final bloc = context.watch<GeneratedGatoIdBloc>();
-
           return Stack(
             children: [
               if (bloc.currentGatoId != null)

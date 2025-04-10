@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gato_id_generator/src/domain/use_case/auth_usecase.dart';
-import 'package:gato_id_generator/src/util/delay.dart';
 
 import '../../../../data/model/app_user/app_user.dart';
 
@@ -18,12 +17,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileSignOut>(_signOut);
   }
 
+  /// Watches state of user, indirectly also the authentication state.
   Stream<AppUser?> watchUser() => _watchUserUsecase.execute();
   AppUser? getUser() => _getCurrentUserUsecase.execute();
 
   Future<void> _signOut(ProfileSignOut event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
-    await delay(true); // TODO delay should be injected since firebase need not these guy.
 
     try {
       await _signOutUsecase.execute();

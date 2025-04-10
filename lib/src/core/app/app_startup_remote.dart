@@ -14,13 +14,13 @@ extension AppStartupRemote on AppStartup {
   /// Setting up [GetIt] dependency injection at the top-level with remote
   /// repositories only.
   ///
-  /// [WARNING] This method should be called after initializeApp is called.
+  /// [WARNING] This method must be called after initializeApp is called.
   Future<void> runWithRemote() async {
     // * Using singleton since it maintains one must-ready, globally-shared state.
     getIt.registerSingleton<AuthRepository>(RemoteAuthRepository(FirebaseAuth.instance));
 
     // Route
-    // ! Must be after authRepo
+    // ! This is core, but must be after authRepo.
     getIt.registerSingleton<GoRouter>(goRouterInstance(getIt<AuthRepository>()));
 
     // Generate ID feature

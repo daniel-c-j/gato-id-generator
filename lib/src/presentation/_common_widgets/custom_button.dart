@@ -18,9 +18,12 @@ class CustomButton extends StatelessWidget {
   });
 
   final VoidCallback onTap;
+
+  /// Tooltip message.
   final String? msg;
   final Widget child;
   final Color? buttonColor;
+
   final BorderRadius? borderRadius;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;

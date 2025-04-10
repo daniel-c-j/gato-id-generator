@@ -36,7 +36,7 @@ class PlatformBrightnessBloc extends Bloc<PlatformBrightnessEvent, Brightness> {
     return super.close();
   }
 
-  /// Used in early app initialization to remember configuration.
+  /// Used in early app initialization to remember latest configuration.
   Future<void> init() async {
     late bool isLightMode;
 
@@ -66,9 +66,7 @@ class PlatformBrightnessBloc extends Bloc<PlatformBrightnessEvent, Brightness> {
 
 /// Observes platform brightness changes and notifies the listener.
 class _PlatformBrightnessObserver with WidgetsBindingObserver {
-  const _PlatformBrightnessObserver({
-    required this.onBrightnessChanged,
-  });
+  const _PlatformBrightnessObserver({required this.onBrightnessChanged});
 
   final ValueChanged<Brightness> onBrightnessChanged;
 

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +14,7 @@ import '../../../../util/context_shortcut.dart';
 import '../../../_common_widgets/custom_button.dart';
 import '../../bloc/image_load_cubit.dart';
 
+/// Button to generate new card id.
 class GenerateButton extends StatelessWidget {
   const GenerateButton({super.key});
 
@@ -35,12 +37,9 @@ class GenerateButton extends StatelessWidget {
                   PRIMARY_COLOR_L2,
                 ],
         ),
-        boxShadow: const [
-          // BoxShadow(color: Colors.black, offset: Offset(0, 1.5), blurRadius: 2),
-        ],
       ),
       child: CustomButton(
-        msg: "Generate ID",
+        msg: "Generate ID".tr(),
         onTap: () {
           final bloc = context.read<GeneratedGatoIdBloc>();
           if (bloc.state is GeneratedGatoIdSaving || bloc.state is GeneratedGatoIdLoading) return;
@@ -56,7 +55,7 @@ class GenerateButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         buttonColor: Colors.transparent,
         child: Text(
-          "Generate ID",
+          "Generate ID".tr(),
           overflow: TextOverflow.fade,
           textAlign: TextAlign.center,
           style: kTextStyle(context).bodyMedium?.copyWith(color: kColor(context).surface),
@@ -66,6 +65,7 @@ class GenerateButton extends StatelessWidget {
   }
 }
 
+/// Button to save the generated card id.
 class SaveGeneratedButton extends StatelessWidget {
   const SaveGeneratedButton({super.key, required this.controller});
 
@@ -95,7 +95,7 @@ class SaveGeneratedButton extends StatelessWidget {
         ),
       ),
       child: CustomButton(
-        msg: "Save",
+        msg: "Save".tr(),
         onTap: () async {
           if (!imageIsLoaded) return;
           if (bloc.currentGatoId == null) return; // Does nothing if yet generate a thing.
@@ -114,7 +114,8 @@ class SaveGeneratedButton extends StatelessWidget {
                 // Indicating that the card is saved, and the button should not be enabled until
                 // generating new one.
                 SchedulerBinding.instance.addPostFrameCallback((_) async {
-                  await delay(true, 100);
+                  await delay(true, 300); // Waits a little bit
+                  // ignore: use_build_context_synchronously
                   context.read<ImageIsLoadedCubit>().value = false;
                 });
 
@@ -130,7 +131,7 @@ class SaveGeneratedButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         buttonColor: Colors.transparent,
         child: Text(
-          "Save",
+          "Save".tr(),
           overflow: TextOverflow.fade,
           textAlign: TextAlign.center,
           style: kTextStyle(context).bodyMedium?.copyWith(color: Colors.white),

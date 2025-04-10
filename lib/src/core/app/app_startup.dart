@@ -26,7 +26,7 @@ class AppStartup {
   /// Core app initializations.
   Future<void> initializeApp({bool minimumTest = false}) async {
     // * Initalize app.
-    if (!minimumTest) await _initializeApp();
+    if (!minimumTest) await _initializeCores();
 
     // * Core GetIt initializations.
     await initCoreAppModule();
@@ -47,7 +47,7 @@ class AppStartup {
   }
 
   /// Core app initializations.
-  Future<void> _initializeApp() async {
+  Future<void> _initializeCores() async {
     // Localization initialization.
     await EasyLocalization.ensureInitialized();
 

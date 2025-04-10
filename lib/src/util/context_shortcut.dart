@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../core/_core.dart';
 import 'navigation.dart';
 
-// ! WARNING
+// ! [WARNING]
 // ! Everything here must only be used one widget below Material widget.
 
 /// An alternative way to get BuildContext that is assigned globally to GoRouter.
