@@ -39,7 +39,7 @@ class AppStartup {
   /// Create the root widget that should be passed to [runApp].
   Future<Widget> createRootWidget({bool minimumTest = false}) async {
     return EasyLocalization(
-      path: 'assets/translations', // TODO localize strings in the app, watchout.
+      path: 'assets/translations',
       supportedLocales: const [Locale('en', 'US')],
       fallbackLocale: const Locale('en', 'US'),
       child: const App(),

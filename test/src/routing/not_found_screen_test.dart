@@ -1,4 +1,4 @@
-import 'package:gato_id_generator/src/util/navigation.dart';
+import 'package:gato_id_generator/src/core/routing/navigation.dart';
 import 'package:gato_id_generator/src/core/routing/app_router.dart';
 import 'package:gato_id_generator/src/core/routing/not_found_screen.dart';
 import 'package:flutter/material.dart';

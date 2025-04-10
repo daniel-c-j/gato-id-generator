@@ -20,8 +20,9 @@ final class NetConsts {
 
   /// Lazy Initialization exists for the ease of testing to manipulate certain properties of [NetConsts].
   static void init() {
-    URL_CHECK_VERSION = "";
-    URL_GET_UPDATED_VERSION = "";
+    URL_CHECK_VERSION =
+        "https://raw.githubusercontent.com/Daniel-C-J/gato-id-generator/refs/heads/master/VERSION.json";
+    URL_GET_UPDATED_VERSION = "https://github.com/Daniel-C-J/gato-id-generator/releases";
     URL_GATO_IMG = "https://cataas.com/cat";
     URL_SAVED_GATO_IMG_API = "https://catbox.moe/user/api.php";
   }

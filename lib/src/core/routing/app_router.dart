@@ -6,6 +6,7 @@ import 'package:gato_id_generator/src/domain/repository/auth_repo.dart';
 import 'package:gato_id_generator/src/domain/repository/generate_id_repo.dart';
 import 'package:gato_id_generator/src/domain/use_case/auth_usecase.dart';
 import 'package:gato_id_generator/src/domain/use_case/generate_id_usecase.dart';
+import 'package:gato_id_generator/src/presentation/about/about_screen.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/bloc/profile_bloc.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/view/profile_screen.dart';
 import 'package:gato_id_generator/src/presentation/auth/sign_in/bloc/email_pass_sign_in_bloc.dart';
@@ -20,7 +21,7 @@ import '../../presentation/_common_widgets/hud_overlay.dart';
 import '../../presentation/auth/sign_in/view/email_password_sign_in_form_type.dart';
 import '../../presentation/generate/view/generate_screen.dart';
 import '../../presentation/version_check/bloc/version_check_bloc.dart';
-import '../../util/navigation.dart';
+import 'navigation.dart';
 import '../../presentation/home/view/home_screen.dart';
 import 'not_found_screen.dart';
 import '../_core.dart';
@@ -168,10 +169,7 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
       GoRoute(
         path: AppRoute.about.path,
         name: AppRoute.about.name,
-        builder: (context, state) {
-          // TODO
-          return const HudOverlay(child: SizedBox());
-        },
+        builder: (context, state) => const AboutScreen(),
         routes: [
           GoRoute(
             path: AppRoute.license.path,

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:gato_id_generator/src/data/model/gato_id_stat.dart';
 import 'package:gato_id_generator/src/domain/use_case/generate_id_usecase.dart';
+import 'package:gato_id_generator/src/util/delay.dart';
 
 import '../../../data/model/gato_id_content.dart';
 
@@ -33,6 +34,8 @@ class GeneratedGatoIdBloc extends Bloc<GeneratedGatoIdEvent, GeneratedGatoIdStat
 
   Future<void> _generate(GenerateGatoId event, Emitter<GeneratedGatoIdState> emit) async {
     emit(GeneratedGatoIdLoading());
+    // Delaying so that loading indicator exists, even if just for a moment.
+    await delay(true, 300);
 
     try {
       _gatoId = await _generateIdUsecase.execute();

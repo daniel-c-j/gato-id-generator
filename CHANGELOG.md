@@ -7,11 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
+### Added
 
-- None.
+-None
 
-## [1.0.0] - 2025-04-04
+## [1.1.0] - 2025-04-10
+
+### Added
+
+- About screen.
+- Small delay in generate id process.
+- Check update feature implementation in home screen.
+
+## [1.0.0] - 2025-04-10
 
 ### Added
 

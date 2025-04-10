@@ -1,16 +1,20 @@
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gato_id_generator/src/presentation/about/components/about_icon_button.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/bloc/profile_bloc.dart';
 import 'package:gato_id_generator/src/presentation/auth/account/view/components/profile_icon_button.dart';
 import 'package:gato_id_generator/src/presentation/home/view/components/theme_icon_button.dart';
+import 'package:gato_id_generator/src/presentation/version_check/bloc/version_check_bloc.dart';
 import 'package:marqueer/marqueer.dart';
 
 import '../../../core/constants/_constants.dart';
 import '../../../data/model/app_user/app_user.dart';
 import '../../../util/context_shortcut.dart';
 import '../../_common_widgets/custom_appbar.dart';
+import '../../version_check/view/version_update_dialog.dart';
 import 'components/generate_button.dart';
 
 bool _isUpdateChecked = false;
@@ -26,19 +30,22 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!_isUpdateChecked) {
-      // SchedulerBinding.instance.addPostFrameCallback((_) {
-      //   context.read<VersionCheckBloc>().add(
-      //         CheckVersionData(onSuccess: (_) {
-      //           // TODO
-      //         }, onError: (_, __) {
-      //           // TODO
-      //         }),
-      //       );
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _isUpdateChecked = true; // Flagging.
 
-      //   _isUpdateChecked = true;
-      // context.read<VersionCheckBloc>().close();
+        final event = CheckVersionData(onSuccess: (ver) async {
+          context.read<VersionCheckBloc>().close();
 
-      // });
+          if (!ver.canUpdate) return;
+          return await VersionUpdateDialog.show(context, ver);
+          //
+        }, onError: (e, __) async {
+          context.read<VersionCheckBloc>().close();
+          return await VersionUpdateDialog.showErrorInstead(context, e: e);
+        });
+
+        context.read<VersionCheckBloc>().add(event);
+      });
     }
 
     return Scaffold(
@@ -51,6 +58,7 @@ class HomeScreen extends StatelessWidget {
                 title: "Gato Id Generator".tr(),
                 withBackIcon: false,
                 additionalActions: [
+                  const AboutIconButton(),
                   const ThemeIconButton(),
                   StreamBuilder<AppUser?>(
                     stream: context.watch<ProfileBloc>().watchUser(),

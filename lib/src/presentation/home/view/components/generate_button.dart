@@ -10,7 +10,7 @@ import '../../../../core/routing/app_router.dart';
 import '../../../../util/context_shortcut.dart';
 import '../../../_common_widgets/custom_button.dart';
 
-// TODO remove to data layer
+// TODO move to data layer
 enum AnimalType {
   cat,
   dog,
