@@ -17,10 +17,11 @@ enum AnimalType {
 }
 
 class HomeGenerateButton extends StatelessWidget {
-  const HomeGenerateButton({super.key, required this.enabled, required this.type});
+  const HomeGenerateButton({super.key, required this.enabled, required this.type, this.buttonKey});
 
   final bool enabled;
   final AnimalType type;
+  final Key? buttonKey;
 
   static const double width = 145;
   static const double height = 200;
@@ -59,6 +60,7 @@ class HomeGenerateButton extends StatelessWidget {
               right: 0,
               left: 0,
               child: CustomButton(
+                key: buttonKey,
                 msg: "Generate ID".tr(),
                 onTap: () async {
                   if (!enabled) return;

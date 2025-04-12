@@ -1,25 +1,35 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gato_id_generator/src/core/local_db/hive_registrar.g.dart';
 import 'package:hive_ce/hive.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gato_id_generator/src/core/constants/_constants.dart';
 import 'package:gato_id_generator/src/core/_core.dart';
 
 import 'goldens/golden_robot.dart';
+import 'src/presentation/auth/auth_robot.dart';
+import 'src/presentation/generate/generate_robot.dart';
+import 'src/presentation/home/home_robot.dart';
 
 @visibleForTesting
 class Robot {
-  Robot(this.tester) : golden = GoldenRobot(tester);
+  Robot(this.tester)
+      : home = HomeRobot(tester),
+        auth = AuthRobot(tester),
+        generate = GenerateRobot(tester),
+        golden = GoldenRobot(tester);
 
   final WidgetTester tester;
   final GoldenRobot golden;
+  final GenerateRobot generate;
+  final AuthRobot auth;
+  final HomeRobot home;
 
   Future<void> _necessaryIntializations() async {
     try {
@@ -29,16 +39,19 @@ class Robot {
       await AppInfo.init(const PackageInfoWrapper());
 
       // Hive-specific
-      Hive.init((await getTemporaryDirectory()).path);
+      Hive.init(Directory("temp").path);
       Hive.registerAdapters();
       await Hive.initBoxes();
     } catch (e) {
-      // Simply put, they're all initialized.
-      log(e.toString());
+      if (kDebugMode) {
+        print("ERROR");
+        print(e);
+      }
     }
   }
 
-  Future<void> pumpApp({bool isGolden = false}) async {
+  Future<void> pumpApp() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
     WidgetsFlutterBinding.ensureInitialized();
 
     // Simulation requirements.
@@ -47,11 +60,23 @@ class Robot {
     // Easy_localization test requirement.
     SharedPreferences.setMockInitialValues({});
 
-    await _necessaryIntializations(); // Must be before rootWidget.
+    // ! Must be before appStartup.
+    await _necessaryIntializations();
+    try {
+      // Try to reset first.
+      await getIt.reset(dispose: true);
+    } catch (e) {
+      // Nothing
+    }
 
     // Creating app startup instance for initialization.
     const appStartup = AppStartup();
-    await appStartup.initializeApp(minimumTest: true);
+    try {
+      await appStartup.initializeApp(minimumTest: true);
+      await appStartup.runWithLocal();
+    } catch (e) {
+      // Do nothing, just to prevent multiple getIt register.
+    }
 
     // * Entry point of the app
     final root = await appStartup.createRootWidget();

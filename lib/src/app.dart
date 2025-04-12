@@ -18,7 +18,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final goRouter = getIt<GoRouter>();
 
-    // Force removal of splash screen.
+    // Force removal of splash screen after everything loads.
     SchedulerBinding.instance.addPostFrameCallback((_) {
       FlutterNativeSplash.remove();
     });

@@ -19,8 +19,8 @@ class AboutIconButton extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       buttonColor: Colors.transparent,
       borderRadius: BorderRadius.circular(60),
-      onTap: () {
-        context.pushNamed(AppRoute.about.name);
+      onTap: () async {
+        await context.pushNamed(AppRoute.about.name);
       },
       child: Icon(
         Icons.info_outline,

@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gato_id_generator/src/core/routing/app_router.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/custom_appbar.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/custom_button.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/generic_snackbar.dart';
@@ -27,6 +26,8 @@ class EmailPasswordSignInScreen extends StatelessWidget {
   // * Keys for testing using find.byKey()
   static const emailKey = Key('email');
   static const passwordKey = Key('password');
+  static const switchFormKey = Key('switchFormKey');
+  static const confirmButtonKey = Key('confirmButtonKey');
 
   @override
   Widget build(BuildContext context) {
@@ -139,6 +140,7 @@ class _EmailPasswordSignInContentsState extends State<EmailPasswordSignInContent
             builder: (context, state) {
               // Controlling HUD
               SchedulerBinding.instance.addPostFrameCallback((_) {
+                if (context.read<HudControllerCubit>().isClosed) return;
                 if (state is EmailPassSignInLoading) return context.read<HudControllerCubit>().show();
                 context.read<HudControllerCubit>().hide();
               });
@@ -197,6 +199,7 @@ class _EmailPasswordSignInContentsState extends State<EmailPasswordSignInContent
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: CustomButton(
+                        key: EmailPasswordSignInScreen.switchFormKey,
                         msg: _formType.secondaryButtonText,
                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                         onTap: () {
@@ -228,6 +231,7 @@ class _EmailPasswordSignInContentsState extends State<EmailPasswordSignInContent
                         ),
                       ),
                       child: CustomButton(
+                        key: EmailPasswordSignInScreen.confirmButtonKey,
                         msg: _formType.primaryButtonText,
                         buttonColor: Colors.transparent,
                         onTap: () {

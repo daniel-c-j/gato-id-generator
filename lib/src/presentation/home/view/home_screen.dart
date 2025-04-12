@@ -27,6 +27,10 @@ bool _isFirstTime = true;
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  static const mottoKey = Key("HomeScreenMotto");
+  static const gatoKey = Key("HomeScreenGatoKey");
+  static const dogKey = Key("HomeScreenDogKeyy");
+
   @override
   Widget build(BuildContext context) {
     if (!_isUpdateChecked) {
@@ -58,8 +62,8 @@ class HomeScreen extends StatelessWidget {
                 title: "Gato Id Generator".tr(),
                 withBackIcon: false,
                 additionalActions: [
-                  const AboutIconButton(),
                   const ThemeIconButton(),
+                  const AboutIconButton(),
                   StreamBuilder<AppUser?>(
                     stream: context.watch<ProfileBloc>().watchUser(),
                     builder: (context, snapshot) {
@@ -84,9 +88,9 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Text(
                   'And thus, Artificial Intelligence answered, \n'
-                          '"Cats are charmingly quirky companions, '
-                          'blending playfulness with an air of independence."'
-                      .tr(),
+                  '"Cats are charmingly quirky companions, '
+                  'blending playfulness with an air of independence."',
+                  key: mottoKey,
                   overflow: TextOverflow.fade,
                   textAlign: TextAlign.center,
                   style: kTextStyle(context).bodySmall?.copyWith(fontStyle: FontStyle.italic),
@@ -110,8 +114,8 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          HomeGenerateButton(enabled: true, type: AnimalType.cat),
-                          HomeGenerateButton(enabled: false, type: AnimalType.dog),
+                          HomeGenerateButton(enabled: true, type: AnimalType.cat, buttonKey: gatoKey),
+                          HomeGenerateButton(enabled: false, type: AnimalType.dog, buttonKey: dogKey),
                         ],
                       ),
                     ),

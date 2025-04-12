@@ -19,6 +19,7 @@ Checklist.pdf
 *.code-workspace
 *bump.py
 *strings.json
+temp/
 
 # IntelliJ related
 *.iml
