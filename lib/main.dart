@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -21,9 +22,9 @@ Future<void> main() async {
   await appStartup.runWithRemote();
   // * Uncomment this if you need to sign out when switching between Firebase
   // * projects (e.g. Firebase Local emulator vs real Firebase backend)
-  // await FirebaseAuth.instance.signOut();
+  await FirebaseAuth.instance.signOut();
   // * Uncomment below to use local emulator.
-  // await appStartup.setupFirebaseEmulators();
+  await appStartup.setupFirebaseEmulators();
 
   // Entry point
   final root = await appStartup.createRootWidget();

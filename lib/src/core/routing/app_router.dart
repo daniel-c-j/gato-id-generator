@@ -66,7 +66,13 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
         path: '/',
         name: AppRoute.home.name,
         builder: (context, state) {
-          final versionUseCase = VersionCheckUsecase(getIt<VersionCheckRepo>());
+          // ! This only checks version for once, and after that will be
+          // ! unregistered by getIt to safe memory.
+          VersionCheckUsecase? versionUseCase;
+          if (getIt.isRegistered<VersionCheckRepo>()) {
+            versionUseCase = VersionCheckUsecase(getIt<VersionCheckRepo>());
+          }
+
           final watchUserUseCase = WatchUserUsecase(authRepo);
           final currentUserUseCase = GetCurrentUserUsecase(authRepo);
           final signOutUseCase = SignOutUsecase(authRepo);
@@ -76,9 +82,12 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
               BlocProvider(
                 create: (context) => ProfileBloc(watchUserUseCase, currentUserUseCase, signOutUseCase),
               ),
-              BlocProvider(
-                create: (context) => VersionCheckBloc(versionUseCase),
-              )
+              // ! This only checks version for once, and after that will be
+              // ! unregistered by getIt to safe memory.
+              if (getIt.isRegistered<VersionCheckRepo>())
+                BlocProvider(
+                  create: (context) => VersionCheckBloc(versionUseCase!),
+                )
             ],
             child: const HudOverlay(child: HomeScreen()),
           );
