@@ -55,7 +55,7 @@ app.*.map.json
 /android/app/release
 
 # Firebase local emulator exports
-firebase-exports
+firebase-export-*/
 seed/
 
 # Environment variables

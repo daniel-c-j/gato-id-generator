@@ -68,8 +68,9 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
         builder: (context, state) {
           // ! This only checks version for once, and after that will be
           // ! unregistered by getIt to safe memory.
+          final isVersionCheckRegistered = getIt.isRegistered<VersionCheckRepo>();
           VersionCheckUsecase? versionUseCase;
-          if (getIt.isRegistered<VersionCheckRepo>()) {
+          if (isVersionCheckRegistered) {
             versionUseCase = VersionCheckUsecase(getIt<VersionCheckRepo>());
           }
 
@@ -84,7 +85,7 @@ GoRouter goRouterInstance(AuthRepository authRepo) {
               ),
               // ! This only checks version for once, and after that will be
               // ! unregistered by getIt to safe memory.
-              if (getIt.isRegistered<VersionCheckRepo>())
+              if (isVersionCheckRegistered)
                 BlocProvider(
                   create: (context) => VersionCheckBloc(versionUseCase!),
                 )

@@ -22,9 +22,9 @@ Future<void> main() async {
   await appStartup.runWithRemote();
   // * Uncomment this if you need to sign out when switching between Firebase
   // * projects (e.g. Firebase Local emulator vs real Firebase backend)
-  await FirebaseAuth.instance.signOut();
+  // await FirebaseAuth.instance.signOut();
   // * Uncomment below to use local emulator.
-  await appStartup.setupFirebaseEmulators();
+  // await appStartup.setupFirebaseEmulators();
 
   // Entry point
   final root = await appStartup.createRootWidget();

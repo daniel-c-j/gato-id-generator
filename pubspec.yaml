@@ -28,17 +28,11 @@ dependencies:
   # Handles version check.
   version: ^3.0.2
 
-  # Unique id generator.
-  uuid: ^4.4.2
-
-  # Api to expose native OS filesystem's path.
+  # Helpful native platform directory path provider
   path_provider: ^2.1.5
 
   # Handy app's flavor utility.
   # flutter_flavorizr: ^2.2.3
-
-  # Handles dependency licenses.
-  # flutter_oss_licenses: ^3.0.4
 
   # Splash screen customization.
   flutter_native_splash: ^2.4.1

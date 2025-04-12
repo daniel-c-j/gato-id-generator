@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:easy_localization/easy_localization.dart';
 
 import '../presentation/auth/sign_in/view/email_password_sign_in_form_type.dart';

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_test/bloc_test.dart';
 import 'package:gato_id_generator/src/core/constants/_constants.dart';
 import 'package:gato_id_generator/src/core/_core.dart';
 import 'package:gato_id_generator/src/core/exceptions/_exceptions.dart';
@@ -26,6 +27,8 @@ class MockVersionCheckRepo extends Mock implements VersionCheckRepo {}
 class MockInternetConnection extends Mock implements InternetConnection {}
 
 class MockHiveBox<T> extends Mock implements Box<T> {}
+
+class MockConnectivityCubit extends MockCubit<bool> implements ConnectivityCubit {}
 
 class MockCallback extends Mock {
   void call();

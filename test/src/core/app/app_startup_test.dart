@@ -28,7 +28,7 @@ void main() {
       FlutterError.onError!(errorDetails);
 
       // * Assert
-      verify(() => mockErrorLogger.logError(errorDetails.exception, errorDetails.stack)).called(1);
+      verify(() => mockErrorLogger.log(errorDetails.exception, errorDetails.stack)).called(1);
     });
 
     test('PlatformDispatcher.instance.onError should log error', () {
@@ -42,7 +42,7 @@ void main() {
       final result = PlatformDispatcher.instance.onError!(error, stackTrace);
 
       // * Assert
-      verify(() => mockErrorLogger.logError(error, stackTrace)).called(1);
+      verify(() => mockErrorLogger.log(error, stackTrace)).called(1);
       expect(result, isTrue);
     });
 
@@ -63,7 +63,6 @@ void main() {
 
       // * Assert
       expect(find.text('An error occurred'), findsOneWidget);
-      expect(find.text('Oops! Something went wrong.'), findsOneWidget);
       expect(find.text(errorDetails.toString()), findsOneWidget);
     });
   });

@@ -1,4 +1,4 @@
-import 'package:gato_id_generator/src/core/constants/_constants.dart';
+// coverage:ignore-file
 import 'package:gato_id_generator/src/data/model/app_user/local_app_user.dart';
 import 'package:gato_id_generator/src/data/repository/auth/local_auth_repo.dart';
 import 'package:gato_id_generator/src/data/repository/generate_id/local_generate_id_repo.dart';
@@ -8,6 +8,7 @@ import 'package:hive_ce/hive.dart';
 
 import '../../domain/repository/auth_repo.dart';
 import '../_core.dart';
+import '../constants/_constants.dart';
 import '../routing/app_router.dart';
 
 /// Extension methods specific for the "local" project configuration

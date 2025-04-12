@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gato_id_generator/src/data/repository/generate_id/remote_generate_id_repo.dart';

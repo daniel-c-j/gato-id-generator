@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../../mocks.dart';
+import '../../../mocks.dart';
 
 void main() {
   test("Init method set the valid information for AppInfo properties when success.", () async {

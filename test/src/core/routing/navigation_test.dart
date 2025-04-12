@@ -1,6 +1,6 @@
-import 'package:gato_id_generator/src/core/_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gato_id_generator/src/core/_core.dart';
 
 void main() {
   testWidgets('''

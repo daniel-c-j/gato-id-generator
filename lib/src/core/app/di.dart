@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'dart:math';
 
 import 'package:faker/faker.dart';

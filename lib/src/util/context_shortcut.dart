@@ -7,6 +7,11 @@ import '../core/routing/navigation.dart';
 // ! [WARNING]
 // ! Everything here must only be used one widget below Material widget.
 
+// * [INFO]
+// * This is intentionally not an extension of [BuildContext] itself, since this is
+// * meant to be as flexible as possible, even outside widget class itself despite how
+// * not a good practice it is.
+
 /// An alternative way to get BuildContext that is assigned globally to GoRouter.
 BuildContext get altContext => NavigationService.currentContext;
 
@@ -26,7 +31,7 @@ double kScreenHeight([BuildContext? ctx]) {
     return (ctx == null) ? MediaQuery.sizeOf(altContext).height : MediaQuery.sizeOf(ctx).height;
   } catch (e) {
     // Expecting the screen resolution will be mobile.
-    return 800;
+    return 720;
   }
 }
 

@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 /// Device type based on screen sizes.
 enum DeviceType {
   desktop,

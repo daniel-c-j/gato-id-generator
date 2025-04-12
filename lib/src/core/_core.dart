@@ -13,3 +13,6 @@ export 'theme/colors.dart';
 export 'theme/font_sizes.dart';
 export 'theme/theme_data_provider.dart';
 export 'translate/data/languages.dart';
+export 'routing/app_router.dart';
+export 'routing/navigation.dart';
+export 'routing/not_found_screen.dart';
