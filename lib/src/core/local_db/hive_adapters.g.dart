@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'hive_adapters.dart';
@@ -38,9 +39,7 @@ class AppUserAdapter extends TypeAdapter<AppUser> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AppUserAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is AppUserAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 class LocalAppUserAdapter extends TypeAdapter<LocalAppUser> {
@@ -78,9 +77,7 @@ class LocalAppUserAdapter extends TypeAdapter<LocalAppUser> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is LocalAppUserAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is LocalAppUserAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 class GatoIdAdapter extends TypeAdapter<GatoId> {
@@ -127,7 +124,5 @@ class GatoIdAdapter extends TypeAdapter<GatoId> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is GatoIdAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is GatoIdAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

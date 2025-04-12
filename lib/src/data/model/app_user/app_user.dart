@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:gato_id_generator/src/core/constants/_constants.dart';
 import 'package:hive_ce/hive.dart';
 

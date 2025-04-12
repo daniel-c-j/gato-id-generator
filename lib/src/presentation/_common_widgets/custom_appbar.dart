@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gato_id_generator/src/presentation/_common_widgets/custom_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 import '../../core/_core.dart';
 import '../../util/context_shortcut.dart';
+import 'custom_button.dart';
 
 /// Pre-defined appbar with some configurations.
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,6 +16,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.withBackIcon,
     this.additionalActions = const [],
   });
+
+  static const appBarKey = Key("CustomAppBar");
 
   final String title;
   final bool withBackIcon;

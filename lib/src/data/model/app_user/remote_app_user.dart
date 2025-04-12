@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'app_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

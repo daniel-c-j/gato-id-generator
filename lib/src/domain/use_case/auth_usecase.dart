@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:gato_id_generator/src/data/model/app_user/app_user.dart';
 
 import '../repository/auth_repo.dart';

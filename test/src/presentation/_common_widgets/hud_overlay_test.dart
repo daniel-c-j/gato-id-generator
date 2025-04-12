@@ -1,6 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/hud_overlay.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -9,8 +9,11 @@ void main() {
       // * Arrange
       forceShowHUD = true;
       await tester.pumpWidget(
-        ProviderScope(
-          child: const MaterialApp(home: HudOverlay(child: Scaffold())),
+        MaterialApp(
+          home: BlocProvider(
+            create: (context) => HudControllerCubit(),
+            child: const HudOverlay(child: Scaffold()),
+          ),
         ),
       );
 

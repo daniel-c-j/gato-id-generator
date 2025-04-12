@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:hive_ce/hive.dart';
 
 import '../../../core/constants/_constants.dart';

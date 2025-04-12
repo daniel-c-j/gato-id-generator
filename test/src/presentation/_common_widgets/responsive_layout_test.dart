@@ -11,7 +11,7 @@ void main() {
 
   testWidgets('ResponsiveLayout shows desktop widget for desktop width', (WidgetTester tester) async {
     // * Arrange
-    final layout = ResponsiveLayout(
+    const layout = ResponsiveLayout(
       width: Breakpoint.DESKTOP + 1, // Simulate a desktop width
       desktop: desktopWidget,
       tablet: tabletWidget,
@@ -19,7 +19,7 @@ void main() {
       wearOS: wearOSWidget,
     );
     // Build the widget
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: layout)));
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: layout)));
 
     // * Act
     await tester.pumpAndSettle();
@@ -33,7 +33,7 @@ void main() {
 
   testWidgets('ResponsiveLayout shows tablet widget for tablet width', (WidgetTester tester) async {
     // * Arrange
-    final layout = ResponsiveLayout(
+    const layout = ResponsiveLayout(
       width: Breakpoint.TABLET + 1, // Simulate a tablet width
       desktop: desktopWidget,
       tablet: tabletWidget,
@@ -41,7 +41,7 @@ void main() {
       wearOS: wearOSWidget,
     );
     // Build the widget
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: layout)));
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: layout)));
 
     // * Act
     await tester.pumpAndSettle();
@@ -55,7 +55,7 @@ void main() {
 
   testWidgets('ResponsiveLayout shows mobile widget for mobile width', (WidgetTester tester) async {
     // * Arrange
-    final layout = ResponsiveLayout(
+    const layout = ResponsiveLayout(
       width: Breakpoint.MOBILE + 1, // Simulate a mobile width
       desktop: desktopWidget,
       tablet: tabletWidget,
@@ -63,7 +63,7 @@ void main() {
       wearOS: wearOSWidget,
     );
     // Build the widget
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: layout)));
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: layout)));
 
     // * Act
     await tester.pumpAndSettle();
@@ -77,7 +77,7 @@ void main() {
 
   testWidgets('ResponsiveLayout shows wearOS widget for widths below mobile', (WidgetTester tester) async {
     // * Arrange
-    final layout = ResponsiveLayout(
+    const layout = ResponsiveLayout(
       width: Breakpoint.MOBILE - 1, // Simulate a width below mobile
       desktop: desktopWidget,
       tablet: tabletWidget,
@@ -85,7 +85,7 @@ void main() {
       wearOS: wearOSWidget,
     );
     // Build the widget
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: layout)));
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: layout)));
 
     // * Act
     await tester.pumpAndSettle();

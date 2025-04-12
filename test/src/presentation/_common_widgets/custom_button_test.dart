@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gato_id_generator/src/presentation/_common_widgets/custom_button.dart';
 
 void main() {
   testWidgets('CustomButton should call onTap when tapped', (WidgetTester tester) async {
     // * Arrange
     bool wasTapped = false;
     final button = CustomButton(
-      onTap: () {
-        wasTapped = true;
-      },
+      onTap: () => wasTapped = true,
       child: const Text('Tap me'),
     );
     // Build the widget

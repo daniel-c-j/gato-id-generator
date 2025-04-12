@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'app_user.dart';
@@ -38,7 +39,5 @@ class AppUserAdapter extends TypeAdapter<AppUser> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AppUserAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is AppUserAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

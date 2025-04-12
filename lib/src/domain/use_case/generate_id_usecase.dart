@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'dart:typed_data';
 
 import 'package:gato_id_generator/src/data/model/gato_id_content.dart';

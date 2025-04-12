@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'local_app_user.dart';
@@ -41,7 +42,5 @@ class LocalAppUserAdapter extends TypeAdapter<LocalAppUser> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is LocalAppUserAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is LocalAppUserAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

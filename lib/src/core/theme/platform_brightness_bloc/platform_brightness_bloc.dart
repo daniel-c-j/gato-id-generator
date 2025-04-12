@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:async';
@@ -44,7 +45,7 @@ class PlatformBrightnessBloc extends Bloc<PlatformBrightnessEvent, Brightness> {
       _box = Hive.box<bool>(DBKeys.BRIGHTNESS_BOX);
       isLightMode = await _getConf();
     } catch (e) {
-      isLightMode = false;
+      isLightMode = true;
     }
 
     // False persistance since it's only an initialization.

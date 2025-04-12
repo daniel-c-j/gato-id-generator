@@ -38,7 +38,7 @@ class Robot {
     }
   }
 
-  Future<void> pumpApp({bool isGolden = false, ProviderContainer? container}) async {
+  Future<void> pumpApp({bool isGolden = false}) async {
     WidgetsFlutterBinding.ensureInitialized();
 
     // Simulation requirements.
@@ -51,10 +51,10 @@ class Robot {
 
     // Creating app startup instance for initialization.
     const appStartup = AppStartup();
-    final container_ = await appStartup.initializeProviderContainer();
-    final root = await appStartup.createRootWidget(container: container ?? container_, minimumTest: true);
+    await appStartup.initializeApp(minimumTest: true);
 
     // * Entry point of the app
+    final root = await appStartup.createRootWidget();
     await tester.pumpWidget(root);
     await tester.pumpAndSettle();
   }

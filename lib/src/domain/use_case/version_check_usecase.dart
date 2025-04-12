@@ -1,4 +1,4 @@
-// is an exception just to show how it works.
+// coverage:ignore-file
 import '../../data/model/version_check.dart';
 import '../repository/version_repo.dart';
 

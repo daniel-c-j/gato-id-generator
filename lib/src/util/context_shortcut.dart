@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 import '../core/_core.dart';
-import '../core/routing/navigation.dart';
 
 // ! [WARNING]
 // ! Everything here must only be used one widget below Material widget.

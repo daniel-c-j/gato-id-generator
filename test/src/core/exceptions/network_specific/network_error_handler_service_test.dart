@@ -1,20 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:gato_id_generator/src/core/exceptions/network_specific/network_error_handler_service.dart';
 import 'package:gato_id_generator/src/core/exceptions/app_exception.dart';
 
-import '../../../mocks.dart';
+import '../../../../mocks.dart';
 
 void main() {
-  ProviderContainer makeProviderContainer() {
-    final container = ProviderContainer(overrides: [
-      // Placeholder
-    ]);
-    addTearDown(container.dispose);
-    return container;
-  }
+  late NetworkErrorHandlerService netErrHandler;
+
+  setUp(() {
+    netErrHandler = NetworkErrorHandlerService();
+  });
 
   DioException mockNullResponse() => DioException(
         response: null,
@@ -49,11 +46,8 @@ void main() {
       When error is identified as a NoConnectionException.
       Then get NoConnectionException back..
     ''', () {
-      // * Arrange
-      final container = makeProviderContainer();
-
       // * Act
-      final exception = container.read(netErrorHandlerProvider).getFailure(mockNoConnectionException());
+      final exception = netErrHandler.getFailure(mockNoConnectionException());
 
       // * Assert
       expect(exception, NoConnectionException());
@@ -64,11 +58,8 @@ void main() {
       When throws a known network issue/exception by statuscode.
       Then get the identified exception.
     ''', () {
-      // * Arrange
-      final container = makeProviderContainer();
-
       // * Act
-      final exception = container.read(netErrorHandlerProvider).getFailure(mock404Exception());
+      final exception = netErrHandler.getFailure(mock404Exception());
 
       // * Assert
       expect(exception, NotFoundException());
@@ -79,11 +70,8 @@ void main() {
       When throws a network issue/exception with response of null.
       Then get the UnknownException.
     ''', () {
-      // * Arrange
-      final container = makeProviderContainer();
-
       // * Act
-      final exception = container.read(netErrorHandlerProvider).getFailure(mockNullResponse());
+      final exception = netErrHandler.getFailure(mockNullResponse());
 
       // * Assert
       expect(exception, UnknownException());
@@ -95,13 +83,11 @@ void main() {
       Then return the UnknownException.
     ''', () {
       // * Arrange
-      final container = makeProviderContainer();
-
       final mockException = MockDioException();
       when(() => mockException.error).thenThrow(Exception());
 
       // * Act
-      final exception = container.read(netErrorHandlerProvider).getFailure(mockException);
+      final exception = netErrHandler.getFailure(mockException);
 
       // * Assert
       expect(exception, UnknownException());
@@ -112,11 +98,8 @@ void main() {
       When an unknown statuscode.
       Then return CustomException.
     ''', () {
-      // * Arrange
-      final container = makeProviderContainer();
-
       // * Act
-      final exception = container.read(netErrorHandlerProvider).getFailure(mockUnknownStatCodeException());
+      final exception = netErrHandler.getFailure(mockUnknownStatCodeException());
 
       // * Assert
       expect(exception, isA<CustomException>());

@@ -5,6 +5,7 @@ import 'package:gato_id_generator/src/core/constants/_constants.dart';
 import 'package:gato_id_generator/src/core/_core.dart';
 import 'package:gato_id_generator/src/core/exceptions/_exceptions.dart';
 import 'package:gato_id_generator/src/domain/repository/version_repo.dart';
+import 'package:gato_id_generator/src/domain/use_case/version_check_usecase.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:mocktail/mocktail.dart';
@@ -29,6 +30,8 @@ class MockInternetConnection extends Mock implements InternetConnection {}
 class MockHiveBox<T> extends Mock implements Box<T> {}
 
 class MockConnectivityCubit extends MockCubit<bool> implements ConnectivityCubit {}
+
+class MockVersionCheckUsecase extends Mock implements VersionCheckUsecase {}
 
 class MockCallback extends Mock {
   void call();

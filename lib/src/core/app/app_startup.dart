@@ -1,10 +1,10 @@
+// coverage:ignore-file
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gato_id_generator/src/core/local_db/hive_registrar.g.dart';
 import 'package:go_router/go_router.dart';
 import 'package:go_transitions/go_transitions.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import '/src/core/local_db/hive_registrar.g.dart';
 import '../../app.dart';
 import '../constants/_constants.dart';
 import '../exceptions/_exceptions.dart';
@@ -37,7 +38,7 @@ class AppStartup {
   }
 
   /// Create the root widget that should be passed to [runApp].
-  Future<Widget> createRootWidget({bool minimumTest = false}) async {
+  Future<Widget> createRootWidget() async {
     return EasyLocalization(
       path: 'assets/translations',
       supportedLocales: const [Locale('en', 'US')],

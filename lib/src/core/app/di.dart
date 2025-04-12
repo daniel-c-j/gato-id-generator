@@ -5,7 +5,7 @@ import 'package:faker/faker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
-import '../../data/repository/remote_version_repo.dart';
+import '../../data/repository/version_check/remote_version_check_repo.dart';
 import '../../domain/repository/version_repo.dart';
 import '../../presentation/_common_widgets/hud_overlay.dart';
 import '../_core.dart';

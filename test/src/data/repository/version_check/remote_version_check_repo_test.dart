@@ -1,4 +1,4 @@
-import 'package:gato_id_generator/src/data/repository/remote_version_repo.dart';
+import 'package:gato_id_generator/src/data/repository/version_check/remote_version_check_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -9,9 +9,6 @@ import 'package:gato_id_generator/src/data/model/version_check.dart';
 import 'package:version/version.dart';
 
 import '../../../../mocks.dart';
-
-// TODO flutter test --coverage
-// TODO do the integration test too.
 
 void main() {
   RemoteVersionCheckRepo makeVersionCheckRepo(ApiService apiService) => RemoteVersionCheckRepo(apiService);

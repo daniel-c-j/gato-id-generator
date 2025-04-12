@@ -4,10 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:version/version.dart';
 
-import '../../core/constants/_constants.dart';
-import '../../core/_core.dart';
-import '../model/version_check.dart';
-import '../../domain/repository/version_repo.dart';
+import '../../../core/constants/_constants.dart';
+import '../../../core/_core.dart';
+import '../../model/version_check.dart';
+import '../../../domain/repository/version_repo.dart';
 
 class RemoteVersionCheckRepo implements VersionCheckRepo {
   const RemoteVersionCheckRepo(this._apiService);

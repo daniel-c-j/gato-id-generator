@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../data/repository/auth/remote_auth_repo.dart';
 import '../_core.dart';
-import '../routing/app_router.dart';
 
 /// Extension methods specific for the "remote" project configuration
 extension AppStartupRemote on AppStartup {
