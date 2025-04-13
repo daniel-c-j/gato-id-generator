@@ -110,7 +110,7 @@ dependencies:
   # Generate Gato Id utility
   cached_network_image: ^3.4.1
   widgets_to_image: ^1.0.0
-  permission_handler: ^11.4.0
+  permission_handler: ^12.0.0+1
   image_gallery_saver_plus: ^4.0.1
   flutter_image_converter: ^0.4.1
 

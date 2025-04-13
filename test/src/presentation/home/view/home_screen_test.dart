@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gato_id_generator/src/core/_core.dart';
 import 'package:gato_id_generator/src/presentation/about/about_screen.dart';
 import 'package:gato_id_generator/src/presentation/auth/sign_in/view/sign_in_screen.dart';
 import 'package:gato_id_generator/src/presentation/home/view/home_screen.dart';
@@ -12,6 +13,7 @@ void main() {
     try {
       // Hive reset
       await Directory('temp').delete(recursive: true);
+      getIt.reset(dispose: true);
     } catch (e) {
       // print("ERROR");
       // print(e);

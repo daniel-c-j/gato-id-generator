@@ -24,7 +24,7 @@ void main() {
       await r.golden.loadTextFont();
       await r.golden.loadMaterialIconFont();
       await r.golden.loadBoxIconFont();
-      await r.pumpApp(isGolden: true);
+      await r.pumpApp();
       await r.golden.precacheImages();
       await expectLater(
         find.byType(App),

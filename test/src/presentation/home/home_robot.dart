@@ -36,6 +36,7 @@ class HomeRobot {
 
   Future<void> tapThemeIconButton() async {
     await tester.tap(expectThemeIconButton());
+    await tester.pumpAndSettle();
   }
 
   Finder expectAboutIconButton() {

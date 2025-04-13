@@ -1,12 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gato_id_generator/src/presentation/_common_widgets/custom_appbar.dart';
-import 'package:gato_id_generator/src/presentation/about/components/about_icon_button.dart';
-import 'package:gato_id_generator/src/presentation/auth/account/view/components/profile_icon_button.dart';
-import 'package:gato_id_generator/src/presentation/home/view/components/theme_icon_button.dart';
-import 'package:gato_id_generator/src/presentation/home/view/home_screen.dart';
-
-// TODO
+import 'package:gato_id_generator/src/presentation/_common_widgets/hud_overlay.dart';
+import 'package:gato_id_generator/src/presentation/generate/view/components/generate_button.dart';
+import 'package:gato_id_generator/src/presentation/generate/view/components/generated_history.dart';
+import 'package:gato_id_generator/src/presentation/generate/view/components/id/gato_id_card.dart';
 
 @visibleForTesting
 class GenerateRobot {
@@ -15,12 +14,13 @@ class GenerateRobot {
 
   Future<void> expectInitialLayoutIsCorrect() async {
     expectAppbar();
-    expectThemeIconButton();
-    expectAboutIconButton();
-    expectMottoText();
-    expectCardIdPreviews();
-    expectGenerateGatoButton();
-    expectGenerateDogButton();
+    expectBackIconButton();
+    expectGatoIdCardWidget();
+    expectNoCachedNetworkImage();
+    expectSaveGeneratedButton();
+    expectGenerateButton();
+    expectGeneratedHistory();
+    expectGeneratedIdsCount(0);
   }
 
   void expectAppbar() async {
@@ -28,69 +28,57 @@ class GenerateRobot {
     expect(finder, findsOneWidget);
   }
 
-  Finder expectThemeIconButton() {
-    final finder = find.byType(ThemeIconButton);
+  void expectBackIconButton() async {
+    final finder = find.byType(BackIconButton);
+    expect(finder, findsOneWidget);
+  }
+
+  void expectGatoIdCardWidget() async {
+    final finder = find.byType(GatoIdCard);
+    expect(finder, findsOneWidget);
+  }
+
+  void expectNoCachedNetworkImage() async {
+    final finder = find.byType(CachedNetworkImage);
+    expect(finder, findsNothing);
+  }
+
+  Finder expectSaveGeneratedButton() {
+    final finder = find.byType(SaveGeneratedButton);
     expect(finder, findsOneWidget);
     return finder;
   }
 
-  Future<void> tapThemeIconButton() async {
-    await tester.tap(expectThemeIconButton());
-  }
-
-  Finder expectAboutIconButton() {
-    final finder = find.byKey(AboutIconButton.buttonKey);
-    expect(finder, findsOneWidget);
-    return finder;
-  }
-
-  Future<void> tapAboutIconButton() async {
-    await tester.tap(expectAboutIconButton());
+  Future<void> tapSaveGeneratedButton() async {
+    await tester.tap(expectSaveGeneratedButton());
     await tester.pumpAndSettle();
   }
 
-  Finder expectProfileIconButton() {
-    final finder = find.byType(ProfileIconButton);
+  Finder expectGenerateButton() {
+    final finder = find.byType(GenerateButton);
     expect(finder, findsOneWidget);
     return finder;
   }
 
-  Future<void> tapProfileIconButton() async {
-    await tester.tap(expectProfileIconButton());
+  Future<void> tapGenerateButton() async {
+    await tester.tap(expectGenerateButton());
     await tester.pumpAndSettle();
   }
 
-  Finder expectMottoText() {
-    final finder = find.byKey(HomeScreen.mottoKey);
+  Finder expectGeneratedHistory() {
+    final finder = find.byType(GeneratedHistory);
     expect(finder, findsOneWidget);
     return finder;
   }
 
-  Finder expectCardIdPreviews() {
-    final finder = find.byType(GatoLine);
-    expect(finder, findsNWidgets(3));
-    return finder;
-  }
-
-  Finder expectGenerateGatoButton() {
-    final finder = find.byKey(HomeScreen.gatoKey);
+  Finder expectGeneratedIdsCount(int val) {
+    final finder = find.text("Generated IDs ($val)");
     expect(finder, findsOneWidget);
     return finder;
   }
 
-  Future<void> tapGenerateGatoButton() async {
-    await tester.tap(expectGenerateGatoButton());
-    await tester.pumpAndSettle();
-  }
-
-  Finder expectGenerateDogButton() {
-    final finder = find.byKey(HomeScreen.dogKey);
-    expect(finder, findsOneWidget);
-    return finder;
-  }
-
-  Future<void> tapGenerateDogButton() async {
-    await tester.tap(expectGenerateDogButton());
-    await tester.pumpAndSettle();
+  void expectHUDLoading(int val) {
+    expect(find.byKey(HudOverlay.bgHudKey), findsOneWidget);
+    expect(find.byKey(HudOverlay.loadingHudKey), findsOneWidget);
   }
 }

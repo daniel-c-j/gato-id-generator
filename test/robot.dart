@@ -45,7 +45,7 @@ class Robot {
     } catch (e) {
       if (kDebugMode) {
         print("ERROR");
-        print(e);
+        // print(e);
       }
     }
   }
@@ -75,7 +75,7 @@ class Robot {
       await appStartup.initializeApp(minimumTest: true);
       await appStartup.runWithLocal();
     } catch (e) {
-      // Do nothing, just to prevent multiple getIt register.
+      // Do nothing, just to prevent multiple getIt register error.
     }
 
     // * Entry point of the app

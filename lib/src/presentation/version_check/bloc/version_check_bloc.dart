@@ -22,7 +22,7 @@ class VersionCheckBloc extends Bloc<VersionCheckEvent, VersionCheckState> {
 
   @override
   Future<void> close() async {
-    getIt.unregister<VersionCheckRepo>();
+    if (getIt.isRegistered<VersionCheckRepo>()) getIt.unregister<VersionCheckRepo>();
     return super.close();
   }
 

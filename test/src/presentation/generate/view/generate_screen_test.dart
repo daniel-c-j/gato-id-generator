@@ -1,15 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gato_id_generator/src/core/_core.dart';
 
 import '../../../../robot.dart';
 
-// TODO
 void main() {
   setUp(() async {
     try {
       // Hive reset
       await Directory('temp').delete(recursive: true);
+      getIt.reset(dispose: true);
     } catch (e) {
       // print("ERROR");
       // print(e);
@@ -23,6 +24,8 @@ void main() {
     await tester.runAsync(() async {
       final r = Robot(tester);
       await r.pumpApp();
+      await r.home.tapGenerateGatoButton();
+      await r.auth.registerAndSignIn();
       await r.generate.expectInitialLayoutIsCorrect();
     });
   });

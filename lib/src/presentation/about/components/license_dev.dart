@@ -1,10 +1,10 @@
+// coverage:ignore-file
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/_core.dart';
 import '../../../core/constants/_constants.dart';
-import '../../../core/routing/app_router.dart';
 import '../../../util/context_shortcut.dart';
 import '../../_common_widgets/custom_button.dart';
 

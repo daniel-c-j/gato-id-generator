@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gato_id_generator/src/core/_core.dart';
 import 'package:gato_id_generator/src/presentation/auth/sign_in/view/email_password_sign_in_form_type.dart';
 import 'package:gato_id_generator/src/presentation/auth/sign_in/view/sign_in_screen.dart';
 import 'package:gato_id_generator/src/presentation/generate/view/generate_screen.dart';
@@ -13,6 +14,7 @@ void main() {
     try {
       // Hive reset
       await Directory('temp').delete(recursive: true);
+      getIt.reset(dispose: true);
     } catch (e) {
       // print("ERROR");
       // print(e);
@@ -57,7 +59,7 @@ void main() {
       // Init
       await r.home.tapGenerateGatoButton();
       r.auth.expectFormTypeIs(EmailPasswordSignInFormType.signIn);
-
+      // Tries to sign-in
       await r.auth.enterEmailField("Manul@gato.id");
       await r.auth.enterPasswordField("secretManul");
       await r.auth.tapConfirmButton();
@@ -81,21 +83,30 @@ void main() {
       await r.home.tapGenerateGatoButton();
       r.auth.expectFormTypeIs(EmailPasswordSignInFormType.signIn);
 
-      // Registering
+      // Enters register mode
       await r.auth.tapSwitchButton();
       r.auth.expectFormTypeIs(EmailPasswordSignInFormType.register);
-
-      await r.auth.enterEmailField("123@123.co.id");
+      // Registering
+      await r.auth.enterEmailField("1233@123001.co");
       await r.auth.enterPasswordField("12345678");
       await r.auth.tapConfirmButton();
+      // Wait for a moment.
       for (int i = 0; i < 5; i++) {
+        await delay(true);
         await tester.pump(Duration(seconds: 1));
-      } // TODO
+      }
 
-      // Signing-in
+      // Rdirected to sign-in mode
       r.auth.expectFormTypeIs(EmailPasswordSignInFormType.signIn);
+      // Signing-in
+      await r.auth.enterEmailField("1233@123001.co");
       await r.auth.enterPasswordField("12345678");
-      r.auth.tapConfirmButton();
+      await r.auth.tapConfirmButton();
+      // Wait for a moment.
+      for (int i = 0; i < 5; i++) {
+        await delay(true);
+        await tester.pump(Duration(seconds: 1));
+      }
 
       expect(find.byType(EmailPasswordSignInScreen), findsNothing);
       expect(find.byType(GenerateScreen), findsOneWidget);
