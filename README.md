@@ -177,9 +177,9 @@ start . # To quickly opens file explorer to see for yourself the output.
 
 This app is a really simple app, so there's no need for official documentation for it for now. As long as you have internet connection available, tap the generate button and wait for a moment, and you're good to go. 
 
-<img src="./media/screenshots/05.png" alt="screenshot" width=325  style="padding: 5px;" ></img>
-<img src="./media/screenshots/06.png" alt="screenshot" width=325 style="padding: 5px;"></img>
-<img src="./media/screenshots/07.png" alt="screenshot" width=325  style="padding: 5px;"></img>
+<img src="./media/screenshots/05.png" alt="screenshot" width=270  style="padding: 5px;" ></img>
+<img src="./media/screenshots/06.png" alt="screenshot" width=270 style="padding: 5px;"></img>
+<img src="./media/screenshots/07.png" alt="screenshot" width=270  style="padding: 5px;"></img>
   
 And you can also track your mini profile with your mini statistics.
 
@@ -193,6 +193,7 @@ And you can also track your mini profile with your mini statistics.
 No, sadly I don't open to any contributions yet. Maybe next time.
 
 Yes, coffee is okay. (Greedy aren't I?)
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P4L666F)
 
 
@@ -224,7 +225,7 @@ Project Link: [https://github.com/Daniel-C-J/gato-id-generator](https://github.c
 
 - The icon is just a combined version of two icons that both came from flaticons. 
 - The cat and the dog image at Homescreen came from internet randomly.
-- Cat generated pictures came directly from [here]("https://cataas.com/cat").
-- Remote id pictures are saved temporarily in [here]("catbox.moe").
+- Cat generated pictures came directly from [here](https://cataas.com/cat).
+- Remote id pictures are saved temporarily in [here](catbox.moe).
   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
