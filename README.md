@@ -99,7 +99,6 @@ More or less like that :D.
 <img src="./media/screenshots/02.png" alt="screenshot" width=325  style="padding: 5px;"></img>
 <img src="./media/screenshots/03.png" alt="screenshot" width=325  style="padding: 5px;"></img>
 <img src="./media/screenshots/04.png" alt="screenshot" width=325  style="padding: 5px;"></img>
-  
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -117,6 +116,8 @@ With main dependencies such as:
 - [Dio](https://pub.dev/packages/dio)
 - [Hive](https://pub.dev/packages/hive_ce)
 - [Localization](https://pub.dev/packages/easy_localization)
+
+[See Changelog](./CHANGELOG.md)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -190,6 +191,10 @@ And you can also track your mini profile with your mini statistics.
 ## Contributing
 
 No, sadly I don't open to any contributions yet. Maybe next time.
+
+Yes, coffee is okay. (Greedy aren't I?)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P4L666F)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
