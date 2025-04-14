@@ -54,11 +54,41 @@ Currently, this app only supports for **Android**. I am unable to test the app f
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project, **Gato Id Generator**, is an application intended for the purpose of showcasing my flutter skills... and also for fun.
+This project, **Gato Id Generator**, is an application intended for the purpose of showcasing my flutter skills. 
+
+*Yeah, it's a dumb app, I know.*
 
 This is a Gato (Cat in spanish) Id generator app. One click, one cat picture, one identity. But before that, you have to login, but fret not, there's an option to run this locally using local backend within your operating system control instead of third party's.
 
-Main features are:
+
+### Architecture
+
+I was using a different kind of approach when it's coming to architecture for this app, particularly about the layer-first approach, a.k.a classic and boring mvvm instead of the usual *feature-first* approach. So this app's architecture in a nutshell is like this:
+```
+├─core
+|
+├─data
+│  ├─model
+│  └─repository
+|
+├─domain
+│  ├─repository
+│  └─use_case
+|
+├─presentation
+│  ├─generate (feature)
+│  │  ├─bloc
+│  │  └─view
+|  |
+│  └─_common_widgets
+|
+└─util
+```
+More or less like that :D.
+
+
+### Features
+
 - Authentication
 - Generation
 - Saving (Locally in gallery)
@@ -80,13 +110,13 @@ Main features are:
 <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)"></img>
 
 With main dependencies such as:
-- [BLoC]("https://pub.dev/packages/bloc")
-- [GetIt]("https://pub.dev/packages/get_it")
-- [GoRouter]("https://pub.dev/packages/go_router")
+- [BLoC](https://pub.dev/packages/bloc)
+- [GetIt](https://pub.dev/packages/get_it)
+- [GoRouter](https://pub.dev/packages/go_router)
 - Firebase (Auth & Firestore)
-- [Dio]("https://pub.dev/packages/dio")
-- [Hive]("https://pub.dev/packages/hive_ce")
-- [Localization]("https://pub.dev/packages/easy_localization")
+- [Dio](https://pub.dev/packages/dio)
+- [Hive](https://pub.dev/packages/hive_ce)
+- [Localization](https://pub.dev/packages/easy_localization)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -101,10 +131,15 @@ Wanna build the fresh one instead? Sure follow these steps.
 
 To avoid incompatibility, it is recommended that at least you have flutter's engine with version of **3.29.2** (stable). Here's how to check yours.
 
-* flutter
-  ```sh
-  flutter --version
-  ```
+```sh
+flutter --version
+```
+
+Also do check whether there's anything wrong with the engine.
+
+```sh
+flutter doctor -v
+```
 
 ### Installation
 
@@ -170,9 +205,10 @@ Distributed under the [MIT License](./LICENSE).
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Daniel CJ - dcj.dandy800@passinbox.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/Daniel-C-J/cipher_dove](https://github.com/Daniel-C-J/gato-id-generator)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
