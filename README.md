@@ -1,17 +1,189 @@
-# template
-# TODO Flex here 😎
-TODO screenshots
-A new Flutter project.
+<a id="readme-top"></a>
 
+<!-- Icon -->
+<p align="center">
+    <img src="./media/icon/icon.png" alt="icon_title" width= 120 height=120></img>
+</p>
+
+<!-- Title & Description -->
+<h1 align="center"> [Gato Id Generator] </h1>
+<p align="center">Generate id card... But for cats!</p>
+
+<!-- Badges -->
+<div align="center">
+    <img src="https://img.shields.io/github/license/Daniel-C-J/gato-id-generator" alt="license"></img>
+    <img src="https://img.shields.io/github/v/release/Daniel-C-J/gato-id-generator" alt="release"></img>
+</div>
+
+<br/>
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#quick-start">Quick Start</a></li>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+<!-- QUICK START -->
+## Quick Start
+Currently, this app only supports for **Android**. I am unable to test the app for iOS platform, since I don't have any apple device.
+
+[Download latest version here.](https://github.com/Daniel-C-J/cipher_dove/releases)
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+This project, **Gato Id Generator**, is an application intended for the purpose of showcasing my flutter skills... and also for fun.
+
+This is a Gato (Cat in spanish) Id generator app. One click, one cat picture, one identity. But before that, you have to login, but fret not, there's an option to run this locally using local backend within your operating system control instead of third party's.
+
+Main features are:
+- Authentication
+- Generation
+- Saving (Locally in gallery)
+- Mini statistics 
+- Classic light & dark theme
+
+<img src="./media/screenshots/01.png" alt="screenshot" width=325  style="padding: 5px;" ></img>
+<img src="./media/screenshots/02.png" alt="screenshot" width=325  style="padding: 5px;"></img>
+<img src="./media/screenshots/03.png" alt="screenshot" width=325  style="padding: 5px;"></img>
+<img src="./media/screenshots/04.png" alt="screenshot" width=325  style="padding: 5px;"></img>
+  
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Built With
+
+<img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)"></img>
+
+With main dependencies such as:
+- [BLoC]("https://pub.dev/packages/bloc")
+- [GetIt]("https://pub.dev/packages/get_it")
+- [GoRouter]("https://pub.dev/packages/go_router")
+- Firebase (Auth & Firestore)
+- [Dio]("https://pub.dev/packages/dio")
+- [Hive]("https://pub.dev/packages/hive_ce")
+- [Localization]("https://pub.dev/packages/easy_localization")
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- GETTING STARTED -->
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Wanna build the fresh one instead? Sure follow these steps.
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+To avoid incompatibility, it is recommended that at least you have flutter's engine with version of **3.29.2** (stable). Here's how to check yours.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* flutter
+  ```sh
+  flutter --version
+  ```
+
+### Installation
+
+
+1. Clone this repository 
+```sh
+git clone https://github.com/Daniel-C-J/gato-id-generator.git
+```
+
+2. Open your terminal and `cd` to the root path of the repository, for example:
+```sh
+cd gato-id-generator
+```
+
+3. Type `flutter build --help` then head down to the `Available subcommands:` section, you'll be able to found the platform specific options to build the app. 
+```sh
+flutter build --help 
+flutter build apk --release # If you choose to build android app.
+```
+
+4. The output path is usually in `./build`, for android specifically it is in `./build/app/outputs/flutter-apk/` alongside with the `sha-1` hash.
+```sh
+start . # To quickly opens file explorer to see for yourself the output.
+```
+
+5. And you're done! Congrats 🎉!
+   
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+This app is a really simple app, so there's no need for official documentation for it for now. As long as you have internet connection available, tap the generate button and wait for a moment, and you're good to go. 
+
+<img src="./media/screenshots/05.png" alt="screenshot" width=325  style="padding: 5px;" ></img>
+<img src="./media/screenshots/06.png" alt="screenshot" width=325 style="padding: 5px;"></img>
+<img src="./media/screenshots/07.png" alt="screenshot" width=325  style="padding: 5px;"></img>
+  
+And you can also track your mini profile with your mini statistics.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+No, sadly I don't open to any contributions yet. Maybe next time.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the [MIT License](./LICENSE).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- CONTACT -->
+## Contact
+
+Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+
+Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+- The icon is just a combined version of two icons that both came from flaticons. 
+- The cat and the dog image at Homescreen came from internet randomly.
+- Cat generated pictures came directly from [here]("https://cataas.com/cat").
+- Remote id pictures are saved temporarily in [here]("catbox.moe").
+  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
