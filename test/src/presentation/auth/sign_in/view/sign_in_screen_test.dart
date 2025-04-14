@@ -66,7 +66,7 @@ void main() {
       for (int i = 0; i < 5; i++) {
         await tester.pump(Duration(seconds: 1));
       }
-      r.auth.expectSnackBar();
+      r.expectSnackBar();
     });
   });
 

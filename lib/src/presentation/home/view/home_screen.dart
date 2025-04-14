@@ -131,6 +131,9 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+@visibleForTesting
+bool randomGatoCardPreview = true;
+
 /// Widget showing marquee-like automatically scrolling gato ids.
 class GatoLine extends StatelessWidget {
   const GatoLine({super.key, this.autoStartAfter, this.color, this.reverse = false});
@@ -156,7 +159,7 @@ class GatoLine extends StatelessWidget {
         )
     ];
     // * To make the images appear randomly.
-    images.shuffle();
+    if (randomGatoCardPreview) images.shuffle();
 
     return SizedBox(
       height: height,

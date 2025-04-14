@@ -3,6 +3,7 @@ import 'package:file/local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gato_id_generator/src/util/delay.dart';
 // ignore: depend_on_referenced_packages
 import 'package:platform/platform.dart';
 
@@ -36,24 +37,11 @@ class GoldenRobot {
     await fontLoader.load();
   }
 
-  // TODO Dunno, does not work.
-  Future<void> loadBoxIconFont() async {
-    // const fs = LocalFileSystem();
-    // final iconFont = fs.file(
-    //     "C:/Users/Lenovo/AppData/Local/Pub/Cache/hosted/pub.dev/icons_plus-5.0.0/assets/fonts/BoxIcons.ttf");
-    final bytes = rootBundle.load('assets/icons/BoxIcons.ttf');
-
-    // final bytes = Future<ByteData>.value(iconFont.readAsBytesSync().buffer.asByteData());
-
-    final fontLoader = FontLoader('BoxIcons')..addFont(bytes);
-    await fontLoader.load();
-  }
-
   /// Load Roboto font from the assets
   Future<void> loadTextFont() async {
-    final font = rootBundle.load('assets/google_fonts/SourceCodePro-Regular.ttf');
+    final font = rootBundle.load('assets/google_fonts/OpenSans-Regular.ttf');
 
-    final fontLoader = FontLoader('SourceCodePro')..addFont(font);
+    final fontLoader = FontLoader('OpenSans')..addFont(font);
     await fontLoader.load();
   }
 
@@ -65,11 +53,17 @@ class GoldenRobot {
       await tester.runAsync(() async {
         for (var match in matches) {
           final image = match.widget as Image;
-          await precacheImage(image.image, match);
+          await precacheImage(image.image, match, onError: (e, st) {});
+        }
+        // Wait for a moment.
+        for (int i = 0; i < 5; i++) {
+          await delay(true);
+          await tester.pump(Duration(seconds: 1));
         }
       });
     }
-    await tester.pumpAndSettle();
+    // * Does not for some reason.
+    // await tester.pumpAndSettle();
   }
 
   /// Sets the surface size.

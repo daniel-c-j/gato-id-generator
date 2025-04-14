@@ -105,12 +105,6 @@ class AuthRobot {
     await tester.tap(expectConfirmButton());
   }
 
-  Finder expectSnackBar() {
-    final finder = find.byType(SnackBar);
-    expect(finder, findsOneWidget);
-    return finder;
-  }
-
   void expectFormTypeIs(EmailPasswordSignInFormType type) {
     final finder = find.text(type.primaryButtonText);
     expect(finder, findsOneWidget);

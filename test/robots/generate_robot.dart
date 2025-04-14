@@ -38,6 +38,11 @@ class GenerateRobot {
     expect(finder, findsOneWidget);
   }
 
+  void expectCachedNetworkImages() async {
+    final finder = find.byType(CachedNetworkImage);
+    expect(finder, findsNWidgets(2));
+  }
+
   void expectNoCachedNetworkImage() async {
     final finder = find.byType(CachedNetworkImage);
     expect(finder, findsNothing);
@@ -62,7 +67,6 @@ class GenerateRobot {
 
   Future<void> tapGenerateButton() async {
     await tester.tap(expectGenerateButton());
-    await tester.pumpAndSettle();
   }
 
   Finder expectGeneratedHistory() {
@@ -77,8 +81,8 @@ class GenerateRobot {
     return finder;
   }
 
-  void expectHUDLoading(int val) {
-    expect(find.byKey(HudOverlay.bgHudKey), findsOneWidget);
-    expect(find.byKey(HudOverlay.loadingHudKey), findsOneWidget);
+  void expectHUDLoading(bool isAppear) {
+    expect(find.byKey(HudOverlay.bgHudKey), (isAppear) ? findsOneWidget : findsNothing);
+    expect(find.byKey(HudOverlay.loadingHudKey), (isAppear) ? findsOneWidget : findsNothing);
   }
 }
