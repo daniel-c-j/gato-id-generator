@@ -56,14 +56,14 @@ Currently, this app only supports for **Android**. I am unable to test the app f
 
 This project, **Gato Id Generator**, is an application intended for the purpose of showcasing my flutter skills. 
 
-*Yeah, it's a dumb app, I know.*
+*Yeah, it's a dumb app, I know. But here I'm focusing on the functionality and the tech stacks within my range --humbly ;).* 
 
 This is a Gato (Cat in spanish) Id generator app. One click, one cat picture, one identity. But before that, you have to login, but fret not, there's an option to run this locally using local backend within your operating system control instead of third party's.
 
 
 ### Architecture
 
-I was using a different kind of approach when it's coming to architecture for this app, particularly about the layer-first approach, a.k.a classic and boring mvvm instead of the usual *feature-first* approach. So this app's architecture in a nutshell is like this:
+I was using a different kind of approach when it's coming to architecture for this app, particularly about the *layer-first* approach, a.k.a classic and boring mvvm instead of the usual *feature-first* approach. So this app's architecture in a nutshell is like this:
 ```
 ├─core
 |
@@ -207,7 +207,7 @@ Distributed under the [MIT License](./LICENSE).
 
 Daniel CJ - dcj.dandy800@passinbox.com
 
-Project Link: [https://github.com/Daniel-C-J/cipher_dove](https://github.com/Daniel-C-J/gato-id-generator)
+Project Link: [https://github.com/Daniel-C-J/gato-id-generator](https://github.com/Daniel-C-J/gato-id-generator)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
