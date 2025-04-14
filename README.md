@@ -142,6 +142,12 @@ Also do check whether there's anything wrong with the engine.
 flutter doctor -v
 ```
 
+Next, initialize your firebase.
+
+```sh
+firebase login
+```
+
 ### Installation
 
 
@@ -155,18 +161,24 @@ git clone https://github.com/Daniel-C-J/gato-id-generator.git
 cd gato-id-generator
 ```
 
-3. Type `flutter build --help` then head down to the `Available subcommands:` section, you'll be able to found the platform specific options to build the app. 
+3. Classic firebase project initialization. (You'll only be needing Auth & Firestore)
+```sh
+firebase init
+flutterfire configure
+```
+
+4. Type `flutter build --help` then head down to the `Available subcommands:` section, you'll be able to found the platform specific options to build the app. 
 ```sh
 flutter build --help 
 flutter build apk --release # If you choose to build android app.
 ```
 
-4. The output path is usually in `./build`, for android specifically it is in `./build/app/outputs/flutter-apk/` alongside with the `sha-1` hash.
+5. The output path is usually in `./build`, for android specifically it is in `./build/app/outputs/flutter-apk/` alongside with the `sha-1` hash.
 ```sh
 start . # To quickly opens file explorer to see for yourself the output.
 ```
 
-5. And you're done! Congrats 🎉!
+1. And you're done! Congrats 🎉!
    
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
