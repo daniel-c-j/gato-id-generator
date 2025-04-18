@@ -178,7 +178,7 @@ flutter build apk --release # If you choose to build android app.
 start . # To quickly opens file explorer to see for yourself the output.
 ```
 
-1. And you're done! Congrats 🎉!
+6. And you're done! Congrats 🎉!
    
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -193,7 +193,7 @@ This app is a really simple app, so there's no need for official documentation f
 <img src="./media/screenshots/06.png" alt="screenshot" width=270 style="padding: 5px;"></img>
 <img src="./media/screenshots/07.png" alt="screenshot" width=270  style="padding: 5px;"></img>
   
-And you can also track your mini profile with your mini statistics.
+And you can also view your mini profile with your mini statistics.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -238,6 +238,6 @@ Project Link: [https://github.com/Daniel-C-J/gato-id-generator](https://github.c
 - The icon is just a combined version of two icons that both came from flaticons. 
 - The cat and the dog image at Homescreen came from internet randomly.
 - Cat generated pictures came directly from [here](https://cataas.com/cat).
-- Remote id pictures are saved temporarily in [here](catbox.moe).
+- Remote id pictures are saved temporarily in [here](https://catbox.moe).
   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
