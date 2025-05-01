@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:faker/faker.dart';
 import 'package:gato_id_generator/src/data/model/gato_id_content.dart';
@@ -11,14 +10,15 @@ import 'package:gato_id_generator/src/domain/repository/generate_id_repo.dart';
 import 'package:gato_id_generator/src/util/date_format.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide MultipartFile;
 
 import '../../../core/_core.dart';
 import '../../../core/constants/_constants.dart';
 import '../../../core/exceptions/_exceptions.dart';
 
-class RemoteGenerateIdRepo implements GenerateIdRepo {
-  RemoteGenerateIdRepo(this._firestore, this._apiService);
-  final FirebaseFirestore _firestore;
+class RemoteSupabaseGenerateIdRepo implements GenerateIdRepo {
+  RemoteSupabaseGenerateIdRepo(this._client, this._apiService);
+  final SupabaseClient _client;
   final ApiService _apiService;
 
   final _faker = getIt<Faker>();
@@ -39,16 +39,11 @@ class RemoteGenerateIdRepo implements GenerateIdRepo {
   @override
   Future<List<Map<String, dynamic>>> getAllGeneratedImages({required String uid}) async {
     try {
-      final QuerySnapshot images = await _firestore.collection('users').doc(uid).collection('image').get();
+      final images = await _client.from('images').select().eq('uid', uid);
 
-      // Assuming the data is in the format {String: String}
-      final tempList = <Map<String, dynamic>>[];
-      for (var imageData in images.docs) {
-        final data = imageData.data();
-        if (data is Map<String, dynamic>) tempList.add(data);
-      }
-
-      return tempList;
+      return [
+        for (var imageData in images) {imageData['name']: imageData['url']}
+      ];
     } catch (e) {
       return [];
     }
@@ -56,7 +51,7 @@ class RemoteGenerateIdRepo implements GenerateIdRepo {
 
   @override
   Future<void> delete({required String uid, required String uuid}) async {
-    return await _firestore.collection('users').doc(uid).collection('image').doc(uuid).delete();
+    return await _client.from('images').delete().eq('uuid', uuid).eq('uid', uid);
   }
 
   @override
@@ -73,15 +68,13 @@ class RemoteGenerateIdRepo implements GenerateIdRepo {
 
   @override
   Future<void> incrementAndSaveStats({required String uid}) async {
-    await _firestore.collection('users').doc(uid).set({
-      DBKeys.GENERATED_ID_COUNT: await _getGeneratedCountStats(uid) + 1,
-    });
+    await _client.from('user_stats').insert({'id': uid});
   }
 
   Future<int> _getGeneratedCountStats(String uid) async {
     try {
-      final docStats = await _firestore.collection('users').doc(uid).get();
-      return docStats.data()?[DBKeys.GENERATED_ID_COUNT] ?? 0;
+      final data = await _client.from('user_stats').select().eq('id', uid).count();
+      return data.count;
     } catch (e) {
       return 0;
     }
@@ -112,12 +105,14 @@ class RemoteGenerateIdRepo implements GenerateIdRepo {
       );
 
       // Post image file's url
-      return await _firestore
-          .collection('users')
-          .doc(uid)
-          .collection('image')
-          .doc(uuid)
-          .set({formattedName: imageUrl.data});
+      return await _client.from('images').insert(
+        {
+          'uuid': uuid,
+          'name': formattedName,
+          'url': imageUrl.data,
+          'uid': uid, // Foreign key of user.id
+        },
+      );
     }
 
     throw const AccessNotGrantedException();

@@ -4,8 +4,8 @@ import '../../../domain/repository/auth_repo.dart';
 import '../../model/app_user/app_user.dart';
 import '../../model/app_user/remote_app_user.dart';
 
-class RemoteAuthRepository implements AuthRepository {
-  RemoteAuthRepository(this._auth);
+class RemoteFirebaseAuthRepository implements AuthRepository {
+  RemoteFirebaseAuthRepository(this._auth);
   final FirebaseAuth _auth;
 
   @override
@@ -40,7 +40,7 @@ class RemoteAuthRepository implements AuthRepository {
   AppUser? get currentUser => _convertUser(_auth.currentUser);
 
   /// Helper method to convert a [User] to an [AppUser]
-  AppUser? _convertUser(User? user) => user != null ? RemoteAppUser(user) : null;
+  AppUser? _convertUser(User? user) => user != null ? RemoteFirebaseAppUser(user) : null;
 
   // TODO deleteUser
   // @override

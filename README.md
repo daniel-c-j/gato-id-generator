@@ -161,10 +161,20 @@ git clone https://github.com/Daniel-C-J/gato-id-generator.git
 cd gato-id-generator
 ```
 
-3. Classic firebase project initialization. (You'll only be needing Auth & Firestore)
+3. Backend configuration. 
 ```sh
+# If you're using firebase, you'll only be needing Auth & Firestore)
 firebase init
 flutterfire configure
+```
+
+```dart
+// If you're using supabase you can go to app_startup_remote.dart under src/core/app/ then:
+await Supabase.initialize(
+    url: NetConsts.SUPABASE_URL, // <- Change this
+    anonKey: NetConsts.SUPABASE_ANONKEY, // <- And this
+);
+// Or alternatively change both inside of network_constants file.
 ```
 
 4. Type `flutter build --help` then head down to the `Available subcommands:` section, you'll be able to found the platform specific options to build the app. 

@@ -68,11 +68,11 @@ dependencies:
   get_it: ^8.0.3
 
   # App routing.
-  go_router: ^14.6.1
+  go_router: ^15.1.1
   go_transitions: ^0.8.0
 
   # Native share link functionality.
-  share_plus: ^10.0.0
+  share_plus: ^11.0.0
 
   # Native url launcher functionality.
   url_launcher: ^6.3.0
@@ -113,6 +113,7 @@ dependencies:
   permission_handler: ^12.0.0+1
   image_gallery_saver_plus: ^4.0.1
   flutter_image_converter: ^0.4.1
+  supabase_flutter: ^2.9.0
 
 #
 # ======================================================================================================
