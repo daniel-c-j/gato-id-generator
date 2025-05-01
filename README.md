@@ -142,11 +142,13 @@ Also do check whether there's anything wrong with the engine.
 flutter doctor -v
 ```
 
-Next, initialize your firebase.
+Next, if you choose firebase as the backend, initialize your firebase.
 
 ```sh
 firebase login
 ```
+
+Alternatively, you can use supabase, just make sure that your project's auth is configured to not **confirm/verify** email address yet, since this app is just a demo.
 
 ### Installation
 
