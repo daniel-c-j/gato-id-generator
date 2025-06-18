@@ -32,9 +32,7 @@ extension AppStartupRemote on AppStartup {
 
     if (backendType == RemoteBackendType.firebase) {
       // Initializing firebase.
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform, name: AppInfo.TITLE);
 
       auth = RemoteFirebaseAuthRepository(FirebaseAuth.instance);
       genIdRepo = RemoteFirebaseGenerateIdRepo(FirebaseFirestore.instance, getIt<ApiService>());
@@ -50,11 +48,12 @@ extension AppStartupRemote on AppStartup {
       genIdRepo = RemoteSupabaseGenerateIdRepo(supabase, getIt<ApiService>());
     }
 
-    // * Using singleton (not lazysingleton) since it maintains one must-ready, globally-shared state.
+    // * Using singleton (not lazysingleton) since it maintains one must-ready globally-shared state.
     getIt.registerSingleton<AuthRepository>(auth);
 
-    // ! Route. This is core, but must be after authRepo.
-    getIt.registerSingleton<GoRouter>(goRouterInstance(getIt<AuthRepository>()));
+    // ! Route. This is actually core, but must be after authRepo since it depends on it.
+    final route = goRouterInstance(getIt<AuthRepository>());
+    getIt.registerSingleton<GoRouter>(route);
 
     // Generate ID feature
     getIt.registerLazySingleton<GenerateIdRepo>(() => genIdRepo);

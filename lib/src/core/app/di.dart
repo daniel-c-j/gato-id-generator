@@ -19,20 +19,18 @@ Future<void> initCoreAppModule() async {
   getIt.registerLazySingleton<Random>(() => Random());
 
   // Error Handlers
-  getIt.registerLazySingleton<ErrorLogger>(() => ErrorLogger());
+  getIt.registerLazySingleton<ErrorLogger>(() => const ErrorLogger());
   getIt.registerLazySingleton<NetworkErrorHandlerService>(() => const NetworkErrorHandlerService());
 
   // ApiService
-  final dio = DioFactory().getDio();
+  final dio = DioFactory().dio;
   getIt.registerLazySingleton<InternetConnection>(() => InternetConnection());
   getIt.registerLazySingleton<ApiService>(() => ApiService(dio, getIt<InternetConnection>()));
 
   // Theme
-  getIt.registerSingletonAsync<PlatformBrightnessBloc>(() async {
-    final brightness = PlatformBrightnessBloc();
-    await brightness.init();
-    return brightness;
-  });
+  final brightness = PlatformBrightnessBloc();
+  brightness.init();
+  getIt.registerSingleton<PlatformBrightnessBloc>(brightness);
 
   // HUD feature
   getIt.registerLazySingleton<HudControllerCubit>(() => HudControllerCubit());

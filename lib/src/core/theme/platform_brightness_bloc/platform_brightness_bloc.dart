@@ -38,22 +38,27 @@ class PlatformBrightnessBloc extends Bloc<PlatformBrightnessEvent, Brightness> {
   }
 
   /// Used in early app initialization to remember latest configuration.
-  Future<void> init() async {
+  void init() {
     late bool isLightMode;
 
     try {
       _box = Hive.box<bool>(DBKeys.BRIGHTNESS_BOX);
-      isLightMode = await _getConf();
+      isLightMode = _getConf();
+//
     } catch (e) {
       isLightMode = true;
+//
+    } finally {
+      // False persistance since it's only an initialization.
+      if (isLightMode) {
+        add(BrightnessChange(to: Brightness.light, persist: false));
+      } else {
+        add(BrightnessChange(to: Brightness.dark, persist: false));
+      }
     }
-
-    // False persistance since it's only an initialization.
-    if (isLightMode) return add(BrightnessChange(to: Brightness.light, persist: false));
-    return add(BrightnessChange(to: Brightness.dark, persist: false));
   }
 
-  Future<bool> _getConf() async {
+  bool _getConf() {
     _box = Hive.box<bool>(DBKeys.BRIGHTNESS_BOX);
     return _box!.get(DBKeys.BRIGHTNESS_LIGHT, defaultValue: Default.BRIGHTNESS_LIGHT)!;
   }

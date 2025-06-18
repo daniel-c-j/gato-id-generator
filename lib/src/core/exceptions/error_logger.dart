@@ -4,7 +4,9 @@ import 'package:logger/logger.dart';
 import '_exceptions.dart';
 
 class ErrorLogger {
-  final _log = Logger();
+  const ErrorLogger();
+
+  static final _log = Logger();
 
   /// This method will separate the error object to be processed by certain mechanism based
   /// on the error's type.

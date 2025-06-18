@@ -10,7 +10,7 @@ class AppBlocObserver extends BlocObserver {
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
-    _errorLogger.log("${bloc.toString()}/n${error.toString()}", stackTrace);
+    _errorLogger.log("${bloc.toString()}/n/n${error.toString()}", stackTrace);
     super.onError(bloc, error, stackTrace);
   }
 }

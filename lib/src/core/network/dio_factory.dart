@@ -11,7 +11,7 @@ import '../constants/_constants.dart';
 
 /// Dio with basic configurations.
 class DioFactory {
-  Dio getDio() {
+  Dio get dio {
     final Dio dio = Dio();
 
     // Certificate issue handler.

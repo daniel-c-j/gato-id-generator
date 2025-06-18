@@ -25,9 +25,9 @@ class App extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        // These providers exists throughout the app.
         BlocProvider(
           create: (context) => getIt<PlatformBrightnessBloc>(),
-          lazy: false,
         ),
         BlocProvider(
           create: (context) => getIt<HudControllerCubit>(),

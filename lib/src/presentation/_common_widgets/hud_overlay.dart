@@ -70,7 +70,7 @@ class HudOverlay extends StatelessWidget {
                 child: BlocBuilder<HudControllerCubit, bool>(builder: (BuildContext context, bool show) {
                   final duration = Duration(milliseconds: (withDelay) ? 800 : 0);
 
-                  // If not testing whatsoever, the condition below will apply.
+                  // If not in testing, the condition below will apply.
                   if (!forceShowHUD) {
                     // Returns nothing when animation ends and show is false.
                     if (!show && !shouldRender) return const SizedBox.shrink();

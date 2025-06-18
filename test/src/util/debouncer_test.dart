@@ -5,15 +5,18 @@ import 'package:mocktail/mocktail.dart';
 import '../../mocks.dart';
 
 void main() {
-  Debouncer makeDebouncer() {
-    final debouncer = Debouncer(delay: Duration(milliseconds: 300));
-    addTearDown(debouncer.dispose);
-    return debouncer;
+  late Debouncer debouncer;
+
+  setUp() {
+    debouncer = Debouncer(delay: Duration(milliseconds: 300));
+  }
+
+  teardown() {
+    debouncer.dispose;
   }
 
   test('should call the callback after the specified delay', () async {
     // * Arrange
-    final debouncer = makeDebouncer();
     final mockCallback = MockCallback();
 
     // * Action
@@ -26,7 +29,6 @@ void main() {
 
   test('should not call the callback if called multiple times within the delay', () async {
     // * Arrange
-    final debouncer = makeDebouncer();
     final mockCallback = MockCallback();
 
     // * Action
@@ -40,7 +42,6 @@ void main() {
 
   test('should cancel the previous timer when called again', () async {
     // * Arrange
-    final debouncer = makeDebouncer();
     final mockCallback = MockCallback();
 
     // * Action

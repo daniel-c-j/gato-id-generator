@@ -62,12 +62,6 @@ class AppStartup {
     Hive.registerAdapters();
     await Hive.initBoxes();
 
-    // Removing the # sign, and follow the real configured route in the URL for the web.
-    if (kIsWeb) {
-      usePathUrlStrategy();
-      GoRouter.optionURLReflectsImperativeAPIs = true;
-    }
-
     /// Set default transition values for all `GoTransition`.
     GoTransition.defaultCurve = Curves.easeInOut;
     GoTransition.defaultDuration = const Duration(milliseconds: 600);
@@ -77,6 +71,12 @@ class AppStartup {
 
     // Prevent google font to access internet to download the already downloaded font.
     GoogleFonts.config.allowRuntimeFetching = false;
+
+    // Removing the # sign, and follow the real configured route in the URL for the web.
+    if (kIsWeb) {
+      usePathUrlStrategy();
+      GoRouter.optionURLReflectsImperativeAPIs = true;
+    }
 
     // Release mode configurations.
     if (kReleaseMode) {
@@ -94,13 +94,11 @@ class AppStartup {
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.presentError(details);
       errorLogger.log(details.exception, details.stack);
-      if (kReleaseMode) exit(1);
     };
 
     // * Handle errors from the underlying platform/OS
     PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
       errorLogger.log(error, stack);
-      if (kReleaseMode) exit(1);
       return true;
     };
 

@@ -16,13 +16,13 @@ Future<void> main() async {
   await appStartup.initializeApp();
 
   // * Run with remote backend.
-  final backendType = RemoteBackendType.firebase;
+  const backendType = RemoteBackendType.firebase;
   await appStartup.runWithRemote(backendType);
 
   // * Uncomment this if you need to sign out when switching between Firebase
   // * projects (e.g. Firebase Local emulator vs real Firebase backend)
   // await FirebaseAuth.instance.signOut();
-  // * Uncomment below to use local emulator.
+  // * Uncomment below to use local emulator instead of prod server in Firebase env.
   // await appStartup.setupFirebaseEmulators();
 
   // * Entry point
