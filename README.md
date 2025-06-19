@@ -17,7 +17,7 @@
 
 <br/>
 est. read time: <b>4.5 minutes</b>
-<br/>
+<br/><br/>
 
 <!-- TABLE OF CONTENTS -->
 <details>
