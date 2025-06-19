@@ -7,13 +7,10 @@ import '../../mocks.dart';
 void main() {
   late Debouncer debouncer;
 
-  setUp() {
+  setUp(() {
     debouncer = Debouncer(delay: Duration(milliseconds: 300));
-  }
-
-  teardown() {
-    debouncer.dispose;
-  }
+    addTearDown(() => debouncer.dispose());
+  });
 
   test('should call the callback after the specified delay', () async {
     // * Arrange

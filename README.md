@@ -16,6 +16,8 @@
 </div>
 
 <br/>
+est. read time: <b>4.5 minutes</b>
+<br/>
 
 <!-- TABLE OF CONTENTS -->
 <details>
